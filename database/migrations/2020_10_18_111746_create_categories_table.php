@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
             $table->string('thumbnail_path', 60);
             $table->string('bg_color', 7);
             $table->string('txt_color', 7);
-            $table->enum('cat_type', config_keys('makesumo.asset_types'));
+            $table->enum('asset_type', config_keys('makesumo.asset_types'));
             $table->unsignedBigInteger('page_views')->default(0);
             $table->text('data')->nullable('');
             $table->timestamps();
