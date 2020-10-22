@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-class TagController extends Controller
+class SettingController extends Controller
 {
     public function index()
     {
