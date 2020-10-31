@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AssetSet;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -21,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $user->email = "shahadat.zcpe@gmail.com";
         $user->password = bcrypt('secret');
         $user->save();
+
+        AssetSet::factory()->count(100000)->create();
     }
 }

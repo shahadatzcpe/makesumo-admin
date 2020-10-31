@@ -23,7 +23,7 @@
     stickyFooter();
     nicescrollInt();
     calendarInt();
-    chattingToggle();
+    // chattingToggle();
   });
 
   $(window).on("resize", function() {

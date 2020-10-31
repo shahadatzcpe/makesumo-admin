@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriesTable extends Migration
+class CreateAssetSetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('asset_sets', function (Blueprint $table) {
             $table->id();
-            $table->string('slug', 50)->index('categories_slug_index');
-            $table->string('name', 50);
+            $table->string('slug', 50)->index('asset_sets_slug_index');
+            $table->string('name', 40);
             $table->text('description');
-            $table->string('thumbnail_path', 60);
-            $table->string('bg_color', 7);
-            $table->string('txt_color', 7);
+            $table->string('thumbnail_path', 60)->nullable();
+            $table->string('bg_color', 7)->nullable();
+            $table->string('txt_color', 7)->nullable();
             $table->enum('asset_type', config_keys('makesumo.asset_types'));
             $table->unsignedBigInteger('page_views')->default(0);
-            $table->text('data')->nullable('');
+            $table->text('extra_data')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

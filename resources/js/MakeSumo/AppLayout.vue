@@ -10,7 +10,10 @@
     <left-sidebar></left-sidebar>
 
     <div class="yoo-content yoo-style1">
-        <slot></slot>
+        <div class="yoo-height-b20 yoo-height-lg-b20"></div>
+        <div class="container">
+            <slot></slot>
+        </div>
     </div><!-- .yoo-content -->
     </div>
 </template>

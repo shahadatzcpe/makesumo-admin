@@ -1,8 +1,9 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+{{--            <application-logo></application-logo>--}}
         </x-slot>
+        <H1 style="margin-bottom: 20px; text-align: center; font-size: 20px;">MakeSumo Admin Panel</H1>
 
         <x-jet-validation-errors class="mb-4" />
 

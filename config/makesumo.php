@@ -2,9 +2,21 @@
 
 return [
     'asset_types' => [
-        'icons' => 'Icons',
-        'illustation' => 'Illustrations',
-        '3d' => '3D Illustrations',
-        'mockup' => 'Mockup'
+        'icons' => [
+            'value' => 'icons',
+            'label' => 'Icons'
+        ],
+        'illustration' => [
+            'value' => 'illustration',
+            'label' => 'Illustration'
+        ],
+        '3d' => [
+            'value' => '3d',
+            'label' => '3D illustration'
+        ],
+        'mockup' => [
+            'value' => 'mockup',
+            'label' => 'Mockup'
+        ]
     ]
 ];

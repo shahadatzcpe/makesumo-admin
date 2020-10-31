@@ -12,7 +12,7 @@
                         </inertia-link>
                     </li>
                     <li>
-                        <inertia-link :href="route('asset-sets')" >
+                        <inertia-link :href="route('asset-sets.create')" >
                              <span class="yoo-sidebar-link-title">
                                 <span class="yoo-sidebar-link-icon yoo-style1"><ion-icon name="create"></ion-icon></span>
                                 <span class="yoo-sidebar-link-text">Asset Sets</span>

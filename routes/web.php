@@ -22,7 +22,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 
 
-Route::get('asset-sets', 'AssetSetController@index')->name("asset-sets");
+Route::resource('asset-sets', 'AssetSetController');
 Route::get('assets', 'AssetController@index')->name("assets");
 Route::get('tags', 'TagController@index')->name("tags");
 Route::get('users', 'UserController@index')->name("users");
