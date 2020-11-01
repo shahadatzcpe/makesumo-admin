@@ -1,20 +1,28 @@
 <template>
-    <div>
-    <div class="yoo-height-b60 yoo-height-lg-b60"></div>
-    <application-header></application-header>
-    <div class="yoo-sidebarheader-toggle">
-        <div class="yoo-button-bar1"></div>
-        <div class="yoo-button-bar2"></div>
-        <div class="yoo-button-bar3"></div>
-    </div><!-- .yoo-sidebarheader-toggle -->
-    <left-sidebar></left-sidebar>
+    <div id="wrapper">
 
-    <div class="yoo-content yoo-style1">
-        <div class="yoo-height-b20 yoo-height-lg-b20"></div>
-        <div class="container">
-            <slot></slot>
+        <application-sidebar></application-sidebar>
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+               <application-header></application-header>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <slot></slot>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <application-footer></application-footer>
+
         </div>
-    </div><!-- .yoo-content -->
+        <!-- End of Content Wrapper -->
+
     </div>
 </template>
 
@@ -22,10 +30,16 @@
 
 import LeftSidebar from '../MakeSumo/LeftSidebar'
 import ApplicationHeader from '../MakeSumo/ApplicationHeader'
+import ApplicationFooter from '../MakeSumo/ApplicationFooter'
+import ApplicationLogo from '../MakeSumo/ApplicationLogo'
+import ApplicationSidebar from "./ApplicationSidebar";
     export default {
         components: {
+            ApplicationSidebar,
             LeftSidebar,
-            ApplicationHeader
+            ApplicationHeader,
+            ApplicationLogo,
+            ApplicationFooter
         },
 
         data() {

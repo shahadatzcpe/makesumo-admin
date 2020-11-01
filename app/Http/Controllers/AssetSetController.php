@@ -48,12 +48,17 @@ class AssetSetController extends Controller
         ]);
     }
 
-    public function show(Request $request, AssetSet $assetSet)
+    public function uploadForm()
     {
-        $props['asset_set'] = $assetSet;
-        $props['items'] = Item::all();
-        $props['filters'] = $request->all(['search', 'trashed']);
+        return Inertia::render('AssetSet/UploadForm');
+    }
+    public function show(Request $request, $assetSet)
+    {
+        return  Inertia::render('AssetSet/Show');
+    }
 
-        return  Inertia::render('AssetSet/Show', $props);
+    public function pendingItems()
+    {
+        return Inertia::render('AssetSet/PendingItems');
     }
 }
