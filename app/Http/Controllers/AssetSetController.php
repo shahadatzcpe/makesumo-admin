@@ -8,6 +8,7 @@ use App\Http\Resources\AssetSetCollection;
 use App\Http\Resources\AssetSetResource;
 use App\Http\Resources\PaginatedCollection;
 use App\Models\AssetSet;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -44,7 +45,15 @@ class AssetSetController extends Controller
     {
         return Inertia::render('AssetSet/Create', [
             'asset_types' => array_values(config('makesumo.asset_types')),
-//            'errors' => ['ab' => 's']
         ]);
+    }
+
+    public function show(Request $request, AssetSet $assetSet)
+    {
+        $props['asset_set'] = $assetSet;
+        $props['items'] = Item::all();
+        $props['filters'] = $request->all(['search', 'trashed']);
+
+        return  Inertia::render('AssetSet/Show', $props);
     }
 }

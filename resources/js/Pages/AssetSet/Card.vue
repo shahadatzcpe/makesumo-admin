@@ -16,7 +16,6 @@
                     <div class="card-description">{{ asset_set.description }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
