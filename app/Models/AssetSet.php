@@ -11,7 +11,8 @@ class AssetSet extends Model
     use HasFactory;
 
     protected $appends = [
-        'thumbnail_src'
+        'thumbnail_src',
+        'total_items'
     ];
 
     protected $hidden = [
@@ -59,5 +60,16 @@ class AssetSet extends Model
         })->when($filters['asset_type'] ?? null, function($query, $asset_type) {
            $query->where('asset_type', $asset_type);
         });
+    }
+
+
+    public function getTotalItemsAttribute()
+    {
+        return 100;
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 }

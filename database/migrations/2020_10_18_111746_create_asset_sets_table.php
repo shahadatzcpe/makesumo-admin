@@ -18,6 +18,7 @@ class CreateAssetSetsTable extends Migration
             $table->string('slug', 50)->index('asset_sets_slug_index');
             $table->string('name', 40);
             $table->text('description');
+            $table->text('item_description')->nullable();
             $table->string('thumbnail_path', 60)->nullable();
             $table->string('bg_color', 7)->nullable();
             $table->string('txt_color', 7)->nullable();

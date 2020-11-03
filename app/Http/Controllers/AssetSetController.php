@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Resources\AssetSetCollection;
 use App\Http\Resources\AssetSetResource;
+use App\Http\Resources\ItemResource;
 use App\Http\Resources\PaginatedCollection;
+use App\Models\Asset;
 use App\Models\AssetSet;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -37,8 +38,7 @@ class AssetSetController extends Controller
         $as->thumbnail_path = $request->thumbnail->store("assets");
         $as->save();
 
-
-        return redirect()->route('asset-sets.index');
+        return redirect()->route('asset-sets.upload-items', $as);
     }
 
     public function create()
@@ -48,17 +48,44 @@ class AssetSetController extends Controller
         ]);
     }
 
-    public function uploadForm()
+    public function uploadForm(AssetSet $assetSet)
     {
-        return Inertia::render('AssetSet/UploadForm');
+        $props = [
+            'asset_set' => $assetSet,
+        ];
+
+        return Inertia::render('AssetSet/UploadForm', $props);
     }
     public function show(Request $request, $assetSet)
     {
         return  Inertia::render('AssetSet/Show');
     }
 
-    public function pendingItems()
+    public function pendingItems(AssetSet $assetSet)
     {
-        return Inertia::render('AssetSet/PendingItems');
+
+         $props['items'] = ItemResource::collection($assetSet->items)->collection;
+
+        return Inertia::render('AssetSet/PendingItems', $props);
+    }
+
+    public function uploadItem(Request $request, AssetSet $assetSet)
+    {
+        $uploadedFile = $request->file('file');
+
+        $item = new Item();
+        $item->name = $uploadedFile->getClientOriginalName();
+        $item->thumbnail_path = $uploadedFile->store('thumbnails');
+        $item->asset_set_id = $assetSet->id;
+        $item->asset_type = $assetSet->asset_type;
+        $item->save();
+
+        $asset = new Asset();
+        $asset->path = $uploadedFile->store('assets');
+        $asset->original_name = $uploadedFile->getClientOriginalName();
+        $asset->item_id = $item->id;
+        $asset->save();
+
+        return;
     }
 }

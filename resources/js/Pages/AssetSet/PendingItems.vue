@@ -36,49 +36,8 @@
             <div class="card-body" >
 
                 <div class="set-cards" style="margin-bottom: 20px;">
-                    <div class="card" v-for="item in items">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/350" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a></h4>
-                                    <div style="display: flex">Detected colours:
-                                        <div class="color" style="background-color: #333"></div>
-                                        <div class="color" style="background-color: #737322"></div>
-                                        <div class="color" style="background-color: #3629a3"></div>
-                                        <div class="color" style="background-color: #3aa9a3"></div>
-                                        <div class="color" style="background-color: #a72a3a"></div>
-                                    </div>
-                                    <br>
-                                    <div style="display: flex">Editable colours:
-                                        <div class="color" style="background-color: #333"></div>
-                                        <div class="color" style="background-color: #737322"></div>
-                                        <div class="color" style="background-color: #3629a3"></div>
-                                        <div class="color" style="background-color: #3aa9a3"></div>
-                                        <div class="color" style="background-color: #a72a3a"></div>
-                                    </div>
-
-                                    <br>
-                                    <input placeholder="Type your tag here...." type="text" class="form-control" aria-label="Text input with dropdown button">
-
-                                    <div>Tags:
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    <editable :key="key" v-for="(item, key) in items" :item="item"></editable>
                 </div>
-
-
-
-
-
 
 
                 <button class="btn btn-primary">Select All</button>
@@ -96,41 +55,22 @@
 
     import ImageUpload from "./../../Shared/ImageUpload";
     import AppLayout from './../../MakeSumo/AppLayout'
+    import Editable from "../Items/Editable";
 
     export default {
         components: {
+            Editable,
             ImageUpload,
             AppLayout
         },
        props: {
+           items: Array
        },
         data() {
             return {
-                sending: false,
-                items: [12,2,2,2,2,2,2,2,2,2,2,2]
-            }
-        },
-        methods: {
-            submit() {
+                sending: false
             }
         }
     }
 </script>
 
-<style>
-    .set-cards>.card:not(:first-child) {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        border-top: 0px;
-    }
-    .set-cards>.card:not(:last-child) {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-    .color{
-        width: 30px;
-        height: 30px;
-        margin-left: 4px;
-        border-radius: 50%;
-    }
-</style>

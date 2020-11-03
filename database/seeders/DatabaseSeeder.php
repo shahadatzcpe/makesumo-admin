@@ -23,6 +23,6 @@ class DatabaseSeeder extends Seeder
         $user->password = bcrypt('secret');
         $user->save();
 
-        AssetSet::factory()->count(100000)->create();
+        AssetSet::factory()->count(100)->create();
     }
 }

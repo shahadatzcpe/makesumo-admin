@@ -5,7 +5,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-auto">
-                        <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
+                        <div :style="{ 'background-color': asset_set.bg_color }"><img :src="asset_set.thumbnail_src" style="border-radius: 5px; max-width: 200px"></div>
                     </div>
                     <div class="col">
                         <div class="float-right">
@@ -19,10 +19,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                        <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                        <div>Background Color: #eee</div>
-                        <div>Total Items: 1200</div>
+                        <h4>{{ asset_set.name }} - <small class="text-muted">{{ asset_set.asset_type }}</small> </h4>
+                        <div>{{ asset_set.description }}</div>
+                        <div>Background Color: {{ asset_set.bg_color }}</div>
+                        <div>Total Items: {{ asset_set.total_items }}</div>
 
 
                     </div>
@@ -32,18 +32,15 @@
 
 
         <div class="card bg-white" style="margin-bottom: 20px">
-            <div style="padding: 20px; padding-bottom: 0px">
 
-                <h2 class="text-center">Drop your items here</h2>
-
-            </div>
 
             <div class="card-body" >
 
                 <div class="drop-zones">
-
+                    <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
                 </div>
 
+                <br>
 
                 <inertia-link class="btn btn-primary form-control" :href="route('asset-sets.pending-items', 1)" aria-label="Next">
                     <span >Next</span>
@@ -57,32 +54,34 @@
 
 <script>
 
-    import ImageUpload from "./../../Shared/ImageUpload";
     import AppLayout from './../../MakeSumo/AppLayout'
+    import vue2Dropzone from 'vue2-dropzone'
+    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
     export default {
         components: {
-            ImageUpload,
+            vueDropzone: vue2Dropzone,
             AppLayout
         },
        props: {
+           asset_set: Object
        },
-        data() {
+        data: function () {
             return {
-                sending: false
-            }
-        },
-        methods: {
-            submit() {
+                dropzoneOptions: {
+                    url: route('asset-sets.upload-item', this.asset_set.id),
+                    thumbnailWidth: 150,
+                    thumbnailHeight: 150,
+                    maxFilesize: 0.2,
+                    headers: { "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content }
+                }
             }
         }
     }
 </script>
-
 <style>
-    .drop-zones{
-        min-height: 300px;
-        border: 3px dashed #eeeeee;
-        margin-bottom: 10px;
+    .dz-image img{
+        max-width: 150px;
+        max-height: 150px;
     }
 </style>

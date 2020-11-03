@@ -34,7 +34,6 @@
                 this.$refs.fileInput.click()
             },
             pickFile () {
-                this.$emit('input', 2121212)
                 let input = this.$refs.fileInput
                 let file = input.files
                 if (file && file[0]) {

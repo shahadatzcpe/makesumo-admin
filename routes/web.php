@@ -19,8 +19,11 @@ Route::get('/', function () {
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/asset-sets/index', 'AssetSetController@index')->name('asset-sets.index');
 Route::get('/asset-sets/create', 'AssetSetController@create')->name('asset-sets.create');
+Route::post('/asset-sets', 'AssetSetController@store')->name('asset-sets.store');
 Route::get('/asset-sets/{assetSet}', 'AssetSetController@show')->name('asset-sets.show');
 Route::get('/asset-sets/{assetSet}/upload-form', 'AssetSetController@uploadForm')->name('asset-sets.upload-items');
+Route::post('/asset-sets/{assetSet}/upload-item', 'AssetSetController@uploadItem')->name('asset-sets.upload-item');
+
 Route::get('/asset-sets/{assetSet}/pending-items', 'AssetSetController@pendingItems')->name('asset-sets.pending-items');
 
 Route::get('/items/index', 'ItemController@index')->name("items.index");

@@ -13,7 +13,7 @@ class MailingListController extends Controller
         return Inertia::render('MailingList/Index');
     }
 
-    public function show(Request $request, $x = '')
+    public function subscribers(Request $request, $x = '')
     {
         return Inertia::render('MailingList/Show');
     }

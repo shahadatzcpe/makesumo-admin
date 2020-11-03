@@ -17,11 +17,9 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('slug')->index('items_slug');
             $table->string('name', 50);
-            $table->string('description', 50);
-            $table->string('thumbnail_path', 60);
-            $table->string('bg_color', 7);
-            $table->string('txt_color', 7);
-            $table->unsignedBigInteger('category_id');
+            $table->text('description')->nullable();
+            $table->string('thumbnail_path', 100)->nullable();
+            $table->unsignedBigInteger('asset_set_id');
             $table->enum('asset_type', config_keys('makesumo.asset_types'));
             $table->timestamps();
             $table->softDeletes();
