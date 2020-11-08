@@ -10,6 +10,7 @@ class Item extends Model
     use HasFactory;
 
 
+
     /**
      * The "booted" method of the model.
      *
@@ -34,14 +35,14 @@ class Item extends Model
         return $this->hasMany(Asset::class)->orderBy('precedence')->orderByDesc('original_name');
     }
 
-    public function colours()
+    public function colors()
     {
         return $this->hasManyThrough(
-            Colour::class,
+            Color::class,
             Asset::class,
             'item_id', // Foreign key on users table...
-            'colourable_id', // Foreign key on posts table...
-        )->where('colourable_type', Asset::class);
+            'colorable_id', // Foreign key on posts table...
+        )->where('colorable_type', Asset::class);
     }
 
     public function tags()
@@ -77,5 +78,20 @@ class Item extends Model
         //Now we will update relationship with this item and tags
         $tagIds = $tagObjects->pluck('id')->toArray() + $insertedTagIds;
         $this->tags()->sync($tagIds);
+    }
+
+
+    public function scopeFilter($query, $filters) {
+        $query->when($filters['search'] ?? null, function($query, $search) {
+            $query->where('name', 'like', "%$search%");
+        });
+
+        return $query;
+    }
+
+
+    public function assetSet()
+    {
+        return $this->belongsTo(AssetSet::class);
     }
 }

@@ -25,19 +25,19 @@ class Asset extends Model
 
             if($ext == 'svg') {
                 $content = Storage::get($asset->path);
-                $coloursPattern = "/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^\)]*\)/i";
-                preg_match_all($coloursPattern, $content, $colours);
-                $detectedColours = array_unique($colours[0]);
-                $colours = [];
-                foreach ($detectedColours as $colourCode) {
-                    $colour = new Colour();
-                    $colour->colour_type = 'detected';
-                    $colour->colour_code = $colourCode;
-                    $colour->colourable_type = Asset::class;
-                    $colour->colourable_id = $asset->id;
-                    $colour->is_editable = true;
-                    $colour->save();
-                    $colours[] = $colour;
+                $colorsPattern = "/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6})\b|(?:rgb|hsl)a?\([^\)]*\)/i";
+                preg_match_all($colorsPattern, $content, $colors);
+                $detectedcolors = array_unique($colors[0]);
+                $colors = [];
+                foreach ($detectedcolors as $colorCode) {
+                    $color = new color();
+                    $color->color_type = 'detected';
+                    $color->color_code = $colorCode;
+                    $color->colorable_type = Asset::class;
+                    $color->colorable_id = $asset->id;
+                    $color->is_editable = true;
+                    $color->save();
+                    $colors[] = $color;
                 }
             }
 
@@ -52,6 +52,6 @@ class Asset extends Model
 
     public function colors()
     {
-        return $this->morphMany(Colour::class, 'colourable');
+        return $this->morphMany(color::class, 'colorable');
     }
 }

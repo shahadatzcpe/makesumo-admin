@@ -76,7 +76,7 @@
                                         <span>Detected colors: 7 </span>,
                                         <span>Editable colors: 3 </span>,
                                     </div>
-                                    <div style="display: flex">Editable colours:
+                                    <div style="display: flex">Editable colors:
                                         <div class="color" style="background-color: #333"></div>
                                         <div class="color" style="background-color: #737322"></div>
                                         <div class="color" style="background-color: #3629a3"></div>

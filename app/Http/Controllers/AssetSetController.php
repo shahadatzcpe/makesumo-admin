@@ -9,7 +9,7 @@ use App\Http\Resources\ItemResource;
 use App\Http\Resources\PaginatedCollection;
 use App\Models\Asset;
 use App\Models\AssetSet;
-use App\Models\Colour;
+use App\Models\color;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -124,7 +124,7 @@ class AssetSetController extends Controller
 
     public function updateItems(AssetSet $assetSet, Request $request)
     {
-        $colours = [];
+        $colors = [];
 
         foreach($request->items as $itemData) {
             $item = Item::find($itemData['id']);
@@ -132,20 +132,20 @@ class AssetSetController extends Controller
             $item->status = $request->status;
             $item->save();
             $item->updateTags($itemData['tags']);
-            $colours = array_merge($colours, $itemData['colours']);
+            $colors = array_merge($colors, $itemData['colors']);
         }
 
-        $editableColours = array_filter($colours, function($item) {
+        $editablecolors = array_filter($colors, function($item) {
             return $item['is_editable'];
         });
 
-        $notEditableColours = array_filter($colours, function($item) {
+        $notEditablecolors = array_filter($colors, function($item) {
             return !$item['is_editable'];
         });
 
 
-        Colour::whereIn('id', array_column($editableColours, 'id'))->update(['is_editable' => 1]);
-        Colour::whereIn('id', array_column($notEditableColours, 'id'))->update(['is_editable' => 0]);
+        color::whereIn('id', array_column($editablecolors, 'id'))->update(['is_editable' => 1]);
+        color::whereIn('id', array_column($notEditablecolors, 'id'))->update(['is_editable' => 0]);
 
         return response()->redirectToRoute('asset-sets.show', $assetSet);
     }

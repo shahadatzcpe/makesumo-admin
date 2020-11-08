@@ -5,31 +5,27 @@
             <div style="padding: 20px; padding-bottom: 0px">
                 <div class="row">
                     <div class="col-auto">
-                        <button class="btn btn-primary">Add new item</button>
+<!--                        <button class="btn btn-primary">Add new item</button>-->
 
 
                     </div>
                     <div class="col">
-
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Icons</a>
-                                    <a class="dropdown-item" href="#">Illustration</a>
-                                    <a class="dropdown-item" href="#">3d Illustration</a>
-                                    <a class="dropdown-item" href="#">Mockup</a>
+                                    <a v-for="asse_type  in asset_types" :class="{active: form.asset_type == asse_type.value}" @click="form.asset_type = asse_type.value" class="dropdown-item " href="#">{{ asse_type.label }}</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">With trashed</a>
-                                    <a class="dropdown-item" href="#">Only trashed</a>
+                                    <a class="dropdown-item" :class="{active:  form.trashed == 'with_trashed'}" @click="form.trashed = 'with_trashed'" href="#">With trashed</a>
+                                    <a class="dropdown-item" :class="{active: form.trashed == 'only_trashed'}" @click="form.trashed = 'only_trashed'"  href="#">Only trashed</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Only free</a>
-                                    <a class="dropdown-item" href="#">Only Paid</a>
+                                    <a class="dropdown-item" :class="{active: form.subscription == 'only_free'}" @click="form.subscription = 'only_free'"  href="#">Only free</a>
+                                    <a class="dropdown-item" :class="{active: form.subscription == 'only_paid'}" @click="form.subscription = 'only_paid'"href="#">Only Paid</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Reset filter</a>
+                                    <a class="dropdown-item" @click="reset" href="#">Reset filter</a>
                                 </div>
                             </div>
-                            <input placeholder="Search here...." type="text" class="form-control" aria-label="Text input with dropdown button">
+                            <input v-model="form.search" placeholder="Search here...." type="text" class="form-control" aria-label="Text input with dropdown button">
                         </div>
                     </div>
                 </div>
@@ -39,41 +35,27 @@
             <div class="card-body" >
 
                 <div class="set-cards" style="margin-bottom: 20px;">
-                    <div class="card" v-for="item in items">
+                    <div class="card" v-for="item in items.data">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
+                                    <a href="#"><img :src="item.preview_src" style="border-radius: 5px"></a>
                                 </div>
                                 <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> - <a href="#">Spercial Shoe</a> - <small class="text-muted">Illustration</small> </h4>
+                                    <h4><a href="#">{{ item.name }}</a> - <a href="#">{{ item.asset_set.name }}</a> - <small class="text-muted">{{ item.asset_set.asset_type }}</small> </h4>
                                     <div>
-                                        <span>Pageviews:  2011010</span>,
-                                        <span>Downloads: 3030303 </span>,
-                                        <span>Detected colors: 7 </span>,
-                                        <span>Editable colors: 3 </span>,
+                                        <span>Pageviews:  {{ item.pageviews }}</span>,
+                                        <span>Downloads: {{ item.downloads }} </span>,
+                                        <span>Detected colors: {{ item.detected_colors_count }}</span>,
+                                        <span>Editable colors: {{ item.editable_colors.length }} </span>
                                     </div>
 
-                                    <div style="display: flex">Editable colours:
-                                        <div class="color" style="background-color: #333"></div>
-                                        <div class="color" style="background-color: #737322"></div>
-                                        <div class="color" style="background-color: #3629a3"></div>
-                                        <div class="color" style="background-color: #3aa9a3"></div>
-                                        <div class="color" style="background-color: #a72a3a"></div>
+                                    <div style="display: flex">Editable colors:
+                                        <div v-for="color in item.editable_colors" class="color" :style="{ 'background-color': color }"></div>
                                     </div>
                                     <div>Tags:
 
-
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
-                                        <a href=""><span class="label label-danger">Danger Label</span></a>
+                                        <a style="margin-right: 10px" @click="form.search=tag" v-for="tag in item.tags" href="#"><span class="label label-danger" >{{ tag }}</span></a>
                                     </div>
 
                                 </div>
@@ -84,29 +66,8 @@
                 </div>
 
 
-
-
-
-
-
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination" style="margin-bottom: 0px">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <pagination :links="items.links"></pagination>
                 </nav>
             </div>
         </div>
@@ -118,16 +79,45 @@
 
 <script>
     import AppLayout from '../../MakeSumo/AppLayout'
+    import Pagination from "../../Shared/Pagination";
+    import pickBy from 'lodash/pickBy'
+    import throttle from 'lodash/throttle'
+    import mapValues from 'lodash/mapValues'
 
     export default {
         components: {
+            Pagination,
             AppLayout
+        },
+        props: {
+            items: Object,
+            filters: Object,
+            asset_types: Array,
         },
         data() {
             return {
-                items: [1,2,22,2,2,2,2,2,2,2,2,2,2,2,2]
+                form: {
+                    search: this.filters.search,
+                    trashed: this.filters.trashed,
+                    asset_type: this.filters.asset_type,
+                    subscription: this.filters.subscription,
+                },
             }
-        }
+        },
+        watch: {
+            form: {
+                handler: throttle(function() {
+                    let query = pickBy(this.form)
+                    this.$inertia.replace(this.route('items.index', Object.keys(query).length ? query : this.form))
+                }, 150),
+                deep: true,
+            },
+        },
+        methods: {
+            reset() {
+                this.form = mapValues(this.form, () => null)
+            },
+        },
     }
 </script>
 

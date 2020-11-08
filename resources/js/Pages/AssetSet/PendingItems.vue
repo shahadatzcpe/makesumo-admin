@@ -72,10 +72,10 @@
                             id: item.id,
                             name: item.name,
                             tags: item.tags,
-                            colours: item.colours.map( function(colour) {
+                            colors: item.colors.map( function(color) {
                                 return {
-                                    id: colour.color_id,
-                                    is_editable: colour.is_editable
+                                    id: color.color_id,
+                                    is_editable: color.is_editable
                                 }
                             })
                         }

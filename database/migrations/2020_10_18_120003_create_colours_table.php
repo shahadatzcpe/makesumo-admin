@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateColoursTable extends Migration
+class CreatecolorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateColoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('colours', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->string('colour_type', 15)->nullable();
-            $table->string('colour_code', 7);
-            $table->nullableMorphs('colourable');
+            $table->string('color_type', 15)->nullable();
+            $table->string('color_code', 7);
+            $table->nullableMorphs('colorable');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ class CreateColoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colours');
+        Schema::dropIfExists('colors');
     }
 }

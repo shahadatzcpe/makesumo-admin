@@ -10,12 +10,12 @@
                 <div class="col">
 
                     <h4><input class="form-control" type="text" v-model="editableItem.name"></h4>
-                    <div style="display: flex">Detected colours:
-                        <div :key="key" v-for="(color, key) in editableItem.colours" class="color" :class="{is_not_editable: !color.is_editable, is_editable: color.is_editable}" :style="{'background-color': color.colour_code}" @click="toggleEditable(color)"></div>
+                    <div style="display: flex">Detected colors:
+                        <div :key="key" v-for="(color, key) in editableItem.colors" class="color" :class="{is_not_editable: !color.is_editable, is_editable: color.is_editable}" :style="{'background-color': color.color_code}" @click="toggleEditable(color)"></div>
                     </div>
 
-                    <div v-if="editableColours.length" style="display: flex; margin-top: 20px">Editable colours:
-                        <input  type="color" :key="key" v-for="(color, key) in editableColours" class="editable-color" @input="generateImageUrl(color, $event)" :value="color.colour_code"></input>
+                    <div v-if="editablecolors.length" style="display: flex; margin-top: 20px">Editable colors:
+                        <input  type="color" :key="key" v-for="(color, key) in editablecolors" class="editable-color" @input="generateImageUrl(color, $event)" :value="color.color_code"></input>
                     </div>
 
 
@@ -48,12 +48,12 @@
             }
         },
         computed: {
-            editableColours: function() {
-                return this.editableItem.colours.filter((item) => item.is_editable)
+            editablecolors: function() {
+                return this.editableItem.colors.filter((item) => item.is_editable)
             }
         },
         watch: {
-            editableColours: function() {
+            editablecolors: function() {
                 this.generateImageUrl()
             }
         },
@@ -76,10 +76,10 @@
                         'original_content': '',
                         'generated_url': assets[i].src,
                         'asset_id': assets[i].asset_id,
-                        'has_colours': assets[i].has_colours
+                        'has_colors': assets[i].has_colors
                     }
 
-                    if(assets[i].has_colours) {
+                    if(assets[i].has_colors) {
                         this.file_get_contents(assets[i].src).then(function(a) {
                             this.original_content = a
                             var encodedData = window.btoa( this.original_content);
@@ -94,8 +94,8 @@
                 for(var i= 0; i < this.imagesUrls.length; i++) {
                     var imageUrl = this.imagesUrls[i];
                     if(color.asset_id === imageUrl.asset_id) {
-                        imageUrl.original_content =  imageUrl.original_content.replaceAll(color.colour_code, $event.target.value);
-                        color.colour_code = $event.target.value;
+                        imageUrl.original_content =  imageUrl.original_content.replaceAll(color.color_code, $event.target.value);
+                        color.color_code = $event.target.value;
                         var encodedData = window.btoa(imageUrl.original_content);
                         imageUrl.generated_url = 'data:image/svg+xml;base64,' + encodedData;
                         break;
