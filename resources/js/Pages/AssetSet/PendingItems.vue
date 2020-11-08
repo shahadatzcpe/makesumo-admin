@@ -22,8 +22,6 @@
                         <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
                         <div>Background Color: #eee</div>
                         <div>Total Items: 1200</div>
-
-
                     </div>
                 </div>
             </div>
@@ -39,13 +37,8 @@
                     <editable :key="key" v-for="(item, key) in items" :item="item"></editable>
                 </div>
 
-
-                <button class="btn btn-primary">Select All</button>
-
-
-                <inertia-link class="btn btn-primary" :href="route('asset-sets.show', 1)" aria-label="Next">
-                    Publish selected item
-                </inertia-link>
+                <button :disabled="sending" class="btn btn-primary" @click="submit(0)">Draft</button>
+                <button :disabled="sending" class="btn btn-primary" @click="submit(1)">Publish</button>
             </div>
         </div>
     </app-layout>
@@ -64,11 +57,43 @@
             AppLayout
         },
        props: {
+           asset_set: Object,
            items: Array
        },
         data() {
             return {
                 sending: false
+            }
+        },
+        computed: {
+            formattedData: function() {
+                return this.items.map(function (item){
+                        return {
+                            id: item.id,
+                            name: item.name,
+                            tags: item.tags,
+                            colours: item.colours.map( function(colour) {
+                                return {
+                                    id: colour.color_id,
+                                    is_editable: colour.is_editable
+                                }
+                            })
+                        }
+                    })
+
+            } //formatted data
+        }, // computted
+        methods: {
+            submit(status) {
+                var data = {
+                    status: status ? 'published' : 'draft',
+                    items: this.formattedData
+                }
+                this.$inertia.post(route('asset-sets.update-items', this.asset_set.id), data, {
+                    onStart: () => this.sending = true,
+                    onFinish: () => this.sending = false,
+                    preserveScroll: true
+                })
             }
         }
     }

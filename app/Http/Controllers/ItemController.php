@@ -13,5 +13,4 @@ class ItemController extends Controller
     {
         return Inertia::render('Items/Index');
     }
-
 }

@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('thumbnail_path', 100)->nullable();
             $table->unsignedBigInteger('asset_set_id');
             $table->enum('asset_type', config_keys('makesumo.asset_types'));
+            $table->enum('status', config_keys('makesumo.item_statuses'))->default('draft');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -31,7 +31,7 @@ class Item extends Model
 
     public function assets()
     {
-        return $this->hasMany(Asset::class)->orderBy('precedence')->orderBy('original_name');
+        return $this->hasMany(Asset::class)->orderBy('precedence')->orderByDesc('original_name');
     }
 
     public function colours()
@@ -47,5 +47,35 @@ class Item extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function updateTags($tags)
+    {
+        // First we will salitize tags becasue
+        // we remove whitespace and make first letter upper case
+        $tags = array_map(function($tag) {
+            return ucfirst(trim($tag));
+        }, $tags);
+
+        //Then, We will find if any tag available in database
+        //Bacause we dont want to inser same tag twice
+        $tagObjects = Tag::whereIn('name', $tags)->get();
+        $tagsFromDb = $tagObjects->pluck('name')->toArray();
+
+        //Then we find which tag is not available in database,
+        // We will insert this tag to the database.
+        $needToInsert = array_diff($tags, $tagsFromDb);
+
+        $insertedTagIds = [];
+        foreach ($needToInsert as $tagTxt) {
+            $tag = new Tag();
+            $tag->name = $tagTxt;
+            $tag->save();
+            $insertedTagIds[] = $tag->id;
+        }
+
+        //Now we will update relationship with this item and tags
+        $tagIds = $tagObjects->pluck('id')->toArray() + $insertedTagIds;
+        $this->tags()->sync($tagIds);
     }
 }

@@ -42,7 +42,7 @@
 
                 <br>
 
-                <inertia-link class="btn btn-primary form-control" :href="route('asset-sets.pending-items', 1)" aria-label="Next">
+                <inertia-link class="btn btn-primary form-control" :href="route('asset-sets.pending-items', asset_set.id)" aria-label="Next">
                     <span >Next</span>
                     <span aria-hidden="true">&raquo;</span>
                 </inertia-link>
@@ -72,7 +72,7 @@
                     url: route('asset-sets.upload-item', this.asset_set.id),
                     thumbnailWidth: 150,
                     thumbnailHeight: 150,
-                    maxFilesize: 0.2,
+                    maxFilesize: 1,
                     headers: { "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content }
                 }
             }

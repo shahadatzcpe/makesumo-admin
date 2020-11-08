@@ -9,8 +9,10 @@ use App\Http\Resources\ItemResource;
 use App\Http\Resources\PaginatedCollection;
 use App\Models\Asset;
 use App\Models\AssetSet;
+use App\Models\Colour;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class AssetSetController extends Controller
@@ -63,7 +65,7 @@ class AssetSetController extends Controller
 
     public function pendingItems(AssetSet $assetSet)
     {
-
+         $props['asset_set'] = $assetSet;
          $props['items'] = ItemResource::collection($assetSet->items)->collection;
 
         return Inertia::render('AssetSet/PendingItems', $props);
@@ -71,21 +73,80 @@ class AssetSetController extends Controller
 
     public function uploadItem(Request $request, AssetSet $assetSet)
     {
-        $uploadedFile = $request->file('file');
+
+        $ext = $request->file('file')->getClientOriginalExtension();
+        $name = pathinfo($request->file('file')->getClientOriginalName(),  PATHINFO_FILENAME);
 
         $item = new Item();
-        $item->name = $uploadedFile->getClientOriginalName();
-        $item->thumbnail_path = $uploadedFile->store('thumbnails');
+        $item->name = \Str::title(preg_replace('/-|_| /i', ' ', $name));
+        $item->thumbnail_path = $request->file('file')->store('thumbnails');
         $item->asset_set_id = $assetSet->id;
         $item->asset_type = $assetSet->asset_type;
         $item->save();
 
-        $asset = new Asset();
-        $asset->path = $uploadedFile->store('assets');
-        $asset->original_name = $uploadedFile->getClientOriginalName();
-        $asset->item_id = $item->id;
-        $asset->save();
 
-        return;
+        if($ext != 'zip') {
+            $asset = new Asset();
+            $asset->path = $request->file('file')->store('assets');
+            $asset->original_name = $request->file('file')->getClientOriginalName();
+            $asset->item_id = $item->id;
+            $asset->save();
+            return 1;
+        }
+
+
+        $uploadedFile = $request->file('file')->store('zip');
+        $folderName = md5($uploadedFile);
+        $filePath = storage_path('app/public/' .  $uploadedFile);
+
+
+        $zip = new \ZipArchive();
+        if ($zip->open($filePath) === true) {
+            for($i = 0; $i < $zip->numFiles; $i++) {
+                $filename = $zip->getNameIndex($i);
+                $fileinfo = pathinfo($filename);
+                $relativePath = "assets/$folderName-".$fileinfo['basename'];
+                copy("zip://".$filePath."#".$filename, storage_path("app/public/$relativePath"));
+
+                $asset = new Asset();
+                $asset->path = $relativePath;
+                $asset->original_name = $fileinfo['basename'];
+                $asset->item_id = $item->id;
+                $asset->save();
+            }
+            $zip->close();
+        }
+
+        return 2;
+    }
+
+
+
+    public function updateItems(AssetSet $assetSet, Request $request)
+    {
+        $colours = [];
+
+        foreach($request->items as $itemData) {
+            $item = Item::find($itemData['id']);
+            $item->name = $itemData['name'];
+            $item->status = $request->status;
+            $item->save();
+            $item->updateTags($itemData['tags']);
+            $colours = array_merge($colours, $itemData['colours']);
+        }
+
+        $editableColours = array_filter($colours, function($item) {
+            return $item['is_editable'];
+        });
+
+        $notEditableColours = array_filter($colours, function($item) {
+            return !$item['is_editable'];
+        });
+
+
+        Colour::whereIn('id', array_column($editableColours, 'id'))->update(['is_editable' => 1]);
+        Colour::whereIn('id', array_column($notEditableColours, 'id'))->update(['is_editable' => 0]);
+
+        return response()->redirectToRoute('asset-sets.show', $assetSet);
     }
 }

@@ -23,8 +23,10 @@ Route::post('/asset-sets', 'AssetSetController@store')->name('asset-sets.store')
 Route::get('/asset-sets/{assetSet}', 'AssetSetController@show')->name('asset-sets.show');
 Route::get('/asset-sets/{assetSet}/upload-form', 'AssetSetController@uploadForm')->name('asset-sets.upload-items');
 Route::post('/asset-sets/{assetSet}/upload-item', 'AssetSetController@uploadItem')->name('asset-sets.upload-item');
+Route::post('/asset-sets/{assetSet}/update-items', 'AssetSetController@updateItems')->name('asset-sets.update-items');
 
 Route::get('/asset-sets/{assetSet}/pending-items', 'AssetSetController@pendingItems')->name('asset-sets.pending-items');
+
 
 Route::get('/items/index', 'ItemController@index')->name("items.index");
 

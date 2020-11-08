@@ -18,5 +18,9 @@ return [
             'value' => 'mockup',
             'label' => 'Mockup'
         ]
+    ],
+    'item_statuses' => [
+        'published' => 'Published',
+        'draft' => 'Draft'
     ]
 ];
