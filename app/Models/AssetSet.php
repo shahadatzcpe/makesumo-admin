@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class AssetSet extends Model
 {
+    use SoftDeletes;
     use HasFactory;
 
     protected $appends = [
@@ -59,17 +61,34 @@ class AssetSet extends Model
             }
         })->when($filters['asset_type'] ?? null, function($query, $asset_type) {
            $query->where('asset_type', $asset_type);
+        })
+        ->when($filters['subscription'] ?? null, function($query, $subscription) {
+            if ($subscription == 'only_free') {
+                $query->where('is_free', 1);
+            } elseif($subscription == 'only_paid') {
+                $query->where('is_free', 0);
+            }
         });
     }
 
 
     public function getTotalItemsAttribute()
     {
-        return 100;
+        return $this->items()->count();
     }
 
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function publishedItems()
+    {
+        return $this->items()->where('status', 'published');
+    }
+
+    public function draftItems()
+    {
+        return $this->items()->where('status', 'draft');
     }
 }

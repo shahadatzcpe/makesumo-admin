@@ -18,6 +18,7 @@ class CreatecolorsTable extends Migration
             $table->string('color_type', 15)->nullable();
             $table->string('color_code', 7);
             $table->nullableMorphs('colorable');
+            $table->boolean('is_editable')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -28,6 +28,7 @@
     "dependencies": {
         "bootstrap": "^4.5.3",
         "bootstrap-vue": "^2.18.1",
+        "puppeteer": "^5.5.0",
         "vue2-dropzone": "^3.6.0"
     }
 }

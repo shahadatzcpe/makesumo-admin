@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use PHPUnit\Util\Color;
+
 
 class Asset extends Model
 {
@@ -30,7 +30,7 @@ class Asset extends Model
                 $detectedcolors = array_unique($colors[0]);
                 $colors = [];
                 foreach ($detectedcolors as $colorCode) {
-                    $color = new color();
+                    $color = new Color();
                     $color->color_type = 'detected';
                     $color->color_code = $colorCode;
                     $color->colorable_type = Asset::class;

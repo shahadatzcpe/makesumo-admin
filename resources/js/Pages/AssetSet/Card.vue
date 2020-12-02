@@ -1,19 +1,30 @@
 <template>
-    <div class="card">
-
+    <div class="card" style="margin-bottom:15px">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="asset-set-img" :style="{background: asset_set.bg_color }">
-                        <img class="card-img-top" :src="asset_set.thumbnail_src" alt="Card image cap">
-                    </div>
-                    <div class="background-color">Background color:{{ asset_set.bg_color }}</div>
-                    <div class="text-color">Text color: {{ asset_set.bg_color }}</div>
-                    <div class="text-color">Total Assets: {{ asset_set.number_of_assets }}</div>
+                <div class="col-auto">
+                    <span v-if="asset_set.is_free" class="free">Free</span>
+                    <span  v-if="asset_set.is_trashed" class="trashed">Trashed</span>
+                    <div :style="{ 'background-color': asset_set.bg_color }"><img :src="asset_set.thumbnail_src" style="border-radius: 5px; max-width: 200px"></div>
                 </div>
-                <div class="col-sm-8">
-                    <h5 class="card-title">{{ asset_set.name }} - <span class="text-blue-gray">{{ asset_set.asset_type }}</span> </h5>
-                    <div class="card-description">{{ asset_set.description }}</div>
+                <div class="col">
+                    <div class="float-right">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <inertia-link class="dropdown-item" :href="route('asset-sets.show', asset_set.id)">Items</inertia-link>
+<!--                                <inertia-link class="dropdown-item" :href="route('asset-sets.edit', asset_set.id)">Edit</inertia-link>-->
+                                <inertia-link class="dropdown-item" :href="route('asset-sets.pending-items', asset_set.id)">Draft Items</inertia-link>
+                                <inertia-link class="dropdown-item" :href="route('asset-sets.upload-items', asset_set.id)">Upload form</inertia-link>
+                            </div>
+                        </div>
+                    </div>
+                    <a v-if="show_link" :href="route('asset-sets.show', asset_set.id)"><h4>{{ asset_set.name }} - <small class="text-muted">{{ asset_set.asset_type }}</small> </h4></a>
+                    <h4 v-else>{{ asset_set.name }} - <small class="text-muted">{{ asset_set.asset_type }}</small> </h4>
+                    <div>{{ asset_set.description }}</div>
+                    <div>Background Color: {{ asset_set.bg_color }}</div>
+                    <div>Total Items: {{ asset_set.total_items }}</div>
                 </div>
             </div>
         </div>
@@ -21,12 +32,30 @@
 </template>
 
 <script>
-    import Input from "../../Jetstream/Input";
     export default {
-        components: {Input},
         props: {
            asset_set: Object,
-           filters: Object
-       },
+            show_link: {
+               default: false
+            }
+       }
     }
 </script>
+
+<style>
+
+    .free {
+        position: absolute;
+        background: #00ff95;
+        padding: 2px 9px;
+        border-radius: 5px;
+    }
+
+    .trashed{
+        background-color: red;
+        padding: 2px 10px;
+        right: 0;
+        position: absolute;
+        border-radius: 5px;
+    }
+</style>

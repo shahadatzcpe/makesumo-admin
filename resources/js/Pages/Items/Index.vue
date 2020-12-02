@@ -16,8 +16,8 @@
                                 <div class="dropdown-menu">
                                     <a v-for="asse_type  in asset_types" :class="{active: form.asset_type == asse_type.value}" @click="form.asset_type = asse_type.value" class="dropdown-item " href="#">{{ asse_type.label }}</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" :class="{active:  form.trashed == 'with_trashed'}" @click="form.trashed = 'with_trashed'" href="#">With trashed</a>
-                                    <a class="dropdown-item" :class="{active: form.trashed == 'only_trashed'}" @click="form.trashed = 'only_trashed'"  href="#">Only trashed</a>
+                                    <a class="dropdown-item" :class="{active:  form.trashed == 'with'}" @click="form.trashed = 'with'" href="#">With trashed</a>
+                                    <a class="dropdown-item" :class="{active: form.trashed == 'only'}" @click="form.trashed = 'only'"  href="#">Only trashed</a>
                                     <div role="separator" class="dropdown-divider"></div>
                                     <a class="dropdown-item" :class="{active: form.subscription == 'only_free'}" @click="form.subscription = 'only_free'"  href="#">Only free</a>
                                     <a class="dropdown-item" :class="{active: form.subscription == 'only_paid'}" @click="form.subscription = 'only_paid'"href="#">Only Paid</a>

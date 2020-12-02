@@ -9,23 +9,41 @@ use App\Http\Resources\ItemResource;
 use App\Http\Resources\PaginatedCollection;
 use App\Models\Asset;
 use App\Models\AssetSet;
-use App\Models\color;
+use App\Models\Color;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Spatie\Browsershot\Browsershot;
 
 class AssetSetController extends Controller
 {
     public function index(Request $request)
     {
-        $filters = $request->all(['search', 'trashed', 'asset_type']);
-        $assetSets = AssetSet::filter($filters)->paginate(50);
+        $filters = $request->all(['search', 'trashed', 'asset_type', 'subscription']);
+        $assetSets = AssetSet::filter($filters)->paginate(1)->withQueryString();
+
+        $assetSets->getCollection()->transform(function ($assetSet) {
+            return [
+                'id' => $assetSet->id,
+                'name' => $assetSet->name,
+                'description' => $assetSet->description,
+                'thumbnail_src' => $assetSet->thumbnail_src,
+                'total_items' => $assetSet->totalItems,
+                'background_color' => $assetSet->bg_color,
+                'asset_type' => $assetSet->asset_type,
+                'is_free' => $assetSet->is_free,
+                'is_trashed' => !!$assetSet->deleted_at,
+            ];
+        });
+
         $props = [
             'filters' => $filters,
-            'asset_sets' => new PaginatedCollection($assetSets, AssetSetResource::class),
+            'asset_sets' => $assetSets,
             'asset_types' => array_values(config('makesumo.asset_types'))
         ];
+
 
         return  Inertia::render('AssetSet/Index', $props);
     }
@@ -58,16 +76,18 @@ class AssetSetController extends Controller
 
         return Inertia::render('AssetSet/UploadForm', $props);
     }
-    public function show(Request $request, $assetSet)
+    public function show(Request $request, AssetSet $assetSet)
     {
-        return  Inertia::render('AssetSet/Show');
+        $props['asset_set'] = $assetSet;
+        $props['items'] = ItemResource::collection($assetSet->publishedItems)->collection;
+
+        return  Inertia::render('AssetSet/Show', $props);
     }
 
     public function pendingItems(AssetSet $assetSet)
     {
          $props['asset_set'] = $assetSet;
-         $props['items'] = ItemResource::collection($assetSet->items)->collection;
-
+         $props['items'] = ItemResource::collection($assetSet->draftItems)->collection;
         return Inertia::render('AssetSet/PendingItems', $props);
     }
 
@@ -79,7 +99,7 @@ class AssetSetController extends Controller
 
         $item = new Item();
         $item->name = \Str::title(preg_replace('/-|_| /i', ' ', $name));
-        $item->thumbnail_path = $request->file('file')->store('thumbnails');
+        $item->thumbnail_path = $ext != 'zip' ? $request->file('file')->store('thumbnails') : null;
         $item->asset_set_id = $assetSet->id;
         $item->asset_type = $assetSet->asset_type;
         $item->save();
@@ -102,6 +122,7 @@ class AssetSetController extends Controller
 
         $zip = new \ZipArchive();
         if ($zip->open($filePath) === true) {
+            $images = [];
             for($i = 0; $i < $zip->numFiles; $i++) {
                 $filename = $zip->getNameIndex($i);
                 $fileinfo = pathinfo($filename);
@@ -113,7 +134,19 @@ class AssetSetController extends Controller
                 $asset->original_name = $fileinfo['basename'];
                 $asset->item_id = $item->id;
                 $asset->save();
+                $images[] = $asset->src;
             }
+
+            if($images) {
+                $fileName =  md5($item->id . time()) . '.png';
+                $savePath = storage_path('app/public/thumbnails/') . $fileName ;
+                $html = view('renderable.item-thumbnail-generator', ['images' => $images]);
+                $img = Browsershot::html($html)->clip(0, 0, 200, 200)->hideBackground()
+                    ->save($savePath);
+                $item->thumbnail_path = 'thumbnails/' .  $fileName;
+                $item->save();
+            }
+
             $zip->close();
         }
 
@@ -144,9 +177,18 @@ class AssetSetController extends Controller
         });
 
 
-        color::whereIn('id', array_column($editablecolors, 'id'))->update(['is_editable' => 1]);
-        color::whereIn('id', array_column($notEditablecolors, 'id'))->update(['is_editable' => 0]);
+        Color::whereIn('id', array_column($editablecolors, 'id'))->update(['is_editable' => 1]);
+        Color::whereIn('id', array_column($notEditablecolors, 'id'))->update(['is_editable' => 0]);
 
         return response()->redirectToRoute('asset-sets.show', $assetSet);
+    }
+
+
+    public function toggleFreeItem(Request $request, AssetSet $assetSet)
+    {
+        $assetSet->is_free = !$assetSet->is_free;
+        $assetSet->save();
+
+        return Redirect::back();
     }
 }

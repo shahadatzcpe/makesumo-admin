@@ -25,6 +25,7 @@ class CreateAssetSetsTable extends Migration
             $table->enum('asset_type', config_keys('makesumo.asset_types'));
             $table->unsignedBigInteger('page_views')->default(0);
             $table->text('extra_data')->nullable();
+            $table->boolean('is_free')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

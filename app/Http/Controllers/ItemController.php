@@ -10,6 +10,7 @@ use App\Models\AssetSet;
 use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ItemController extends Controller
@@ -44,5 +45,19 @@ class ItemController extends Controller
         ];
 
         return Inertia::render('Items/Index', $props);
+    }
+
+    public function destroy(Request $request, Item $item)
+    {
+        $item->delete();
+        return Redirect::back();
+    }
+
+    public function update(Request $request, Item $item)
+    {
+        $item->status = 'draft';
+        $item->save();
+
+        return Redirect::back();
     }
 }

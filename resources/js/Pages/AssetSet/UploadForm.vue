@@ -1,35 +1,8 @@
 <template>
     <app-layout>
 
-        <div class="card" style="margin-bottom:15px">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-auto">
-                        <div :style="{ 'background-color': asset_set.bg_color }"><img :src="asset_set.thumbnail_src" style="border-radius: 5px; max-width: 200px"></div>
-                    </div>
-                    <div class="col">
-                        <div class="float-right">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Pending Item</a>
-                                    <a class="dropdown-item" href="#">Publish</a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4>{{ asset_set.name }} - <small class="text-muted">{{ asset_set.asset_type }}</small> </h4>
-                        <div>{{ asset_set.description }}</div>
-                        <div>Background Color: {{ asset_set.bg_color }}</div>
-                        <div>Total Items: {{ asset_set.total_items }}</div>
 
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <card :asset_set="asset_set"></card>
 
         <div class="card bg-white" style="margin-bottom: 20px">
 
@@ -57,9 +30,11 @@
     import AppLayout from './../../MakeSumo/AppLayout'
     import vue2Dropzone from 'vue2-dropzone'
     import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+    import Card from "./Card";
 
     export default {
         components: {
+            Card,
             vueDropzone: vue2Dropzone,
             AppLayout
         },
@@ -72,7 +47,7 @@
                     url: route('asset-sets.upload-item', this.asset_set.id),
                     thumbnailWidth: 150,
                     thumbnailHeight: 150,
-                    maxFilesize: 1,
+                    maxFilesize: 3,
                     headers: { "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content }
                 }
             }

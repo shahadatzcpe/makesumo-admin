@@ -12,21 +12,18 @@
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Icons</a>
-                                    <a class="dropdown-item" href="#">Illustration</a>
-                                    <a class="dropdown-item" href="#">3d Illustration</a>
-                                    <a class="dropdown-item" href="#">Mockup</a>
+                                    <a v-for="asse_type  in asset_types" :class="{active: form.asset_type == asse_type.value}" @click="form.asset_type = asse_type.value" class="dropdown-item " href="#">{{ asse_type.label }}</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">With trashed</a>
-                                    <a class="dropdown-item" href="#">Only trashed</a>
+                                    <a class="dropdown-item" :class="{active:  form.trashed == 'with'}" @click="form.trashed = 'with'" href="#">With trashed</a>
+                                    <a class="dropdown-item" :class="{active: form.trashed == 'only'}" @click="form.trashed = 'only'"  href="#">Only trashed</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Only free</a>
-                                    <a class="dropdown-item" href="#">Only Paid</a>
+                                    <a class="dropdown-item" :class="{active: form.subscription == 'only_free'}" @click="form.subscription = 'only_free'"  href="#">Only free</a>
+                                    <a class="dropdown-item" :class="{active: form.subscription == 'only_paid'}" @click="form.subscription = 'only_paid'"href="#">Only Paid</a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Reset filter</a>
+                                    <a class="dropdown-item" @click="reset" href="#">Reset filter</a>
                                 </div>
                             </div>
-                            <input placeholder="Search here...." type="text" class="form-control" aria-label="Text input with dropdown button">
+                            <input v-model="form.search" placeholder="Search here...." type="text" class="form-control" aria-label="Text input with dropdown button">
                         </div>
                     </div>
                 </div>
@@ -35,157 +32,7 @@
 
             <div class="card-body" >
                 <div class="set-cards" style="margin-bottom: 20px;">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <a href="#"><img src="https://picsum.photos/150" style="border-radius: 5px"></a>
-                                </div>
-                                <div class="col">
-                                    <h4><a href="#">Spercial Shoe</a> -<small class="text-muted">Illustration</small> </h4>
-                                    <div>We carefully review new entries from our community one by one to make sure they meet high-quality design and functionality standards. From multipurpose themes to niche templates, you’ll always find something that catches your eye.</div>
-                                    <div>Background Color: #eee</div>
-                                    <div>Total Items: 1200</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <card :show_link="true" :key="asset_set.id" v-for="asset_set in asset_sets.data" :asset_set="asset_set"/>
                 </div>
 
 
@@ -195,23 +42,7 @@
 
 
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination" style="margin-bottom: 0px">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <pagination :links="asset_sets.links"></pagination>
                 </nav>
             </div>
         </div>
@@ -245,6 +76,7 @@
                     search: this.filters.search,
                     asset_type: this.filters.asset_type,
                     trashed: this.filters.trashed,
+                    subscription: this.filters.subscription,
                 },
             }
         },

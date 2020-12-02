@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $item = \App\Models\Item::first()->assets->pluck('src');
+    return $html = view('renderable.item-thumbnail-generator', ['images' => $item]);;
 });
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/asset-sets/index', 'AssetSetController@index')->name('asset-sets.index');
 Route::get('/asset-sets/create', 'AssetSetController@create')->name('asset-sets.create');
 Route::post('/asset-sets', 'AssetSetController@store')->name('asset-sets.store');
 Route::get('/asset-sets/{assetSet}', 'AssetSetController@show')->name('asset-sets.show');
+Route::get('/asset-sets/{assetSet}/edit', 'AssetSetController@edit')->name('asset-sets.edit');
 Route::get('/asset-sets/{assetSet}/upload-form', 'AssetSetController@uploadForm')->name('asset-sets.upload-items');
 Route::post('/asset-sets/{assetSet}/upload-item', 'AssetSetController@uploadItem')->name('asset-sets.upload-item');
 Route::post('/asset-sets/{assetSet}/update-items', 'AssetSetController@updateItems')->name('asset-sets.update-items');
@@ -29,6 +31,8 @@ Route::get('/asset-sets/{assetSet}/pending-items', 'AssetSetController@pendingIt
 
 
 Route::get('/items/index', 'ItemController@index')->name("items.index");
+Route::get('/items/{item}/update', 'ItemController@update')->name("items.update");
+Route::get('/items/{item}', 'ItemController@destroy')->name("items.delete");
 
 Route::get('/tags/index', 'TagController@index')->name("tags.index");
 

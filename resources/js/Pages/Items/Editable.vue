@@ -8,6 +8,15 @@
                     </div>
                 </div>
                 <div class="col">
+                    <div class="float-right">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <inertia-link class="dropdown-item" :href="route('items.delete', item.id)">Delete</inertia-link>
+                            </div>
+                        </div>
+                    </div>
 
                     <h4><input class="form-control" type="text" v-model="editableItem.name"></h4>
                     <div style="display: flex">Detected colors:
