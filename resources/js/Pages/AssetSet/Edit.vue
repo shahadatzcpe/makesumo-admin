@@ -60,10 +60,6 @@
                         </div>
                         <div class="image-preview" :style="{ 'background-color': form.bg_color }">
                             <img class="preview-image" v-if="previewImage" :src="previewImage">
-                            <pre>
-                                {{ asset_set }}
-                                {{ form }}
-                            </pre>
                         </div>
                     </div>
                 </div>
