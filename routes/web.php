@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $item = \App\Models\Item::first()->assets->pluck('src');
-    return $html = view('renderable.item-thumbnail-generator', ['images' => $item]);;
-});
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/asset-sets/index', 'AssetSetController@index')->name('asset-sets.index');
 Route::get('/asset-sets/create', 'AssetSetController@create')->name('asset-sets.create');
