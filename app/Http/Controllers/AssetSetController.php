@@ -121,6 +121,7 @@ class AssetSetController extends Controller
     public function show(Request $request, AssetSet $assetSet)
     {
         $props['asset_set'] = $assetSet;
+        $props['search'] = $request->search;
         $props['items'] = ItemResource::collection($assetSet->publishedItems)->collection;
 
         return  Inertia::render('AssetSet/Show', $props);

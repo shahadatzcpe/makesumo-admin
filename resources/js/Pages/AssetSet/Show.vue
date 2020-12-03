@@ -11,19 +11,7 @@
                     <div class="col">
 
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">With trashed</a>
-                                    <a class="dropdown-item" href="#">Only trashed</a>
-                                    <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Only free</a>
-                                    <a class="dropdown-item" href="#">Only Paid</a>
-                                    <div role="separator" class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Reset filter</a>
-                                </div>
-                            </div>
-                            <input placeholder="Search here...." type="text" class="form-control" aria-label="Text input with dropdown button">
+                            <input v-model="form.search" placeholder="Search here...." type="text" class="form-control" aria-label="Text input with dropdown button">
                         </div>
                     </div>
                 </div>
@@ -37,30 +25,9 @@
                 </div>
 
 
-
-
-
-
-
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination" style="margin-bottom: 0px">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+<!--                <nav aria-label="Page navigation example">-->
+<!--                    <pagination :links="asset_sets.links"></pagination>-->
+<!--                </nav>-->
             </div>
         </div>
     </app-layout>
@@ -87,7 +54,26 @@
         props: {
             asset_set: Object,
             items: Array,
-        }
+            search: String
+        },
+
+        data() {
+            return {
+                form: {
+                    search: this.search,
+                },
+            }
+        },
+
+        watch: {
+            form: {
+                handler: throttle(function() {
+                    let query = pickBy(this.form)
+                    this.$inertia.replace(this.route('asset-sets.show', { asset_set: this.asset_set.id , search: this.form.search }))
+                }, 150),
+                deep: true,
+            },
+        },
     }
 </script>
 <style>
