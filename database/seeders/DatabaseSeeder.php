@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $user->save();
 
 
+        if(!app()->environment('PRODUCTION'))
         AssetSet::factory()->count(100)->create();
     }
 }
