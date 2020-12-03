@@ -23,6 +23,14 @@ class DatabaseSeeder extends Seeder
         $user->password = bcrypt('secret');
         $user->save();
 
+
+        $user = new User();
+        $user->name = "Ishmam";
+        $user->email = "gfxbucket@gmail.com";
+        $user->password = bcrypt('h3+Ft#Ap)Lw2');
+        $user->save();
+
+
         AssetSet::factory()->count(100)->create();
     }
 }
