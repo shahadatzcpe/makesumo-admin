@@ -60,6 +60,10 @@
                         </div>
                         <div class="image-preview" :style="{ 'background-color': form.bg_color }">
                             <img class="preview-image" v-if="previewImage" :src="previewImage">
+                            <pre>
+                                {{ asset_set }}
+                                {{ form }}
+                            </pre>
                         </div>
                     </div>
                 </div>
@@ -85,8 +89,10 @@
             AppLayout
         },
        props: {
-           asset_types: Array
+           asset_types: Array,
+           asset_set: Object
        },
+
         data() {
             return {
                 form: {
@@ -101,16 +107,28 @@
                 previewImage: null,
             }
         },
+        mounted() {
+                this.form.asset_type = this.asset_set.asset_type;
+                this.form.name = this.asset_set.name;
+                this.form.description =  this.asset_set.description;
+                this.form.bg_color =  this.asset_set.bg_color;
+                this.form.is_free =  this.asset_set.is_free;
+                this.previewImage =  this.asset_set.thumbnail_src;
+
+                console.log(this.form)
+        },
         methods: {
             submit() {
                 var data = new FormData()
+                data.append('_method', 'PUT')
                 data.append('asset_type', this.form.asset_type || '')
                 data.append('bg_color', this.form.bg_color || '')
                 data.append('name', this.form.name || '')
                 data.append('description', this.form.description || '')
+                if(this.form.thumbnail)
                 data.append('thumbnail', this.form.thumbnail || '')
-                data.append('is_free', this.form.is_free || false)
-                this.$inertia.post(route('asset-sets.store'), data, {
+                data.append('is_free', this.form.is_free || 0)
+                this.$inertia.post(route('asset-sets.update', this.asset_set.id), data, {
                     onStart: () => this.sending = true,
                     onFinish: () => this.sending = false,
                     preserveScroll: true

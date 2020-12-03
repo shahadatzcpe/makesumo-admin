@@ -23,6 +23,9 @@ Route::get('/asset-sets/create', 'AssetSetController@create')->name('asset-sets.
 Route::post('/asset-sets', 'AssetSetController@store')->name('asset-sets.store');
 Route::get('/asset-sets/{assetSet}', 'AssetSetController@show')->name('asset-sets.show');
 Route::get('/asset-sets/{assetSet}/edit', 'AssetSetController@edit')->name('asset-sets.edit');
+Route::put('/asset-sets/{assetSet}', 'AssetSetController@update')->name('asset-sets.update');
+Route::delete('/asset-sets/{assetSet}', 'AssetSetController@destroy')->name('asset-sets.delete');
+Route::post('/asset-sets/{assetSet}/restore', 'AssetSetController@restore')->name('asset-sets.restore');
 Route::get('/asset-sets/{assetSet}/upload-form', 'AssetSetController@uploadForm')->name('asset-sets.upload-items');
 Route::post('/asset-sets/{assetSet}/upload-item', 'AssetSetController@uploadItem')->name('asset-sets.upload-item');
 Route::post('/asset-sets/{assetSet}/update-items', 'AssetSetController@updateItems')->name('asset-sets.update-items');

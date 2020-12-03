@@ -31,7 +31,7 @@ class AssetSetController extends Controller
                 'description' => $assetSet->description,
                 'thumbnail_src' => $assetSet->thumbnail_src,
                 'total_items' => $assetSet->totalItems,
-                'background_color' => $assetSet->bg_color,
+                'bg_color' => $assetSet->bg_color,
                 'asset_type' => $assetSet->asset_type,
                 'is_free' => $assetSet->is_free,
                 'is_trashed' => !!$assetSet->deleted_at,
@@ -56,6 +56,7 @@ class AssetSetController extends Controller
         $as->txt_color = $request->txt_color;
         $as->asset_type = $request->asset_type;
         $as->thumbnail_path = $request->thumbnail->store("assets");
+        $as->is_free = $request->is_free;
         $as->save();
 
         return redirect()->route('asset-sets.upload-items', $as);
@@ -65,6 +66,47 @@ class AssetSetController extends Controller
     {
         return Inertia::render('AssetSet/Create', [
             'asset_types' => array_values(config('makesumo.asset_types')),
+        ]);
+    }
+
+
+    public function update(Request $request, AssetSet $assetSet)
+    {
+        $request->validate([
+            'name' => 'required|max:40',
+            'description' => 'required',
+            'bg_color' => 'required|max:7|min:4',
+            'asset_type' => 'required',
+            'thumbnail' => 'nullable|image',
+        ]);
+
+        $assetSet->name = $request->name;
+        $assetSet->description = $request->description;
+        $assetSet->bg_color = $request->bg_color;
+        $assetSet->txt_color = $request->txt_color;
+        $assetSet->asset_type = $request->asset_type;
+        $assetSet->thumbnail_path = $request->thumbnail ? $request->thumbnail->store("assets") : $as->thumbnail_path;
+        $assetSet->is_free = $request->is_free;
+        $assetSet->save();
+
+        return redirect()->route('asset-sets.show', $assetSet);
+    }
+
+    public function edit(AssetSet $assetSet)
+    {
+        return Inertia::render('AssetSet/Edit', [
+            'asset_types' => array_values(config('makesumo.asset_types')),
+            'asset_set' => [
+                'id' => $assetSet->id,
+                'name' => $assetSet->name,
+                'description' => $assetSet->description,
+                'thumbnail_src' => $assetSet->thumbnail_src,
+                'total_items' => $assetSet->totalItems,
+                'bg_color' => $assetSet->bg_color,
+                'asset_type' => $assetSet->asset_type,
+                'is_free' => $assetSet->is_free,
+                'is_trashed' => !!$assetSet->deleted_at,
+            ]
         ]);
     }
 
@@ -190,5 +232,22 @@ class AssetSetController extends Controller
         $assetSet->save();
 
         return Redirect::back();
+    }
+
+
+    public function restore($id)
+    {
+        $assetSet = AssetSet::withTrashed()->find($id);
+        if ($assetSet) {
+           $assetSet->restore();
+        }
+
+        return response()->redirectToRoute('asset-sets.show', $assetSet);
+    }
+
+    public function destroy(AssetSet $assetSet)
+    {
+        $assetSet->delete();
+        return  response()->redirectToRoute('asset-sets.index');
     }
 }

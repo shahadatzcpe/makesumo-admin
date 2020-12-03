@@ -14,9 +14,12 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <inertia-link class="dropdown-item" :href="route('asset-sets.show', asset_set.id)">Items</inertia-link>
-<!--                                <inertia-link class="dropdown-item" :href="route('asset-sets.edit', asset_set.id)">Edit</inertia-link>-->
+                                <inertia-link class="dropdown-item" :href="route('asset-sets.edit', asset_set.id)">Edit</inertia-link>
                                 <inertia-link class="dropdown-item" :href="route('asset-sets.pending-items', asset_set.id)">Draft Items</inertia-link>
                                 <inertia-link class="dropdown-item" :href="route('asset-sets.upload-items', asset_set.id)">Upload form</inertia-link>
+                                <button v-if="!asset_set.is_trashed" class="dropdown-item" @click="destroy">Delete</button>
+                                <button  v-if="asset_set.is_trashed"  class="dropdown-item" @click="restore">Restore</button>
+
                             </div>
                         </div>
                     </div>
@@ -38,7 +41,17 @@
             show_link: {
                default: false
             }
-       }
+       },
+        methods: {
+            destroy() {
+                this.$inertia.post(route('asset-sets.delete', this.asset_set.id), {
+                    '_method': 'delete'
+                }, {preserveScroll: true})
+            },
+            restore() {
+                this.$inertia.post(route('asset-sets.restore', this.asset_set.id), {}, {preserveScroll: true})
+            }
+        }
     }
 </script>
 
