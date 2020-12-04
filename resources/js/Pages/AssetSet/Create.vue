@@ -109,7 +109,7 @@
                 data.append('name', this.form.name || '')
                 data.append('description', this.form.description || '')
                 data.append('thumbnail', this.form.thumbnail || '')
-                data.append('is_free', this.form.is_free || false)
+                data.append('is_free', this.form.is_free || 0)
                 this.$inertia.post(route('asset-sets.store'), data, {
                     onStart: () => this.sending = true,
                     onFinish: () => this.sending = false,
