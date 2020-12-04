@@ -52,6 +52,6 @@ class Asset extends Model
 
     public function colors()
     {
-        return $this->morphMany(color::class, 'colorable');
+        return $this->morphMany(Color::class, 'colorable');
     }
 }
