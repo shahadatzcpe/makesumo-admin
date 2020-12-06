@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::domain(config('app.frontend_url'))->namespace('Frontend')
     ->group(function () {
 
-    Route::get('/', 'HomepageController@homepage')->name('frontend.homepage');
+    Route::get('/', 'HomepageController@homepage')->name('frontend.homepage'); //done
     Route::get('/illustrations', 'IllustrationController@index');
     Route::get('/illustrations/{assetSet:slug}', 'IllustrationController@assetSet');
     Route::get('/illustrations/{assetSet:slug}/{asset:slug}', 'IllustrationController@show');
 
     Route::get('/3d-illustrations', 'Illustration3dController@index');
-    Route::get('/3d-illustrations/{assetSet:slug}', 'Illustration3dController@assetSet');
-    Route::get('/3d-illustrations/{assetSet:slug}/{asset:slug}', 'Illustration3dController@show');
+    Route::get('/3d-illustrations/{assetSet}', 'Illustration3dController@assetSet');
+    Route::get('/3d-illustrations/{assetSet}/{asset}', 'Illustration3dController@show');
 
-    Route::get('/search', 'SearchConntroller@result')->name('search.result');
+    Route::get('/search', 'SearchController@result')->name('search.result'); // done
 
     Route::get('/icons', 'IconController@index');
 });
