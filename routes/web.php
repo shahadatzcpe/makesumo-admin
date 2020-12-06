@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('dev.makesumo.test')->namespace('Frontend')
+Route::domain(config('app.frontend_url'))->namespace('Frontend')
     ->group(function () {
 
     Route::get('/', 'HomepageController@homepage')->name('frontend.homepage');
@@ -25,7 +25,7 @@ Route::domain('dev.makesumo.test')->namespace('Frontend')
     Route::get('/3d-illustrations/{assetSet:slug}', 'Illustration3dController@assetSet');
     Route::get('/3d-illustrations/{assetSet:slug}/{asset:slug}', 'Illustration3dController@show');
 
-    Route::get('/search', 'SearchConntroller@result');
+    Route::get('/search', 'SearchConntroller@result')->name('search.result');
 
     Route::get('/icons', 'IconController@index');
 });
@@ -36,9 +36,9 @@ Route::domain('dev.makesumo.test')->namespace('Frontend')
 
 
 
-//For admin only
 
-Route::domain('makesumo-admin.test')->group(function () {
+
+Route::domain(config('app.url'))->group(function () {
 
 Route::redirect('/', '/login');
 
