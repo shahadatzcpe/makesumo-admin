@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Asset;
+use App\Models\AssetSet;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;

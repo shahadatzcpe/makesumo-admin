@@ -13,7 +13,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::domain('dev.makesumo.test')->namespace('Frontend')
+    ->group(function () {
+
+    Route::get('/', 'HomepageController@homepage')->name('frontend.homepage');
+    Route::get('/illustrations', 'IllustrationController@index');
+    Route::get('/illustrations/{assetSet:slug}', 'IllustrationController@assetSet');
+    Route::get('/illustrations/{assetSet:slug}/{asset:slug}', 'IllustrationController@show');
+
+    Route::get('/3d-illustrations', 'Illustration3dController@index');
+    Route::get('/3d-illustrations/{assetSet:slug}', 'Illustration3dController@assetSet');
+    Route::get('/3d-illustrations/{assetSet:slug}/{asset:slug}', 'Illustration3dController@show');
+
+    Route::get('/search', 'SearchConntroller@result');
+
+    Route::get('/icons', 'IconController@index');
+});
+
+
+
+
+
+
+
+//For admin only
+
+Route::domain('makesumo-admin.test')->group(function () {
+
 Route::redirect('/', '/login');
+
+
+
 Route::middleware('auth')->group(function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/asset-sets/index', 'AssetSetController@index')->name('asset-sets.index');
@@ -51,5 +81,7 @@ Route::middleware('auth')->group(function() {
 
 
 //Route::get('settings', 'SettingController@index')->name("settings");
+
+});
 
 });
