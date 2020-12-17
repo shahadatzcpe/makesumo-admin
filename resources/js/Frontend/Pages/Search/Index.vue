@@ -1,7 +1,7 @@
 <template>
     <frontend-layout>
-        <search-result v-if="search_results.has_items"></search-result>
-        <no-search-result v-else></no-search-result>
+        <search-result v-if="search_results.has_items" :search="search"></search-result>
+        <no-search-result v-else :search="search"></no-search-result>
     </frontend-layout>
 </template>
 
@@ -14,7 +14,12 @@
           'search_results': {
               type: Object,
               required: true
-          }
+          },
+            'search': {
+              type: String,
+              required: true,
+              default: ''
+            }
         },
         components: {SearchResult, FrontendLayout, NoSearchResult}
     }
