@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+    const ILLUSTRATION = 'illustration';
+    const ILLUSTRATION3D = 'illustration3d';
+    const ICON = 'icon';
+
     use HasFactory;
 
 

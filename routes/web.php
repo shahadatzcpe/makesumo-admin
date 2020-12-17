@@ -13,21 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::view('welcome', 'welcome');
+
 Route::domain(config('app.frontend_url'))->namespace('Frontend')
     ->group(function () {
 
     Route::get('/', 'HomepageController@homepage')->name('frontend.homepage'); //done
-    Route::get('/illustrations', 'IllustrationController@index');
-    Route::get('/illustrations/{assetSet:slug}', 'IllustrationController@assetSet');
-    Route::get('/illustrations/{assetSet:slug}/{asset:slug}', 'IllustrationController@show');
+    Route::get('/illustrations', 'IllustrationController@index')->name('frontend.illustrations.index');
+    Route::get('/illustrations/{assetSet:slug}', 'IllustrationController@assetSet')->name('frontend.illustrations.assets-set');
+    Route::get('/illustrations/{assetSet:slug}/{asset:slug}', 'IllustrationController@show')->name('frontend.illustrations.asset');
 
-    Route::get('/3d-illustrations', 'Illustration3dController@index');
-    Route::get('/3d-illustrations/{assetSet}', 'Illustration3dController@assetSet');
-    Route::get('/3d-illustrations/{assetSet}/{asset}', 'Illustration3dController@show');
+    Route::get('/3d-illustrations', 'Illustration3dController@index')->name('frontend.illustrations3d.index');
+    Route::get('/3d-illustrations/{assetSet}', 'Illustration3dController@assetSet')->name('frontend.illustrations3d.assets-set');
+    Route::get('/3d-illustrations/{assetSet}/{asset}', 'Illustration3dController@show')->name('frontend.illustrations3d.asset');
 
-    Route::get('/search', 'SearchController@result')->name('search.result'); // done
+    Route::get('/icons', 'IconController@index')->name('frontend.icons.index');
+    Route::get('/icons/{assetSet}', 'IconController@assetSet')->name('frontend.icons.assets-set');
+    Route::get('/icons/{assetSet}/{asset}', 'IconController@show')->name('frontend.icons.asset');
 
-    Route::get('/icons', 'IconController@index');
+    Route::get('/search', 'SearchController@result')->name('frontend.search.result'); // done
+
 });
 
 

@@ -9,6 +9,7 @@ class Tag extends Model
 {
     use HasFactory;
 
+    const DEFAULT_LIMIT = 8;
 
     /**
      * The "booted" method of the model.
@@ -27,5 +28,26 @@ class Tag extends Model
             }while($alreadyExists);
 
         });
+    }
+
+
+    public function items()
+    {
+        return $this->morphedByMany(Item::class, 'taggable');
+    }
+
+    public function illustrations()
+    {
+        return $this->items()->where('asset_type', Item::ILLUSTRATION);
+    }
+
+    public function icons()
+    {
+        return $this->items()->where('asset_type', Item::ICON);
+    }
+
+    public function illustrations3d()
+    {
+        return $this->items()->where('asset_type', Item::ILLUSTRATION3D);
     }
 }

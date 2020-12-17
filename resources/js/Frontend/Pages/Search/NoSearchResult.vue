@@ -7,7 +7,7 @@
                         <h1 class="ms-hero-title">😞 Whoops, nothing found for “{{ search }}”...</h1>
                         <p class="ms-hero-subtitle">Please check spelling or try a different keyword...</p>
 
-                        <form :action="route('search.result')" class="ms-search-form"  @submit.prevent="submit">
+                        <form :action="route('frontend.search.result')" class="ms-search-form"  @submit.prevent="submit">
 
                             <button class="ms-search-btn">
                                 <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -218,7 +218,7 @@
         },
         methods: {
             submit() {
-                this.$inertia.visit(route('search.result'), {
+                this.$inertia.visit(route('frontend.search.result'), {
                     method: 'get',
                     data: this.form,
                 })

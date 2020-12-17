@@ -1,6 +1,6 @@
 <template>
     <frontend-layout>
-        <search-result v-if="search_results.has_items" :search="search"></search-result>
+        <search-result v-if="search_results.has_items" :search="search" :search_results="search_results"></search-result>
         <no-search-result v-else :search="search"></no-search-result>
     </frontend-layout>
 </template>
@@ -24,9 +24,3 @@
         components: {SearchResult, FrontendLayout, NoSearchResult}
     }
 </script>
-
-<style>
-    .ms-sub-header{
-        display: none;
-    }
-</style>

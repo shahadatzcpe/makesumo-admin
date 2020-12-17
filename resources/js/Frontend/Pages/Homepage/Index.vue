@@ -19,8 +19,3 @@
         components: {FrontendLayout, Homepage3dPreview, Homepage2dPreview, WhereToUse,ImageBox1, Hero}
     }
 </script>
-<style>
-    .ms-sub-header{
-        display: none;
-    }
-</style>

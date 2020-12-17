@@ -17,34 +17,33 @@
             </inertia-link>
             <nav class="ms-nav">
                 <ul class="ms-nav-list">
-                    <li><a href="#">Free Account</a></li>
+                    <li><a href="#">Free Accounts</a></li>
                     <li><a href="#">Login</a></li>
                     <li><a href="#" class="ms-btn ms-style1">⚡ Go Pro</a></li>
                 </ul>
             </nav>
         </div>
-        <div class="ms-sub-header">
-            <a href="#" class="ms-sub-nav-item ms-active">
-                <div class="ms-sub-nav-item-img"><img src="assets/img/nav-img1.png" alt=""></div>
+        <div class="ms-sub-header" v-if="!route().current('frontend.search.result')" >
+            <inertia-link :href="route('frontend.illustrations.index')" class="ms-sub-nav-item" :class="{'ms-active': route().current('frontend.illustrations.*') && !route().current('frontend.illustrations3d.*') }">
+                <div class="ms-sub-nav-item-img"><img src="/assets/img/nav-img1.png" alt="Illustrations"></div>
                 <span>Illustration</span>
-            </a>
-            <a href="#" class="ms-sub-nav-item">
-                <div class="ms-sub-nav-item-img"><img src="assets/img/nav-img2.png" alt=""></div>
+            </inertia-link>
+            <inertia-link :href="route('frontend.illustrations3d.index')" class="ms-sub-nav-item" :class="{'ms-active': route().current('frontend.illustrations3d.*') }">
+                <div class="ms-sub-nav-item-img"><img src="/assets/img/nav-img2.png" alt="3d Illustration"></div>
                 <span>3D Illustration</span>
-            </a>
-            <a href="#" class="ms-sub-nav-item">
-                <div class="ms-sub-nav-item-img"><img src="assets/img/nav-img1.png" alt=""></div>
+            </inertia-link>
+            <inertia-link :href="route('frontend.icons.index')" class="ms-sub-nav-item" :class="{'ms-active': route().current('frontend.icons.*') }">
+                <div class="ms-sub-nav-item-img"><img src="/assets/img/nav-img1.png" alt=""></div>
                 <span>Icon Set</span>
                 <span class="ms-label">Coming soon...</span>
-            </a>
+            </inertia-link>
         </div>
     </header>
 </template>
 
 <script>
     export default {
-
+        methods: {
+        }
     }
 </script>
-
-

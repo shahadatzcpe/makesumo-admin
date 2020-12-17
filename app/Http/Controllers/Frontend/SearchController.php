@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class SearchController extends Controller
@@ -13,19 +15,53 @@ class SearchController extends Controller
    {
        $tag = Tag::where('name', $request->search)->first();
 
-       $this->props['search_results'] = [
-            'has_items' => $tag ?? null,
-//            'illustration_3d_assets' => $tag->,
-//            'illustration_3d_assets_count' => $tag->,
-//            'illustrations_assets' => $tag->,
-//            'illustrations_assets_count' => $tag->,
-//            'icons_assets' => $tag->,
-//            'icons_assets_count' => $tag->,
-       ];
-
+       $this->props['search_results'] = $this->getSearchResults($tag);
        $this->props['search'] = $request->search;
 
-
+//       return $this->props;
        return Inertia::render('Search/Index', $this->props);
+   }
+
+
+   private function getSearchResults($tag)
+   {
+       $results =  [
+           'has_items' => $tag instanceof Tag,
+           Item::ICON => $this->getResultsByItemType($tag, Item::ILLUSTRATION),
+           Item::ILLUSTRATION3D => $this->getResultsByItemType($tag, Item::ILLUSTRATION),
+           Item::ILLUSTRATION => $this->getResultsByItemType($tag, Item::ILLUSTRATION),
+       ];
+
+       $results['total'] = array_sum(array_column($results, 'count'));
+
+       return $results;
+   }
+
+
+   private function getResultsByItemType($tag, $type)
+   {
+       if(!($tag instanceof Tag)) {
+           return [
+               'items' => [],
+               'count' => 0
+           ];
+       }
+
+       $collection = $tag->items()->where('asset_type', $type)->take(8)->get();
+
+       $collection =  $collection->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'slug' => $item->slug,
+                'name' => $item->name,
+                'thumbnail_src' => Storage::url($item->thumbnail_path),
+                'asset_type' => $item->asset_type
+            ];
+       });
+
+       return [
+           'items' => $collection,
+           'count' => $tag->items()->where('asset_type', $type)->count()
+       ];
    }
 }
