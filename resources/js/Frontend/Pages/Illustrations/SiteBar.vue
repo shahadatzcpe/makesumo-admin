@@ -8,8 +8,8 @@
                 </div>
                 <span class="ms-catagory-title">All Styles</span>
             </inertia-link>
-            <inertia-link v-for="aset in assetSets" :key="aset.id"
-               :href="aset.url" class="ms-catagory" :class="{'ms-active': assetSet && assetSet.id === aset.id }" :style="{'background-color' : aset.bg_color}">
+            <inertia-link v-for="aset in asset_sets" :key="aset.id"
+               :href="aset.url" class="ms-catagory" :class="{'ms-active': asset_set && asset_set.id === aset.id }" :style="{'background-color' : aset.bg_color}">
                 <div class="ms-catagory-img">
                     <img :src="aset.thumbnail_src" :alt="aset.name">
                 </div>
@@ -31,11 +31,11 @@
 <script>
     export default {
         props: {
-            assetSets: {
+            asset_sets: {
                 type: Array,
                 required: true,
             },
-            assetSet: {
+            asset_set: {
                 type: Object,
             }
         }

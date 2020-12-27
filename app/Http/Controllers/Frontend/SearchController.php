@@ -12,7 +12,7 @@ use Inertia\Inertia;
 
 class SearchController extends Controller
 {
-   public function result(Request $request, SearchEngine $searchEngine)
+   public function globalSearch(Request $request, SearchEngine $searchEngine)
    {
        $tag = Tag::where('name', $request->search)->first();
 

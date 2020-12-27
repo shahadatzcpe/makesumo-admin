@@ -106,4 +106,8 @@ class Item extends Model
     {
         return $this->belongsTo(AssetSet::class);
     }
+
+    public function getUrlAttribute() {
+        return route('frontend.illustrations.asset', [$this->assetSet, $this]);
+    }
 }
