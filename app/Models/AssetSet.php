@@ -49,6 +49,15 @@ class AssetSet extends Model
         return Storage::url($this->thumbnail_path);
     }
 
+    public function getUrlAttribute()
+    {
+        switch ($this->asset_type) {
+            case 'illustration':
+                ;
+        }
+        return route('frontend.illustrations.assets-set', $this->slug);
+    }
+
     public function scopeFilter($query, $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {

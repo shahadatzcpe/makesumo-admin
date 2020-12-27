@@ -12,7 +12,7 @@ if(! function_exists('isBackend')) {
     function isBackend() {
         static  $isBackend;
         if(is_null($isBackend)) {
-            $isBackend = request()->root() == config('app.url');
+            $isBackend = false; //request()->root() == config('app.url');
         }
         return $isBackend;
     }

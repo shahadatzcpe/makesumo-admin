@@ -12,6 +12,7 @@ class Asset extends Model
     use HasFactory;
 
 
+    protected $appends = ['src', 'is_editable'];
     /**
      * The "booted" method of the model.
      *
@@ -53,5 +54,10 @@ class Asset extends Model
     public function colors()
     {
         return $this->morphMany(Color::class, 'colorable');
+    }
+
+    public function getIsEditableAttribute()
+    {
+        return $this->colors()->where('is_editable', 1)->exists();
     }
 }

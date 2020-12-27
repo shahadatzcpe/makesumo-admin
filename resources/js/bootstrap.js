@@ -35,3 +35,14 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+
+Array.prototype.insert = function ( index, item ) {
+    this.splice( index, 0, item );
+};
+
+
+
+
+
+

@@ -14,6 +14,14 @@ class Item extends Model
     use HasFactory;
 
 
+    protected $appends = ['width', 'height'];
+
+    public function getWidthAttribute() {
+        return 1925;
+    }
+    public function getHeightAttribute() {
+        return 2378;
+    }
 
     /**
      * The "booted" method of the model.
