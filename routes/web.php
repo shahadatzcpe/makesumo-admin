@@ -24,8 +24,8 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
     Route::get('/illustrations/{assetSet:slug}/{item:slug}', 'IllustrationController@show')->name('frontend.illustrations.asset');
 
     Route::get('/3d-illustrations', 'Illustration3dController@index')->name('frontend.illustrations3d.index');
-    Route::get('/3d-illustrations/{assetSet}', 'Illustration3dController@assetSet')->name('frontend.illustrations3d.assets-set');
-    Route::get('/3d-illustrations/{assetSet}/{asset}', 'Illustration3dController@show')->name('frontend.illustrations3d.asset');
+    Route::get('/3d-illustrations/{assetSet:slug}', 'Illustration3dController@assetSet')->name('frontend.illustrations3d.assets-set');
+    Route::get('/3d-illustrations/{assetSet:slug}/{asset:slug}', 'Illustration3dController@show')->name('frontend.illustrations3d.asset');
 
     Route::get('/icons', 'IconController@index')->name('frontend.icons.index');
     Route::get('/icons/{assetSet}', 'IconController@assetSet')->name('frontend.icons.assets-set');

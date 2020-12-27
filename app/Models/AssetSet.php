@@ -52,8 +52,10 @@ class AssetSet extends Model
     public function getUrlAttribute()
     {
         switch ($this->asset_type) {
-            case 'illustration':
-                ;
+            case '3d':
+                return route('frontend.illustrations3d.assets-set', $this->slug);
+
+                break;
         }
         return route('frontend.illustrations.assets-set', $this->slug);
     }

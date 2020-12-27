@@ -108,6 +108,14 @@ class Item extends Model
     }
 
     public function getUrlAttribute() {
+
+        switch ($this->asset_type) {
+            case '3d':
+                return route('frontend.illustrations3d.assets-set', $this->slug);
+
+                break;
+        }
+
         return route('frontend.illustrations.asset', [$this->assetSet, $this]);
     }
 }
