@@ -2604,17 +2604,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Item */ "./resources/js/Frontend/Pages/Illustrations/Item.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _SearchBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBox */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue");
 //
 //
 //
@@ -2644,28 +2634,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
+    SearchBox: _SearchBox__WEBPACK_IMPORTED_MODULE_1__["default"],
     Item: _Item__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
     asset_set: {
       type: Object
-    }
-  },
-  data: function data() {
-    return {
-      form: {
-        search: ''
-      }
-    };
-  },
-  methods: {
-    submit: function submit() {
-      this.$inertia.visit(route('frontend.search.result'), {
-        method: 'get',
-        data: this.form
-      });
     }
   }
 });
@@ -3019,6 +2996,15 @@ __webpack_require__.r(__webpack_exports__);
     related_items: {
       type: Array,
       required: true
+    },
+    open_modal: {
+      type: Boolean,
+      "default": true
+    }
+  },
+  methods: {
+    goBack: function goBack() {
+      window.history.back();
     }
   }
 });
@@ -3035,17 +3021,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Item */ "./resources/js/Frontend/Pages/Illustrations/Item.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _SearchBox__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBox */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue");
 //
 //
 //
@@ -3070,29 +3046,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Item: _Item__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Item: _Item__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SearchBox: _SearchBox__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
     popular_items: {
       type: Array,
       required: true
-    }
-  },
-  data: function data() {
-    return {
-      form: {
-        search: ''
-      }
-    };
-  },
-  methods: {
-    submit: function submit() {
-      this.$inertia.visit(route('frontend.search.result'), {
-        method: 'get',
-        data: this.form
-      });
     }
   }
 });
@@ -3221,6 +3184,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FrontendLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../FrontendLayout */ "./resources/js/Frontend/FrontendLayout.vue");
 /* harmony import */ var _SiteBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SiteBar */ "./resources/js/Frontend/Pages/Illustrations/SiteBar.vue");
 /* harmony import */ var _Item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Item */ "./resources/js/Frontend/Pages/Illustrations/Item.vue");
+/* harmony import */ var _SearchBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SearchBox */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue");
 //
 //
 //
@@ -3243,17 +3207,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -3261,7 +3215,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     SiteBar: _SiteBar__WEBPACK_IMPORTED_MODULE_1__["default"],
     FrontendLayout: _FrontendLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Item: _Item__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Item: _Item__WEBPACK_IMPORTED_MODULE_2__["default"],
+    SearchBox: _SearchBox__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
     related_keywords: {
@@ -3274,21 +3229,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     search: {
       type: String
-    }
-  },
-  data: function data() {
-    return {
-      form: {
-        search: this.search
-      }
-    };
-  },
-  methods: {
-    submit: function submit() {
-      this.$inertia.visit(route('frontend.search.result'), {
-        method: 'get',
-        data: this.form
-      });
     }
   }
 });
@@ -3373,6 +3313,52 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      form: {
+        search: this.$page.search ? this.$page.search : ''
+      }
+    };
+  },
+  methods: {
+    submit: function submit() {
+      this.$inertia.visit(route('frontend.search.result'), {
+        method: 'get',
+        data: this.form
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Frontend/Pages/Illustrations/SearchResult.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Frontend/Pages/Illustrations/SearchResult.vue?vue&type=script&lang=js& ***!
@@ -3385,6 +3371,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FrontendLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../FrontendLayout */ "./resources/js/Frontend/FrontendLayout.vue");
 /* harmony import */ var _SiteBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SiteBar */ "./resources/js/Frontend/Pages/Illustrations/SiteBar.vue");
 /* harmony import */ var _Item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Item */ "./resources/js/Frontend/Pages/Illustrations/Item.vue");
+/* harmony import */ var _SearchBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SearchBox */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue");
 //
 //
 //
@@ -3415,18 +3402,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -3434,7 +3410,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Item: _Item__WEBPACK_IMPORTED_MODULE_2__["default"],
     SiteBar: _SiteBar__WEBPACK_IMPORTED_MODULE_1__["default"],
-    FrontendLayout: _FrontendLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
+    FrontendLayout: _FrontendLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SearchBox: _SearchBox__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
     related_keywords: {
@@ -3449,20 +3426,7 @@ __webpack_require__.r(__webpack_exports__);
       type: String
     }
   },
-  data: function data() {
-    return {
-      form: {
-        search: ''
-      }
-    };
-  },
   methods: {
-    submit: function submit() {
-      this.$inertia.visit(route('frontend.search.result'), {
-        method: 'get',
-        data: this.form
-      });
-    },
     capitalizeFirstLetter: function capitalizeFirstLetter(abc) {
       return abc.charAt(0).toUpperCase() + abc.slice(1);
     }
@@ -44553,113 +44517,28 @@ var render = function() {
   return _c("div", { staticClass: "ms-site-content" }, [
     _c("div", { staticClass: "ms-hero ms-version2" }, [
       _c("div", { staticClass: "ms-hero-text" }, [
-        _c("div", { staticClass: "ms-hero-text-in" }, [
-          _c("ol", { staticClass: "ms-breadcrumb" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("li", { staticClass: "ms-breadcrumb-item ms-active" }, [
-              _vm._v(_vm._s(_vm.asset_set.name))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("h1", { staticClass: "ms-hero-title" }, [
-            _vm._v("✨ Vector illustrations in Grain style")
-          ]),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              staticClass: "ms-search-form",
-              attrs: { action: _vm.route("frontend.search.result") }
-            },
-            [
-              _c(
-                "button",
-                { staticClass: "ms-search-btn", attrs: { type: "submit" } },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        width: "21",
-                        height: "21",
-                        viewBox: "0 0 21 21",
-                        fill: "none",
-                        xmlns: "http://www.w3.org/2000/svg"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M20.6781 18.892L15.9175 14.1315C17.0637 12.6057 17.6823 10.7485 17.6803 8.84015C17.6803 3.96572 13.7146 0 8.84015 0C3.96572 0 0 3.96572 0 8.84015C0 13.7146 3.96572 17.6803 8.84015 17.6803C10.7485 17.6823 12.6057 17.0637 14.1315 15.9175L18.892 20.6781C19.1331 20.8936 19.4474 21.0085 19.7704 20.9995C20.0936 20.9904 20.4009 20.858 20.6294 20.6294C20.858 20.4009 20.9904 20.0936 20.9995 19.7704C21.0085 19.4474 20.8936 19.1331 20.6781 18.892ZM2.52576 8.84015C2.52576 7.59128 2.8961 6.37046 3.58992 5.33206C4.28376 4.29367 5.26993 3.48433 6.42374 3.00642C7.57754 2.52849 8.84715 2.40345 10.072 2.64708C11.2969 2.89073 12.4221 3.49212 13.3051 4.37521C14.1882 5.25828 14.7896 6.3834 15.0332 7.60827C15.2769 8.83315 15.1518 10.1028 14.6739 11.2566C14.196 12.4104 13.3867 13.3966 12.3482 14.0904C11.3098 14.7842 10.089 15.1545 8.84015 15.1545C7.16609 15.1525 5.56117 14.4866 4.37742 13.3029C3.19368 12.1191 2.52777 10.5142 2.52576 8.84015Z",
-                          fill: "black",
-                          "fill-opacity": "0.4"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              ),
+        _c(
+          "div",
+          { staticClass: "ms-hero-text-in" },
+          [
+            _c("ol", { staticClass: "ms-breadcrumb" }, [
+              _vm._m(0),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.search,
-                    expression: "form.search"
-                  }
-                ],
-                staticClass: "ms-search-input",
-                attrs: {
-                  required: "",
-                  type: "text",
-                  placeholder: "Search for illustrations..."
-                },
-                domProps: { value: _vm.form.search },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "search", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "ms-clear" }, [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      width: "24",
-                      height: "24",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "fill-rule": "evenodd",
-                        "clip-rule": "evenodd",
-                        d:
-                          "M17.626 6.62472C17.1535 6.15224 16.3874 6.15231 15.9149 6.62486L11.9248 10.6149L8.00882 6.69894C7.53634 6.22646 6.77024 6.22652 6.29768 6.69908C5.82512 7.17164 5.82506 7.93774 6.29754 8.41022L10.2135 12.3262L6.22167 16.3181C5.74912 16.7906 5.74905 17.5567 6.22153 18.0292C6.69401 18.5017 7.46012 18.5016 7.93267 18.0291L11.9245 14.0372L15.8377 17.9504C16.3102 18.4229 17.0763 18.4228 17.5488 17.9502C18.0214 17.4777 18.0215 16.7116 17.549 16.2391L13.6358 12.3259L17.6259 8.33586C18.0984 7.86331 18.0985 7.0972 17.626 6.62472Z",
-                        fill: "white"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", { attrs: { type: "reset" } })
+              _c("li", { staticClass: "ms-breadcrumb-item ms-active" }, [
+                _vm._v(_vm._s(_vm.asset_set.name))
               ])
-            ]
-          )
-        ])
+            ]),
+            _vm._v(" "),
+            _c("h1", { staticClass: "ms-hero-title" }, [
+              _vm._v("✨ Vector illustrations in Grain style")
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("search-box")
+          ],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
@@ -45156,10 +45035,17 @@ var render = function() {
       "div",
       { staticClass: "ms-content ms-no-sidebar" },
       [
-        _vm.openModal
+        _vm.open_modal
           ? [
               _c("div", { staticClass: "ms-overlay-section" }, [
-                _c("button", { staticClass: "ms-cross-btn" }),
+                _c("button", {
+                  staticClass: "ms-cross-btn",
+                  on: {
+                    click: function($event) {
+                      return _vm.goBack()
+                    }
+                  }
+                }),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -45229,103 +45115,12 @@ var render = function() {
   return _c("div", { staticClass: "ms-site-content" }, [
     _c("div", { staticClass: "ms-hero ms-version2" }, [
       _c("div", { staticClass: "ms-hero-text" }, [
-        _c("div", { staticClass: "ms-hero-text-in" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              staticClass: "ms-search-form",
-              attrs: { action: _vm.route("frontend.search.result") }
-            },
-            [
-              _c(
-                "button",
-                { staticClass: "ms-search-btn", attrs: { type: "submit" } },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        width: "21",
-                        height: "21",
-                        viewBox: "0 0 21 21",
-                        fill: "none",
-                        xmlns: "http://www.w3.org/2000/svg"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M20.6781 18.892L15.9175 14.1315C17.0637 12.6057 17.6823 10.7485 17.6803 8.84015C17.6803 3.96572 13.7146 0 8.84015 0C3.96572 0 0 3.96572 0 8.84015C0 13.7146 3.96572 17.6803 8.84015 17.6803C10.7485 17.6823 12.6057 17.0637 14.1315 15.9175L18.892 20.6781C19.1331 20.8936 19.4474 21.0085 19.7704 20.9995C20.0936 20.9904 20.4009 20.858 20.6294 20.6294C20.858 20.4009 20.9904 20.0936 20.9995 19.7704C21.0085 19.4474 20.8936 19.1331 20.6781 18.892ZM2.52576 8.84015C2.52576 7.59128 2.8961 6.37046 3.58992 5.33206C4.28376 4.29367 5.26993 3.48433 6.42374 3.00642C7.57754 2.52849 8.84715 2.40345 10.072 2.64708C11.2969 2.89073 12.4221 3.49212 13.3051 4.37521C14.1882 5.25828 14.7896 6.3834 15.0332 7.60827C15.2769 8.83315 15.1518 10.1028 14.6739 11.2566C14.196 12.4104 13.3867 13.3966 12.3482 14.0904C11.3098 14.7842 10.089 15.1545 8.84015 15.1545C7.16609 15.1525 5.56117 14.4866 4.37742 13.3029C3.19368 12.1191 2.52777 10.5142 2.52576 8.84015Z",
-                          fill: "black",
-                          "fill-opacity": "0.4"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.search,
-                    expression: "form.search"
-                  }
-                ],
-                staticClass: "ms-search-input",
-                attrs: {
-                  required: "",
-                  type: "text",
-                  placeholder: "Search for illustrations..."
-                },
-                domProps: { value: _vm.form.search },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "search", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "ms-clear" }, [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      width: "24",
-                      height: "24",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "fill-rule": "evenodd",
-                        "clip-rule": "evenodd",
-                        d:
-                          "M17.626 6.62472C17.1535 6.15224 16.3874 6.15231 15.9149 6.62486L11.9248 10.6149L8.00882 6.69894C7.53634 6.22646 6.77024 6.22652 6.29768 6.69908C5.82512 7.17164 5.82506 7.93774 6.29754 8.41022L10.2135 12.3262L6.22167 16.3181C5.74912 16.7906 5.74905 17.5567 6.22153 18.0292C6.69401 18.5017 7.46012 18.5016 7.93267 18.0291L11.9245 14.0372L15.8377 17.9504C16.3102 18.4229 17.0763 18.4228 17.5488 17.9502C18.0214 17.4777 18.0215 16.7116 17.549 16.2391L13.6358 12.3259L17.6259 8.33586C18.0984 7.86331 18.0985 7.0972 17.626 6.62472Z",
-                        fill: "white"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", { attrs: { type: "reset" } })
-              ])
-            ]
-          )
-        ])
+        _c(
+          "div",
+          { staticClass: "ms-hero-text-in" },
+          [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("search-box")],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
@@ -45460,19 +45255,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ms-card ms-style1" }, [
-    _c("div", { staticClass: "ms-illustration-wrap" }, [
-      _c("div", { staticClass: "ms-illustration" }, [
-        _c("img", {
-          attrs: { src: _vm.item.thumbnail_src, alt: _vm.item.name }
-        })
+  return _c(
+    "inertia-link",
+    { staticClass: "ms-card ms-style1", attrs: { href: _vm.item.url } },
+    [
+      _c("div", { staticClass: "ms-illustration-wrap" }, [
+        _c("div", { staticClass: "ms-illustration" }, [
+          _c("img", {
+            attrs: { src: _vm.item.thumbnail_src, alt: _vm.item.name }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "ms-illustration-name" }, [
+        _vm._v(_vm._s(_vm.item.name))
       ])
-    ]),
-    _vm._v(" "),
-    _c("p", { staticClass: "ms-illustration-name" }, [
-      _vm._v(_vm._s(_vm.item.name))
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45499,109 +45298,24 @@ var render = function() {
   return _c("div", { staticClass: "ms-site-content" }, [
     _c("div", { staticClass: "ms-hero ms-version2" }, [
       _c("div", { staticClass: "ms-hero-text" }, [
-        _c("div", { staticClass: "ms-hero-text-in" }, [
-          _c("h1", { staticClass: "ms-hero-title" }, [
-            _vm._v(
-              "😞 Whoops, nothing found for “" + _vm._s(_vm.search) + "”..."
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "ms-hero-subtitle" }, [
-            _vm._v("Please check spelling or try a different keyword...")
-          ]),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              staticClass: "ms-search-form",
-              attrs: { action: _vm.route("frontend.search.result") }
-            },
-            [
-              _c(
-                "button",
-                { staticClass: "ms-search-btn", attrs: { type: "submit" } },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        width: "21",
-                        height: "21",
-                        viewBox: "0 0 21 21",
-                        fill: "none",
-                        xmlns: "http://www.w3.org/2000/svg"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M20.6781 18.892L15.9175 14.1315C17.0637 12.6057 17.6823 10.7485 17.6803 8.84015C17.6803 3.96572 13.7146 0 8.84015 0C3.96572 0 0 3.96572 0 8.84015C0 13.7146 3.96572 17.6803 8.84015 17.6803C10.7485 17.6823 12.6057 17.0637 14.1315 15.9175L18.892 20.6781C19.1331 20.8936 19.4474 21.0085 19.7704 20.9995C20.0936 20.9904 20.4009 20.858 20.6294 20.6294C20.858 20.4009 20.9904 20.0936 20.9995 19.7704C21.0085 19.4474 20.8936 19.1331 20.6781 18.892ZM2.52576 8.84015C2.52576 7.59128 2.8961 6.37046 3.58992 5.33206C4.28376 4.29367 5.26993 3.48433 6.42374 3.00642C7.57754 2.52849 8.84715 2.40345 10.072 2.64708C11.2969 2.89073 12.4221 3.49212 13.3051 4.37521C14.1882 5.25828 14.7896 6.3834 15.0332 7.60827C15.2769 8.83315 15.1518 10.1028 14.6739 11.2566C14.196 12.4104 13.3867 13.3966 12.3482 14.0904C11.3098 14.7842 10.089 15.1545 8.84015 15.1545C7.16609 15.1525 5.56117 14.4866 4.37742 13.3029C3.19368 12.1191 2.52777 10.5142 2.52576 8.84015Z",
-                          fill: "black",
-                          "fill-opacity": "0.4"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.search,
-                    expression: "form.search"
-                  }
-                ],
-                staticClass: "ms-search-input",
-                attrs: {
-                  required: "",
-                  type: "text",
-                  placeholder: "Search for illustrations..."
-                },
-                domProps: { value: _vm.form.search },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "search", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "ms-clear" }, [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      width: "24",
-                      height: "24",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "fill-rule": "evenodd",
-                        "clip-rule": "evenodd",
-                        d:
-                          "M17.626 6.62472C17.1535 6.15224 16.3874 6.15231 15.9149 6.62486L11.9248 10.6149L8.00882 6.69894C7.53634 6.22646 6.77024 6.22652 6.29768 6.69908C5.82512 7.17164 5.82506 7.93774 6.29754 8.41022L10.2135 12.3262L6.22167 16.3181C5.74912 16.7906 5.74905 17.5567 6.22153 18.0292C6.69401 18.5017 7.46012 18.5016 7.93267 18.0291L11.9245 14.0372L15.8377 17.9504C16.3102 18.4229 17.0763 18.4228 17.5488 17.9502C18.0214 17.4777 18.0215 16.7116 17.549 16.2391L13.6358 12.3259L17.6259 8.33586C18.0984 7.86331 18.0985 7.0972 17.626 6.62472Z",
-                        fill: "white"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", { attrs: { type: "reset" } })
-              ])
-            ]
-          )
-        ])
+        _c(
+          "div",
+          { staticClass: "ms-hero-text-in" },
+          [
+            _c("h1", { staticClass: "ms-hero-title" }, [
+              _vm._v(
+                "😞 Whoops, nothing found for “" + _vm._s(_vm.search) + "”..."
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "ms-hero-subtitle" }, [
+              _vm._v("Please check spelling or try a different keyword...")
+            ]),
+            _vm._v(" "),
+            _c("search-box")
+          ],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
@@ -45756,6 +45470,121 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=template&id=140354cd&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=template&id=140354cd& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      staticClass: "ms-search-form",
+      attrs: { action: _vm.route("frontend.illustrations.index") }
+    },
+    [
+      _c(
+        "button",
+        { staticClass: "ms-search-btn", attrs: { type: "submit" } },
+        [
+          _c(
+            "svg",
+            {
+              attrs: {
+                width: "21",
+                height: "21",
+                viewBox: "0 0 21 21",
+                fill: "none",
+                xmlns: "http://www.w3.org/2000/svg"
+              }
+            },
+            [
+              _c("path", {
+                attrs: {
+                  d:
+                    "M20.6781 18.892L15.9175 14.1315C17.0637 12.6057 17.6823 10.7485 17.6803 8.84015C17.6803 3.96572 13.7146 0 8.84015 0C3.96572 0 0 3.96572 0 8.84015C0 13.7146 3.96572 17.6803 8.84015 17.6803C10.7485 17.6823 12.6057 17.0637 14.1315 15.9175L18.892 20.6781C19.1331 20.8936 19.4474 21.0085 19.7704 20.9995C20.0936 20.9904 20.4009 20.858 20.6294 20.6294C20.858 20.4009 20.9904 20.0936 20.9995 19.7704C21.0085 19.4474 20.8936 19.1331 20.6781 18.892ZM2.52576 8.84015C2.52576 7.59128 2.8961 6.37046 3.58992 5.33206C4.28376 4.29367 5.26993 3.48433 6.42374 3.00642C7.57754 2.52849 8.84715 2.40345 10.072 2.64708C11.2969 2.89073 12.4221 3.49212 13.3051 4.37521C14.1882 5.25828 14.7896 6.3834 15.0332 7.60827C15.2769 8.83315 15.1518 10.1028 14.6739 11.2566C14.196 12.4104 13.3867 13.3966 12.3482 14.0904C11.3098 14.7842 10.089 15.1545 8.84015 15.1545C7.16609 15.1525 5.56117 14.4866 4.37742 13.3029C3.19368 12.1191 2.52777 10.5142 2.52576 8.84015Z",
+                  fill: "black",
+                  "fill-opacity": "0.4"
+                }
+              })
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.form.search,
+            expression: "form.search"
+          }
+        ],
+        staticClass: "ms-search-input",
+        attrs: {
+          required: "",
+          type: "text",
+          name: "search",
+          placeholder: "Search for illustrations..."
+        },
+        domProps: { value: _vm.form.search },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.form, "search", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "ms-clear" }, [
+        _c(
+          "svg",
+          {
+            attrs: {
+              width: "24",
+              height: "24",
+              viewBox: "0 0 24 24",
+              fill: "none",
+              xmlns: "http://www.w3.org/2000/svg"
+            }
+          },
+          [
+            _c("path", {
+              attrs: {
+                "fill-rule": "evenodd",
+                "clip-rule": "evenodd",
+                d:
+                  "M17.626 6.62472C17.1535 6.15224 16.3874 6.15231 15.9149 6.62486L11.9248 10.6149L8.00882 6.69894C7.53634 6.22646 6.77024 6.22652 6.29768 6.69908C5.82512 7.17164 5.82506 7.93774 6.29754 8.41022L10.2135 12.3262L6.22167 16.3181C5.74912 16.7906 5.74905 17.5567 6.22153 18.0292C6.69401 18.5017 7.46012 18.5016 7.93267 18.0291L11.9245 14.0372L15.8377 17.9504C16.3102 18.4229 17.0763 18.4228 17.5488 17.9502C18.0214 17.4777 18.0215 16.7116 17.549 16.2391L13.6358 12.3259L17.6259 8.33586C18.0984 7.86331 18.0985 7.0972 17.626 6.62472Z",
+                fill: "white"
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", { attrs: { type: "reset" } })
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Frontend/Pages/Illustrations/SearchResult.vue?vue&type=template&id=065a3bea&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Frontend/Pages/Illustrations/SearchResult.vue?vue&type=template&id=065a3bea& ***!
@@ -45774,146 +45603,61 @@ var render = function() {
   return _c("div", { staticClass: "ms-site-content" }, [
     _c("div", { staticClass: "ms-hero ms-search-hero ms-remove-border" }, [
       _c("div", { staticClass: "ms-hero-text" }, [
-        _c("div", { staticClass: "ms-hero-text-in" }, [
-          _c(
-            "form",
-            {
-              staticClass: "ms-search-form ms-type1",
-              attrs: { action: _vm.route("frontend.search.result") }
-            },
-            [
-              _c(
-                "button",
-                { staticClass: "ms-search-btn", attrs: { type: "submit" } },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        width: "21",
-                        height: "21",
-                        viewBox: "0 0 21 21",
-                        fill: "none",
-                        xmlns: "http://www.w3.org/2000/svg"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M20.6781 18.892L15.9175 14.1315C17.0637 12.6057 17.6823 10.7485 17.6803 8.84015C17.6803 3.96572 13.7146 0 8.84015 0C3.96572 0 0 3.96572 0 8.84015C0 13.7146 3.96572 17.6803 8.84015 17.6803C10.7485 17.6823 12.6057 17.0637 14.1315 15.9175L18.892 20.6781C19.1331 20.8936 19.4474 21.0085 19.7704 20.9995C20.0936 20.9904 20.4009 20.858 20.6294 20.6294C20.858 20.4009 20.9904 20.0936 20.9995 19.7704C21.0085 19.4474 20.8936 19.1331 20.6781 18.892ZM2.52576 8.84015C2.52576 7.59128 2.8961 6.37046 3.58992 5.33206C4.28376 4.29367 5.26993 3.48433 6.42374 3.00642C7.57754 2.52849 8.84715 2.40345 10.072 2.64708C11.2969 2.89073 12.4221 3.49212 13.3051 4.37521C14.1882 5.25828 14.7896 6.3834 15.0332 7.60827C15.2769 8.83315 15.1518 10.1028 14.6739 11.2566C14.196 12.4104 13.3867 13.3966 12.3482 14.0904C11.3098 14.7842 10.089 15.1545 8.84015 15.1545C7.16609 15.1525 5.56117 14.4866 4.37742 13.3029C3.19368 12.1191 2.52777 10.5142 2.52576 8.84015Z",
-                          fill: "black",
-                          "fill-opacity": "0.4"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
+        _c(
+          "div",
+          { staticClass: "ms-hero-text-in" },
+          [
+            _c("search-box"),
+            _vm._v(" "),
+            _c("a", { staticClass: "ms-back-to-home", attrs: { href: "#" } }, [
+              _vm._v("Free Illustrations")
+            ]),
+            _vm._v(" "),
+            _c("h3", { staticClass: "ms-search-result-text" }, [
+              _vm._v(
+                _vm._s(_vm.capitalizeFirstLetter(_vm.search)) + " illustration"
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ms-search-result-subtext-wrap" }, [
+              _c("p", { staticClass: "ms-search-result-subtext" }, [
+                _vm._v(
+                  "Get free " +
+                    _vm._s(_vm.search) +
+                    " Illustration. These free $asset-types are pixel-perfect to fit your design and available in both png and SVG vector. You can change colors easily and download right away. Be sure to check all "
+                ),
+                _c("a", { attrs: { href: "#" } }, [_vm._v("$asset-types")]),
+                _vm._v(".")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "ms-related-tags" },
+              _vm._l(_vm.related_keywords, function(searchTerm, key) {
+                return _c(
+                  "inertia-link",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.search,
-                    expression: "form.search"
-                  }
-                ],
-                staticClass: "ms-search-input",
-                attrs: {
-                  required: "",
-                  type: "text",
-                  placeholder: "Search for illustrations..."
-                },
-                domProps: { value: _vm.form.search },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "search", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "ms-clear" }, [
-                _c(
-                  "svg",
-                  {
+                    key: key,
+                    staticClass: "ms-tag",
                     attrs: {
-                      width: "24",
-                      height: "24",
-                      viewBox: "0 0 24 24",
-                      fill: "none",
-                      xmlns: "http://www.w3.org/2000/svg"
+                      href: _vm.route("frontend.illustrations.index", {
+                        search: searchTerm
+                      })
                     }
                   },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "fill-rule": "evenodd",
-                        "clip-rule": "evenodd",
-                        d:
-                          "M17.626 6.62472C17.1535 6.15224 16.3874 6.15231 15.9149 6.62486L11.9248 10.6149L8.00882 6.69894C7.53634 6.22646 6.77024 6.22652 6.29768 6.69908C5.82512 7.17164 5.82506 7.93774 6.29754 8.41022L10.2135 12.3262L6.22167 16.3181C5.74912 16.7906 5.74905 17.5567 6.22153 18.0292C6.69401 18.5017 7.46012 18.5016 7.93267 18.0291L11.9245 14.0372L15.8377 17.9504C16.3102 18.4229 17.0763 18.4228 17.5488 17.9502C18.0214 17.4777 18.0215 16.7116 17.549 16.2391L13.6358 12.3259L17.6259 8.33586C18.0984 7.86331 18.0985 7.0972 17.626 6.62472Z",
-                        fill: "white"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", { attrs: { type: "reset" } })
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("a", { staticClass: "ms-back-to-home", attrs: { href: "#" } }, [
-            _vm._v("Free Illustrations")
-          ]),
-          _vm._v(" "),
-          _c("h3", { staticClass: "ms-search-result-text" }, [
-            _vm._v(
-              _vm._s(_vm.capitalizeFirstLetter(_vm.search)) + " illustration"
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ms-search-result-subtext-wrap" }, [
-            _c("p", { staticClass: "ms-search-result-subtext" }, [
-              _vm._v(
-                "Get free " +
-                  _vm._s(_vm.search) +
-                  " Illustration. These free $asset-types are pixel-perfect to fit your design and available in both png and SVG vector. You can change colors easily and download right away. Be sure to check all "
-              ),
-              _c("a", { attrs: { href: "#" } }, [_vm._v("$asset-types")]),
-              _vm._v(".")
+                  [_vm._v(_vm._s(searchTerm))]
+                )
+              }),
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "cs-number-of-search-result" }, [
+              _vm._v("138 vector illustrations found")
             ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "ms-related-tags" },
-            _vm._l(_vm.related_keywords, function(searchTerm, key) {
-              return _c(
-                "inertia-link",
-                {
-                  key: key,
-                  staticClass: "ms-tag",
-                  attrs: {
-                    href: _vm.route("frontend.illustrations.index", {
-                      search: searchTerm
-                    })
-                  }
-                },
-                [_vm._v(_vm._s(searchTerm))]
-              )
-            }),
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "cs-number-of-search-result" }, [
-            _vm._v("138 vector illustrations found")
-          ])
-        ])
+          ],
+          1
+        )
       ])
     ]),
     _vm._v(" "),
@@ -47422,7 +47166,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "ms-search-results2" },
+    { staticClass: "ms-search-results" },
     [
       _c("div", { staticClass: "ms-section-head ms-type4" }, [
         _c("h3", { staticClass: "ms-section-title" }, [
@@ -47435,34 +47179,41 @@ var render = function() {
         "div",
         { staticClass: "ms-illustration-list ms-style3 ms-col-10" },
         _vm._l(_vm.results.items, function(item) {
-          return _c("a", { key: item.id, staticClass: "ms-card ms-style1" }, [
-            _c("div", { staticClass: "ms-illustration-wrap" }, [
-              _c("div", { staticClass: "ms-illustration" }, [
-                _c("img", {
-                  attrs: { src: item.thumbnail_src, alt: item.name }
-                })
+          return _c(
+            "inertia-link",
+            {
+              key: item.id,
+              staticClass: "ms-card ms-style1",
+              attrs: { href: item.url }
+            },
+            [
+              _c("div", { staticClass: "ms-illustration-wrap" }, [
+                _c("div", { staticClass: "ms-illustration" }, [
+                  _c("img", {
+                    attrs: { src: item.thumbnail_src, alt: item.name }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "ms-illustration-name" }, [
+                _vm._v(_vm._s(item.name))
               ])
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "ms-illustration-name" }, [
-              _vm._v(_vm._s(item.name))
-            ])
-          ])
+            ]
+          )
         }),
-        0
+        1
       ),
       _vm._v(" "),
       _c(
         "inertia-link",
         {
-          staticClass: "ms-more-btn",
           attrs: {
             href: _vm.route("frontend." + this.type + ".index", {
               search: _vm.search
             })
           }
         },
-        [_vm._v("See All")]
+        [_c("div", { staticClass: "ms-more-btn" }, [_vm._v("See All")])]
       )
     ],
     1
@@ -60150,6 +59901,8 @@ var map = {
 	"./Illustrations/PopularItem.vue": "./resources/js/Frontend/Pages/Illustrations/PopularItem.vue",
 	"./Illustrations/RelatedItem": "./resources/js/Frontend/Pages/Illustrations/RelatedItem.vue",
 	"./Illustrations/RelatedItem.vue": "./resources/js/Frontend/Pages/Illustrations/RelatedItem.vue",
+	"./Illustrations/SearchBox": "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue",
+	"./Illustrations/SearchBox.vue": "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue",
 	"./Illustrations/SearchResult": "./resources/js/Frontend/Pages/Illustrations/SearchResult.vue",
 	"./Illustrations/SearchResult.vue": "./resources/js/Frontend/Pages/Illustrations/SearchResult.vue",
 	"./Illustrations/SiteBar": "./resources/js/Frontend/Pages/Illustrations/SiteBar.vue",
@@ -61254,6 +61007,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RelatedItem_vue_vue_type_template_id_591ba9a8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RelatedItem_vue_vue_type_template_id_591ba9a8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/Frontend/Pages/Illustrations/SearchBox.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchBox_vue_vue_type_template_id_140354cd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchBox.vue?vue&type=template&id=140354cd& */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=template&id=140354cd&");
+/* harmony import */ var _SearchBox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBox.vue?vue&type=script&lang=js& */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SearchBox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchBox_vue_vue_type_template_id_140354cd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchBox_vue_vue_type_template_id_140354cd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Frontend/Pages/Illustrations/SearchBox.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchBox.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=template&id=140354cd&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=template&id=140354cd& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBox_vue_vue_type_template_id_140354cd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchBox.vue?vue&type=template&id=140354cd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Frontend/Pages/Illustrations/SearchBox.vue?vue&type=template&id=140354cd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBox_vue_vue_type_template_id_140354cd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBox_vue_vue_type_template_id_140354cd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

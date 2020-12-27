@@ -1,19 +1,19 @@
 <template>
-    <div class="ms-search-results2">
+    <div class="ms-search-results">
         <div class="ms-section-head ms-type4">
             <h3 class="ms-section-title">{{ label }} <span>({{ results.count }})</span></h3>
         </div>
         <div class="ms-illustration-list ms-style3 ms-col-10">
-            <a class="ms-card ms-style1" :key="item.id" v-for="item in results.items">
+            <inertia-link class="ms-card ms-style1" :href="item.url" :key="item.id" v-for="item in results.items">
                 <div class="ms-illustration-wrap">
                     <div class="ms-illustration">
                         <img :src="item.thumbnail_src" :alt="item.name">
                     </div>
                 </div>
                 <p class="ms-illustration-name">{{ item.name }}</p>
-            </a>
+            </inertia-link>
         </div>
-        <inertia-link class="ms-more-btn" :href="route('frontend.'+this.type+'.index', {search})">See All</inertia-link>
+        <inertia-link  :href="route('frontend.'+this.type+'.index', {search})"><div class="ms-more-btn">See All</div></inertia-link>
     </div>
 </template>
 

@@ -67,6 +67,7 @@ class IllustrationController extends Controller
 
        $this->props['related_items'] = $relatedEngin->getRelatedItems($item);
        $this->props['popular_items'] = $popularityEngine->getIllustrations();
+       $this->props['open_modal'] = $request->ajax();
 
        return Inertia::render('Illustrations/Illustration', $this->props);
    }

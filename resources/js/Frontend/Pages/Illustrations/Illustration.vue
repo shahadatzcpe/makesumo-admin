@@ -2,10 +2,9 @@
     <frontend-layout>
 
         <div class="ms-content ms-no-sidebar">
-
-            <template v-if="openModal">
+            <template v-if="open_modal">
                 <div class="ms-overlay-section">
-                    <button class="ms-cross-btn"></button>
+                    <button class="ms-cross-btn" @click="goBack()"></button>
                     <div class="ms-overlay-content ms-lg">
                         <editable-item :item="item"></editable-item>
                         <related-item :related_items="related_items"></related-item>
@@ -16,6 +15,7 @@
             </template>
             <template>
                 <div class="pd-40">
+
                     <editable-item :item="item"></editable-item>
 
                     <related-item :related_items="related_items"></related-item>
@@ -51,8 +51,16 @@ import PopularItem from "./PopularItem";
                 type: Array,
                 required: true
             },
+            open_modal: {
+                type: Boolean,
+                default: true,
+            }
         },
-
+        methods: {
+            goBack() {
+                window.history.back();
+            }
+        }
     }
 </script>
 

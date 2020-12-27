@@ -55,7 +55,8 @@ class SearchController extends Controller
                 'slug' => $item->slug,
                 'name' => $item->name,
                 'thumbnail_src' => Storage::url($item->thumbnail_path),
-                'asset_type' => $item->asset_type
+                'asset_type' => $item->asset_type,
+                'url' => $item->url
             ];
        });
 
