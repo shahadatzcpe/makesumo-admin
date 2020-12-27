@@ -3323,6 +3323,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3336,6 +3340,10 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true,
       "default": ''
+    },
+    related_keywords: {
+      type: Array,
+      required: true
     }
   },
   components: {
@@ -3558,12 +3566,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     'search': {
       type: String,
       required: true,
       "default": ''
+    },
+    related_keywords: {
+      type: Array,
+      required: true
     }
   },
   data: function data() {
@@ -3633,6 +3650,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3647,6 +3665,10 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true,
       "default": ''
+    },
+    related_keywords: {
+      type: Array,
+      required: true
     }
   },
   data: function data() {
@@ -3871,7 +3893,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {}
+  methods: {},
+  computed: {
+    showMainNav: function showMainNav() {
+      return !(route('frontend.search.result') && this.$page.search_results && this.$page.search_results.has_items);
+    }
+  }
 });
 
 /***/ }),
@@ -40499,6 +40526,7 @@ var render = function() {
               ],
               staticClass: "ms-search-input",
               attrs: {
+                required: "",
                 name: "search",
                 placeholder: "Search for illustrations..."
               },
@@ -45325,9 +45353,18 @@ var render = function() {
     [
       _vm.search_results.has_items
         ? _c("search-result", {
-            attrs: { search: _vm.search, search_results: _vm.search_results }
+            attrs: {
+              search: _vm.search,
+              search_results: _vm.search_results,
+              related_keywords: _vm.related_keywords
+            }
           })
-        : _c("no-search-result", { attrs: { search: _vm.search } })
+        : _c("no-search-result", {
+            attrs: {
+              search: _vm.search,
+              related_keywords: _vm.related_keywords
+            }
+          })
     ],
     1
   )
@@ -45354,7 +45391,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ms-content ms-no-sidebar ms-no-subnav" }, [
+  return _c("div", { staticClass: "ms-content ms-no-sidebar" }, [
     _c("div", { staticClass: "ms-site-content" }, [
       _c("div", { staticClass: "ms-hero ms-version2" }, [
         _c("div", { staticClass: "ms-hero-text" }, [
@@ -45419,6 +45456,7 @@ var render = function() {
                   staticClass: "ms-search-input",
                   attrs: {
                     type: "text",
+                    required: "",
                     placeholder: "Search for illustrations..."
                   },
                   domProps: { value: _vm.form.search },
@@ -45461,7 +45499,28 @@ var render = function() {
                 ])
               ]
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "ms-related-tags ms-type1" },
+            _vm._l(_vm.related_keywords, function(searchTerm, key) {
+              return _c(
+                "inertia-link",
+                {
+                  key: key,
+                  staticClass: "ms-tag",
+                  attrs: {
+                    href: _vm.route("frontend.search.result", {
+                      search: searchTerm
+                    })
+                  }
+                },
+                [_vm._v(_vm._s(searchTerm))]
+              )
+            }),
+            1
+          )
         ])
       ]),
       _vm._v(" "),
@@ -45959,7 +46018,26 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _vm._m(0),
+            _c(
+              "div",
+              { staticClass: "ms-related-tags ms-type1" },
+              _vm._l(_vm.related_keywords, function(searchTerm, key) {
+                return _c(
+                  "inertia-link",
+                  {
+                    key: key,
+                    staticClass: "ms-tag",
+                    attrs: {
+                      href: _vm.route("frontend.search.result", {
+                        search: searchTerm
+                      })
+                    }
+                  },
+                  [_vm._v(_vm._s(searchTerm))]
+                )
+              }),
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "cs-number-of-search-result" }, [
               _vm._v(_vm._s(_vm.search_results.total) + " assets found")
@@ -45989,15 +46067,6 @@ var render = function() {
                 search: _vm.search,
                 label: "3D illustrations"
               }
-            }),
-            _vm._v(" "),
-            _c("search-result-section", {
-              attrs: {
-                results: _vm.search_results.icon,
-                type: "icons",
-                search: _vm.search,
-                label: "Icons"
-              }
             })
           ],
           1
@@ -46006,22 +46075,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ms-related-tags ms-type1" }, [
-      _c("a", { staticClass: "ms-tag", attrs: { href: "#" } }, [
-        _vm._v("Material Clock")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "ms-tag", attrs: { href: "#" } }, [
-        _vm._v("flat clock")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -46586,7 +46640,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    !_vm.route().current("frontend.search.result")
+    _vm.showMainNav
       ? _c(
           "div",
           { staticClass: "ms-sub-header" },

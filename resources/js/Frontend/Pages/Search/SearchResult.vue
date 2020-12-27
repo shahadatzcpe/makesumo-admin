@@ -17,8 +17,9 @@
                             </div>
                         </form>
                         <div class="ms-related-tags ms-type1">
-                            <a href="#" class="ms-tag">Material Clock</a>
-                            <a href="#" class="ms-tag">flat clock</a>
+                            <inertia-link :key="key" v-for="(searchTerm, key) in related_keywords"
+                               :href="route('frontend.search.result', { search: searchTerm } )"
+                            class="ms-tag">{{ searchTerm }}</inertia-link>
                         </div>
                         <div class="cs-number-of-search-result">{{ search_results.total }} assets found</div>
                     </div>
@@ -28,7 +29,7 @@
                 <div class="ms-global-search-results-wrap">
                     <search-result-section :results="search_results.illustration" type="illustrations" :search="search" label="2D illustrations"></search-result-section>
                     <search-result-section :results="search_results.illustration3d" type="illustrations3d" :search="search" label="3D illustrations"></search-result-section>
-                    <search-result-section :results="search_results.icon" type="icons" :search="search" label="Icons"></search-result-section>
+<!--                    <search-result-section :results="search_results.icon" type="icons" :search="search" label="Icons"></search-result-section>-->
                 </div>
             </div>
         </div>
@@ -49,6 +50,10 @@
                 type: String,
                 required: true,
                 default: ''
+            },
+            related_keywords: {
+                type: Array,
+                required: true,
             }
         },
         data () {

@@ -5,20 +5,20 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Tag;
+use App\SearchEngine\SearchEngine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class SearchController extends Controller
 {
-   public function result(Request $request)
+   public function result(Request $request, SearchEngine $searchEngine)
    {
        $tag = Tag::where('name', $request->search)->first();
 
        $this->props['search_results'] = $this->getSearchResults($tag);
        $this->props['search'] = $request->search;
-
-//       return $this->props;
+       $this->props['related_keywords'] = $searchEngine->getRelatedKeywords(4);
        return Inertia::render('Search/Index', $this->props);
    }
 

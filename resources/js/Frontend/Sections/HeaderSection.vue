@@ -23,7 +23,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="ms-sub-header" v-if="!route().current('frontend.search.result')" >
+        <div class="ms-sub-header" v-if="showMainNav" >
             <inertia-link :href="route('frontend.illustrations.index')" class="ms-sub-nav-item" :class="{'ms-active': route().current('frontend.illustrations.*') && !route().current('frontend.illustrations3d.*') }">
                 <div class="ms-sub-nav-item-img"><img src="/assets/img/nav-img1.png" alt="Illustrations"></div>
                 <span>Illustration</span>
@@ -44,6 +44,11 @@
 <script>
     export default {
         methods: {
+        },
+        computed: {
+            showMainNav() {
+                return !(route('frontend.search.result') && this.$page.search_results && this.$page.search_results.has_items)
+            }
         }
     }
 </script>

@@ -15,6 +15,5 @@
             FooterSection,
             HeaderSection
         }
-
     }
 </script>

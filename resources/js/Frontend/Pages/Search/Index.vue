@@ -1,7 +1,11 @@
 <template>
     <frontend-layout>
-        <search-result v-if="search_results.has_items" :search="search" :search_results="search_results"></search-result>
-        <no-search-result v-else :search="search"></no-search-result>
+        <search-result v-if="search_results.has_items"
+                       :search="search"
+                       :search_results="search_results"
+                       :related_keywords="related_keywords"
+        ></search-result>
+        <no-search-result v-else :search="search" :related_keywords="related_keywords"></no-search-result>
     </frontend-layout>
 </template>
 
@@ -19,6 +23,10 @@
               type: String,
               required: true,
               default: ''
+            },
+            related_keywords: {
+                type: Array,
+                required: true,
             }
         },
         components: {SearchResult, FrontendLayout, NoSearchResult}
