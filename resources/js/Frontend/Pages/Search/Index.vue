@@ -5,7 +5,10 @@
                        :search_results="search_results"
                        :related_keywords="related_keywords"
         ></search-result>
-        <no-search-result v-else :search="search" :related_keywords="related_keywords"></no-search-result>
+        <no-search-result v-else :search="search" :related_keywords="related_keywords"
+            :popular_illustrations3d="popular_illustrations3d"
+            :popular_illustrations="popular_illustrations"
+        ></no-search-result>
     </frontend-layout>
 </template>
 
@@ -25,6 +28,14 @@
               default: ''
             },
             related_keywords: {
+                type: Array,
+                required: true,
+            },
+            popular_illustrations3d: {
+                type: Array,
+                required: true,
+            },
+            popular_illustrations: {
                 type: Array,
                 required: true,
             }

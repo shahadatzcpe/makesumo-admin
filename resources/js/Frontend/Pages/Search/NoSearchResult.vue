@@ -29,184 +29,18 @@
                 </div><!-- .ms-hero-text -->
             </div><!-- .ms-hero -->
             <div class="ms-site-content-in ms-version2">
-                <div class="ms-popular-assets-title">Most popular assets</div>
-                <div class="ms-illustration-list ms-style1 ms-col-8">
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration2.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                    <div class="ms-card ms-style1">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img src="assets/img/illustration1.svg" alt="Collaboration">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">Collaboration</p>
-                    </div>
-                </div>
+                <popular-illustration3d :popular_items="popular_illustrations3d"></popular-illustration3d>
+                <popular-illustration :popular_items="popular_illustrations"></popular-illustration>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import PopularIllustration from "../Illustrations/PopularItem";
+    import PopularIllustration3d from "../Illustrations3d/PopularItem";
     export default {
+        components: {PopularIllustration, PopularIllustration3d},
         props: {
             'search': {
                 type: String,
@@ -214,6 +48,14 @@
                 default: ''
             },
             related_keywords: {
+                type: Array,
+                required: true,
+            },
+            popular_illustrations3d: {
+                type: Array,
+                required: true,
+            },
+            popular_illustrations: {
                 type: Array,
                 required: true,
             }

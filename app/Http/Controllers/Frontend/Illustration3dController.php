@@ -55,6 +55,7 @@ class Illustration3dController extends Controller
 
     public function show(Request $request, AssetSet $assetSet, Item $item, RelatedEngine $relatedEngin, PopularityEngine $popularityEngine)
     {
+
         $this->props['item'] = $item->load([
             'assets' => function($query) {
                 $query->with([
@@ -65,8 +66,9 @@ class Illustration3dController extends Controller
             },
             'tags']);
 
+        $item->increasePageViews();
         $this->props['related_items'] = $relatedEngin->getRelatedItems($item);
-        $this->props['popular_items'] = $popularityEngine->getIllustrations();
+        $this->props['popular_items'] = $popularityEngine->get3DIllustrations();
         $this->props['open_modal'] = $request->ajax();
 
         return Inertia::render('Illustrations3d/Illustration', $this->props);
@@ -77,13 +79,13 @@ class Illustration3dController extends Controller
     private function setupProps(Request $request, SearchEngine $searchEngine, PopularityEngine $popularityEngine)
     {
         if($request->search) {
-            $this->props['search_results'] = $searchEngine->getIllustrations();
+            $this->props['search_results'] = $searchEngine->get3DIllustrations();
             $this->props['related_keywords'] = $searchEngine->getRelatedKeywords(4);
         }
 
         if(!$this->props['search_results']) {
-            $this->props['popular_items'] = $popularityEngine->getIllustrations();
-            $this->props['asset_sets'] = $searchEngine->getIllustrationSets();
+            $this->props['popular_items'] = $popularityEngine->get3DIllustrations();
+            $this->props['asset_sets'] = $searchEngine->get3dIllustrationSets();
         }
     }
 }

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     const ILLUSTRATION = 'illustration';
-    const ILLUSTRATION3D = 'illustration3d';
+    const ILLUSTRATION3D = '3d';
     const ICON = 'icon';
 
     use HasFactory;
 
+    protected $fillable =['page_views'];
 
     protected $appends = ['width', 'height'];
 
@@ -111,11 +112,16 @@ class Item extends Model
 
         switch ($this->asset_type) {
             case '3d':
-                return route('frontend.illustrations3d.assets-set', $this->slug);
+                return route('frontend.illustrations3d.asset', [$this->assetSet, $this->slug]);
 
                 break;
         }
 
         return route('frontend.illustrations.asset', [$this->assetSet, $this]);
+    }
+
+    public function increasePageViews()
+    {
+        $this->update(['page_views' => $this->page_views +1]);
     }
 }

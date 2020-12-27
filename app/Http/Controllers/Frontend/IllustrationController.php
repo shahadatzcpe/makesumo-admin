@@ -55,6 +55,8 @@ class IllustrationController extends Controller
 
    public function show(Request $request, AssetSet $assetSet, Item $item, RelatedEngine $relatedEngin, PopularityEngine $popularityEngine)
    {
+       $item->increasePageViews();
+
        $this->props['item'] = $item->load([
            'assets' => function($query) {
                $query->with([
@@ -65,8 +67,8 @@ class IllustrationController extends Controller
             },
            'tags']);
 
-       $this->props['related_items'] = $relatedEngin->getRelatedItems($item);
-       $this->props['popular_items'] = $popularityEngine->getIllustrations();
+       $this->props['related_items'] = $relatedEngin->getRelatedItems($item, 12);
+       $this->props['popular_items'] = $popularityEngine->getIllustrations(12);
        $this->props['open_modal'] = $request->ajax();
 
        return Inertia::render('Illustrations/Illustration', $this->props);
