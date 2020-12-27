@@ -79,6 +79,8 @@
             </span>
             <inertia-link v-for="(tag, key) in tags" :key="key" :href="route('frontend.illustrations.index', {search: tag.name})"  class="ms-tag">{{ tag.name }}</inertia-link>
         </div>
+
+
     </div>
 </template>
 
@@ -132,7 +134,7 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
               canvas: null,
               assets: [],
               backgroundColor: null,
-              editableColors: []
+              editableColors: [],
           }
         },
 

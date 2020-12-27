@@ -1,53 +1,28 @@
 <template>
     <frontend-layout>
 
-
         <div class="ms-content ms-no-sidebar">
 
-            <div class="pd-40">
-                <editable-item :item="item"></editable-item>
-
-                <div class="ms-section-head ms-type3">
-                    <h3 class="ms-section-title">Related to {{ item.name }}</h3>
-                    <a href="#" class="ms-btn ms-style2">View More<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.209209 0.209209C0.488155 -0.0697365 0.940416 -0.0697365 1.21936 0.209209L5.50508 4.49492C5.78402 4.77387 5.78402 5.22613 5.50508 5.50508L1.21936 9.79079C0.940416 10.0697 0.488155 10.0697 0.209209 9.79079C-0.0697365 9.51184 -0.0697365 9.05958 0.209209 8.78064L3.98985 5L0.209209 1.21936C-0.0697365 0.940416 -0.0697365 0.488155 0.209209 0.209209Z" fill="#506BF0"></path></svg></a>
-                </div>
-
-                <div class="ms-illustration-list ms-style2 ms-col-6">
-
-
-                    <div class="ms-card ms-style1" :key="key" v-for="(relatedItem,key) in related_items">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img :src="relatedItem.thumbnail_src" :alt="relatedItem.name">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">{{ relatedItem.name }}</p>
+            <template v-if="openModal">
+                <div class="ms-overlay-section">
+                    <button class="ms-cross-btn"></button>
+                    <div class="ms-overlay-content ms-lg">
+                        <editable-item :item="item"></editable-item>
+                        <related-item :related_items="related_items"></related-item>
+                        <popular-item :popular_items="popular_items"></popular-item>
                     </div>
-
                 </div>
 
+            </template>
+            <template>
+                <div class="pd-40">
+                    <editable-item :item="item"></editable-item>
 
-                <div class="ms-section-head ms-type3">
-                    <h3 class="ms-section-title">Popular items</h3>
-                    <a href="#" class="ms-btn ms-style2">View More<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.209209 0.209209C0.488155 -0.0697365 0.940416 -0.0697365 1.21936 0.209209L5.50508 4.49492C5.78402 4.77387 5.78402 5.22613 5.50508 5.50508L1.21936 9.79079C0.940416 10.0697 0.488155 10.0697 0.209209 9.79079C-0.0697365 9.51184 -0.0697365 9.05958 0.209209 8.78064L3.98985 5L0.209209 1.21936C-0.0697365 0.940416 -0.0697365 0.488155 0.209209 0.209209Z" fill="#506BF0"></path></svg></a>
-                </div>
-
-                <div class="ms-illustration-list ms-style2 ms-col-6">
-
-
-                    <div class="ms-card ms-style1" :key="key" v-for="(popularItem,key) in popular_items">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img :src="popularItem.thumbnail_src" :alt="popularItem.name">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">{{ popularItem.name }}</p>
-                    </div>
+                    <related-item :related_items="related_items"></related-item>
+                    <popular-item :popular_items="popular_items"></popular-item>
 
                 </div>
-            </div>
-
-
+            </template>
 
 
         </div>
@@ -59,9 +34,11 @@
 
 import FrontendLayout from "../../FrontendLayout";
 import EditableItem from "./EditableItem";
+import RelatedItem from "./RelatedItem";
+import PopularItem from "./PopularItem";
 
     export default {
-        components: {EditableItem, FrontendLayout},
+        components: {PopularItem, RelatedItem, EditableItem, FrontendLayout},
         props: {
             item: {
                 type: Object,

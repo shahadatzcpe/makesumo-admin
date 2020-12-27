@@ -24,14 +24,7 @@
             <div class="ms-popular-assets-title">Most popular assets</div>
             <div class="ms-illustration-list ms-style1 ms-col-7">
 
-                <div class="ms-card ms-style1" :key="key" v-for="(pitem,key) in popular_items">
-                    <div class="ms-illustration-wrap">
-                        <div class="ms-illustration">
-                            <img :src="pitem.thumbnail_src" :alt="pitem.name">
-                        </div>
-                    </div>
-                    <p class="ms-illustration-name">{{ pitem.name }}</p>
-                </div>
+                <item :key="key" v-for="(item,key) in popular_items" :item="item" />
 
             </div>
         </div>
@@ -41,9 +34,10 @@
 <script>
 import FrontendLayout from "../../FrontendLayout";
 import SiteBar from "./SiteBar";
+import Item from './Item'
 
 export default {
-    components: {SiteBar, FrontendLayout},
+    components: {SiteBar, FrontendLayout, Item},
     props: {
         related_keywords: {
             type: Array,

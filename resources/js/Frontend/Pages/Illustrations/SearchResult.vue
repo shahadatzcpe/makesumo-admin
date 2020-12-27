@@ -33,17 +33,7 @@
         <div class="ms-site-content-in">
             <div class="ms-local-search-results-wrap">
                 <div class="ms-illustration-list ms-style3 ms-col-10">
-
-                    <div class="ms-card ms-style1" :key="key" v-for="(searchItem,key) in search_results">
-                        <div class="ms-illustration-wrap">
-                            <div class="ms-illustration">
-                                <img :src="searchItem.thumbnail_src" :alt="searchItem.name">
-                            </div>
-                        </div>
-                        <p class="ms-illustration-name">{{ searchItem.name }}</p>
-                    </div>
-
-
+                    <item :key="key" v-for="(item,key) in search_results" :item="item" />
                 </div>
             </div>
         </div>
@@ -53,8 +43,9 @@
 <script>
     import FrontendLayout from "../../FrontendLayout";
     import SiteBar from "./SiteBar";
+    import Item from "./Item";
     export default {
-        components: {SiteBar, FrontendLayout},
+        components: {Item, SiteBar, FrontendLayout},
         props: {
             related_keywords: {
                 type: Array,

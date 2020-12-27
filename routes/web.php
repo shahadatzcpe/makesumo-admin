@@ -32,6 +32,7 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
     Route::get('/icons/{assetSet}/{asset}', 'IconController@show')->name('frontend.icons.asset');
 
     Route::get('/search', 'SearchController@globalSearch')->name('frontend.search.result'); // done
+    Route::get('/sitemap.xml', 'SitemapController@preview')->name('sitemap.xml'); // done
 
 });
 
