@@ -60,4 +60,14 @@ class Asset extends Model
     {
         return $this->colors()->where('is_editable', 1)->exists();
     }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function isSVG()
+    {
+        return strtolower(substr($this->path, -3));
+    }
 }

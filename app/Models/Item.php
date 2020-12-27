@@ -18,10 +18,10 @@ class Item extends Model
     protected $appends = ['width', 'height'];
 
     public function getWidthAttribute() {
-        return 1925;
+        return $this->attributes['width'] ?? 0;
     }
     public function getHeightAttribute() {
-        return 2378;
+        return $this->attributes['height'] ?? 0;
     }
 
     /**
@@ -123,5 +123,43 @@ class Item extends Model
     public function increasePageViews()
     {
         $this->update(['page_views' => $this->page_views +1]);
+    }
+
+
+    public function updateHeightWidth()
+    {
+
+        foreach($this->assets as $asset){
+            try {
+                $fileLoc = storage_path('app/public/' . $asset->path);
+                if( $asset->isSVG()){
+                    $xml = file_get_contents($fileLoc);
+                    $xmlget = simplexml_load_string($xml);
+                    if($xmlget) {
+                        $xmlattributes = $xmlget->attributes();
+                        $width = (string) $xmlattributes->width;
+                        $height = (string) $xmlattributes->height;
+
+                    } else {
+                        $width = 0;
+                        $height = 0;
+                    }
+                } else {
+                    list($width, $height, $type, $attr) = getimagesize($fileLoc);
+                }
+
+                if($height && $width) {
+                    $this->height = $height;
+                    $this->width = $width;
+                    $this->save();
+                    break;
+                }
+            }
+            catch (\Exception $exception)
+            {
+                \Log::error($exception->getMessage(). $exception->getFile() .':' . $exception->getLine() . " - Aset ID:". $asset->id);
+            }
+        }
+
     }
 }

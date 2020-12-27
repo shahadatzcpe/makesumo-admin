@@ -15,6 +15,8 @@ class AddPageviewColumnItems extends Migration
     {
         Schema::table('items', function (Blueprint $blueprint){
             $blueprint->unsignedBigInteger('page_views')->default(0);
+            $blueprint->unsignedInteger('height')->default(0);
+            $blueprint->unsignedInteger('width')->default(0);
         });
     }
 
@@ -27,6 +29,8 @@ class AddPageviewColumnItems extends Migration
     {
         Schema::table('items', function (Blueprint $blueprint){
             $blueprint->dropColumn('page_views');
+            $blueprint->dropColumn('height');
+            $blueprint->dropColumn('width');
         });
     }
 }
