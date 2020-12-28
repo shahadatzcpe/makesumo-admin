@@ -22,7 +22,7 @@ class AssetSetController extends Controller
     public function index(Request $request)
     {
         $filters = $request->all(['search', 'trashed', 'asset_type', 'subscription']);
-        $assetSets = AssetSet::filter($filters)->paginate(1)->withQueryString();
+        $assetSets = AssetSet::filter($filters)->paginate(20)->withQueryString();
 
         $assetSets->getCollection()->transform(function ($assetSet) {
             return [
