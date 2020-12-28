@@ -13,7 +13,7 @@
                 </div>
 
             </template>
-            <template>
+            <template v-else>
                 <div class="pd-40">
 
                     <editable-item :item="item"></editable-item>

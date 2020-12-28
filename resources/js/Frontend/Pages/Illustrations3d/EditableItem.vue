@@ -141,7 +141,7 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
         mounted() {
             //setup canvas
             this.canvas = document.getElementById('canvas');
-            console.log(this.canvas);
+
             this.canvas.getContext("2d").globalCompositeOperation = 'multiply';
 
             //add all assets
