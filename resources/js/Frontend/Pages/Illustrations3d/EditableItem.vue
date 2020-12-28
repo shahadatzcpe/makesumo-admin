@@ -184,10 +184,10 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
             changeColor: _.debounce(function (editableColor, colorObj) {
                 this.assets.forEach((currentValue, index) => {
                     if(currentValue.id === colorObj.asset_id) {
-                        colorObj.edited_value=editableColor
-                        var svgStr = currentValue.response;
-                        var editedStr = svgStr.replaceAll(colorObj.original_color, colorObj.edited_value)
-                        currentValue.imageDataUrl = "data:image/svg+xml;base64," + btoa(editedStr);
+                        colorObj.edited_value = editableColor
+                        currentValue.response = currentValue.response.replaceAll(colorObj.original_color, colorObj.edited_value)
+                        colorObj.original_color = editableColor
+                        currentValue.imageDataUrl = "data:image/svg+xml;base64," + btoa(currentValue.response);
                         this.assets[index] = currentValue;
                     }
                 });
