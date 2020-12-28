@@ -37,16 +37,6 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
 });
 
 
-Route::get('abc', function() {
-    $item = \App\Models\Item::all();
-
-    foreach ($item as $i) {
-        $i->updateHeightWidth();
-    }
-
-});
-
-
 
 
 

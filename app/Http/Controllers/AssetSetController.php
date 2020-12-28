@@ -155,9 +155,7 @@ class AssetSetController extends Controller
             $asset->item_id = $item->id;
             $asset->save();
 
-
-            list($width, $height, $type, $attr) = getimagesize(storage_path('app/public/' . $asset->path));
-
+            $item->updateHeightWidth();
             return 1;
         }
 
@@ -181,10 +179,6 @@ class AssetSetController extends Controller
                 $asset->original_name = $fileinfo['basename'];
                 $asset->item_id = $item->id;
                 $asset->save();
-
-                if($i = 0) {
-                    list($width, $height, $type, $attr) = getimagesize(storage_path('app/public/' . $asset->path));
-                }
                 $images[] = $asset->src;
             }
 
@@ -204,10 +198,7 @@ class AssetSetController extends Controller
 
 
 
-        $item->width = $width;
-        $item->height = $height;
-        $item->save();
-
+        $item->updateHeightWidth();
         return 2;
     }
 

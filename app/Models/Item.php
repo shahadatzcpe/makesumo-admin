@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Item extends Model
 {
@@ -128,7 +129,7 @@ class Item extends Model
 
     public function updateHeightWidth()
     {
-
+        Log::info("Item ID: {$this->id}, Updating item height width." );
         foreach($this->assets as $asset){
             try {
                 $fileLoc = storage_path('app/public/' . $asset->path);
@@ -159,6 +160,9 @@ class Item extends Model
             {
                 \Log::error($exception->getMessage(). $exception->getFile() .':' . $exception->getLine() . " - Aset ID:". $asset->id);
             }
+
+
+            Log::info("Item ID: {$this->id},  Successfully height width updated." );
         }
 
     }
