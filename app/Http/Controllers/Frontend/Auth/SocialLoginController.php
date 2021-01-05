@@ -25,7 +25,8 @@ class SocialLoginController extends Controller
         $newUser = User::create([
             'name' => $socialuser->getName(),
             'email' => $socialuser->getEmail(),
-            'google_id'=> $socialuser->getId()
+            'google_id'=> $socialuser->getId(),
+            'password' => bcrypt(time() . $socialuser->getId())
         ]);
 
         return $newUser;
