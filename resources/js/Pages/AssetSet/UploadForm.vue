@@ -47,7 +47,7 @@
                     url: route('asset-sets.upload-item', this.asset_set.id),
                     thumbnailWidth: 150,
                     thumbnailHeight: 150,
-                    maxFilesize: 3,
+                    maxFilesize: 5,
                     headers: { "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content }
                 }
             }
