@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
@@ -44,6 +45,7 @@ class SocialLoginController extends Controller
             return redirect('/');
 
         } catch (\Exception $e) {
+            Log::info($e->getMessage());
             return redirect("auth/{$provider}");
         }
     }
