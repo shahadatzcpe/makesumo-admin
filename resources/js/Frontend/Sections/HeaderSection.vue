@@ -15,12 +15,34 @@
                     <path d="M156.502 15.952C156.861 15.952 157.213 15.8847 157.557 15.7499C157.902 15.6152 158.201 15.4205 158.456 15.166C158.71 14.8965 158.912 14.5672 159.062 14.1779C159.227 13.7886 159.309 13.332 159.309 12.808C159.309 12.284 159.227 11.8273 159.062 11.4381C158.912 11.0488 158.71 10.7269 158.456 10.4724C158.201 10.2029 157.902 10.0008 157.557 9.86603C157.213 9.73128 156.861 9.66391 156.502 9.66391C156.142 9.66391 155.791 9.73128 155.446 9.86603C155.102 10.0008 154.802 10.2029 154.548 10.4724C154.293 10.7269 154.084 11.0488 153.919 11.4381C153.769 11.8273 153.695 12.284 153.695 12.808C153.695 13.332 153.769 13.7886 153.919 14.1779C154.084 14.5672 154.293 14.8965 154.548 15.166C154.802 15.4205 155.102 15.6152 155.446 15.7499C155.791 15.8847 156.142 15.952 156.502 15.952ZM156.502 6.94654C157.325 6.94654 158.089 7.09626 158.792 7.39569C159.511 7.68016 160.125 8.08439 160.634 8.6084C161.158 9.11744 161.562 9.73128 161.847 10.4499C162.146 11.1686 162.296 11.9546 162.296 12.808C162.296 13.6614 162.146 14.4474 161.847 15.166C161.562 15.8697 161.158 16.4835 160.634 17.0075C160.125 17.5316 159.511 17.9433 158.792 18.2427C158.089 18.5272 157.325 18.6694 156.502 18.6694C155.678 18.6694 154.907 18.5272 154.189 18.2427C153.485 17.9433 152.871 17.5316 152.347 17.0075C151.838 16.4835 151.434 15.8697 151.134 15.166C150.85 14.4474 150.708 13.6614 150.708 12.808C150.708 11.9546 150.85 11.1686 151.134 10.4499C151.434 9.73128 151.838 9.11744 152.347 8.6084C152.871 8.08439 153.485 7.68016 154.189 7.39569C154.907 7.09626 155.678 6.94654 156.502 6.94654Z" fill="rgba(13, 13, 16, 0.9)"></path>
                 </svg>
             </inertia-link>
+
             <nav class="ms-nav">
                 <ul class="ms-nav-list">
-                    <li><a href="#">Free Accounts</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#" class="ms-btn ms-style1">⚡ Go Pro</a></li>
+                    <template v-if="$page.user">
+                        <li><a href="#" class="ms-btn ms-style1">⚡ Go Pro</a></li>
+                    </template>
+                   <template v-else>
+                       <li @click="showLoginModal = true"><a href="#">Free Accounts</a></li>
+                       <li @click="showLoginModal = true"><a href="#">Login</a></li>
+                   </template>
                 </ul>
+
+                <div class="ms-dropdown" v-if="$page.user">
+                    <div class="ms-dropdown-btn">
+                        <div class="ms-header-avatar">
+                            <img :src="$page.user.profile_photo_url" :alt="$page.user.name">
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.79079 0.21967C10.0697 0.512563 10.0697 0.987437 9.79079 1.28033L5.50508 5.78033C5.22613 6.07322 4.77387 6.07322 4.49492 5.78033L0.209209 1.28033C-0.0697365 0.987436 -0.0697365 0.512563 0.209209 0.219669C0.488155 -0.0732237 0.940416 -0.0732237 1.21936 0.21967L5 4.18934L8.78064 0.21967C9.05958 -0.0732233 9.51184 -0.0732233 9.79079 0.21967Z" fill="#1C1C1E" fill-opacity="0.5"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <input type="checkbox" class="ms-toggle-controll">
+                    <div class="ms-dropdown-body">
+                        <a href="#" class="ms-dropdown-item">Useful Link</a>
+                        <a href="#" class="ms-dropdown-item">Profile</a>
+                        <inertia-link method="post" :href="route('logout')"  class="ms-dropdown-item">Log out</inertia-link>
+                    </div>
+                </div>
             </nav>
         </div>
         <div class="ms-sub-header" v-if="showMainNav" >
@@ -38,17 +60,23 @@
                 <span class="ms-label">Coming soon...</span>
             </inertia-link>
         </div>
+        <login-modal v-if="showLoginModal" @close="showLoginModal=false"></login-modal>
     </header>
 </template>
 
 <script>
+    import LoginModal from "../Components/LoginModal";
     export default {
-        methods: {
+        components: {LoginModal},
+        data() {
+            return {
+                showLoginModal: false,
+            }
         },
         computed: {
             showMainNav() {
                 return !(route('frontend.search.result') && this.$page.search_results && this.$page.search_results.has_items)
             }
-        }
+        },
     }
 </script>

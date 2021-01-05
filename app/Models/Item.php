@@ -16,7 +16,7 @@ class Item extends Model
 
     protected $fillable =['page_views'];
 
-    protected $appends = ['width', 'height'];
+    protected $appends = ['width', 'height', 'is_premium'];
 
     public function getWidthAttribute() {
         return $this->attributes['width'] ?? 0;
@@ -165,5 +165,10 @@ class Item extends Model
             Log::info("Item ID: {$this->id},  Successfully height width updated." );
         }
 
+    }
+
+    public function getIsPremiumAttribute()
+    {
+        return !$this->is_free;
     }
 }

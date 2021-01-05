@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('welcome', 'welcome');
+Route::view('welcome', 'renderable.item-thumbnail-generator');
 
 Route::domain(config('app.frontend_url'))->namespace('Frontend')
     ->group(function () {
+    Route::get('/auth/{provider}', 'Auth\SocialLoginController@redirect')
+        ->name('social-login')->where('provider', implode(',', config('auth.available_login_option')));
+    Route::get('/auth/{provider}/callback', 'Auth\SocialLoginController@handleCallback')
+        ->name('social-login-callback')->where('provider', implode(',', config('auth.available_login_option')));
 
-    Route::get('/', 'HomepageController@homepage')->name('frontend.homepage'); //done
+
+        Route::get('/', 'HomepageController@homepage')->name('frontend.homepage'); //done
     Route::get('/illustrations', 'IllustrationController@index')->name('frontend.illustrations.index');
     Route::get('/illustrations/{assetSet:slug}', 'IllustrationController@assetSet')->name('frontend.illustrations.assets-set');
     Route::get('/illustrations/{assetSet:slug}/{item:slug}', 'IllustrationController@show')->name('frontend.illustrations.asset');
@@ -41,6 +46,7 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
 
 
 
+return ;
 
 
 Route::domain(config('app.url'))->group(function () {

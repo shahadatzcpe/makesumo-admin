@@ -66,10 +66,16 @@
                 </div>
                 <div class="ms-card-seperator"></div>
                 <div class="ms-btn-group">
-                    <button class="ms-btn ms-style3 ms-color1" @click="downloadFreePng">Download Free PNG</button>
+                    <button class="ms-btn ms-style3 ms-color1" v-if="isPremiumMember" @click="downloadPng">Download PNG</button>
+                    <button class="ms-btn ms-style3 ms-color1" v-else @click="downloadFreePng">Download Free PNG</button>
 
-                        <button class="ms-btn ms-style3 ms-color2"><svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.3467 5.33333H10.5379V3.80952C10.5379 1.67619 8.75863 0 6.49407 0C4.22952 0 2.45023 1.67619 2.45023 3.80952V5.33333H1.64146C0.751818 5.33333 0.0239258 6.01905 0.0239258 6.85714V14.4762C0.0239258 15.3143 0.751818 16 1.64146 16H11.3467C12.2363 16 12.9642 15.3143 12.9642 14.4762V6.85714C12.9642 6.01905 12.2363 5.33333 11.3467 5.33333ZM6.49407 12.1905C5.60443 12.1905 4.87654 11.5048 4.87654 10.6667C4.87654 9.82857 5.60443 9.14286 6.49407 9.14286C7.38372 9.14286 8.11161 9.82857 8.11161 10.6667C8.11161 11.5048 7.38372 12.1905 6.49407 12.1905ZM9.00126 5.33333H3.98689V3.80952C3.98689 2.51429 5.11917 1.44762 6.49407 1.44762C7.86898 1.44762 9.00126 2.51429 9.00126 3.80952V5.33333Z" fill="white"></path></svg>Unlock Large PNG</button>
-                        <div class="cs-download-note">No Watermark, High Resolution PNG ({{ item.width }}x{{ item.height }}).</div>
+                    <template v-if="needSubscription(item)">
+                        <button class="ms-btn ms-style3 ms-color2" @click="showGoProModal = true"><svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.3467 5.33333H10.5379V3.80952C10.5379 1.67619 8.75863 0 6.49407 0C4.22952 0 2.45023 1.67619 2.45023 3.80952V5.33333H1.64146C0.751818 5.33333 0.0239258 6.01905 0.0239258 6.85714V14.4762C0.0239258 15.3143 0.751818 16 1.64146 16H11.3467C12.2363 16 12.9642 15.3143 12.9642 14.4762V6.85714C12.9642 6.01905 12.2363 5.33333 11.3467 5.33333ZM6.49407 12.1905C5.60443 12.1905 4.87654 11.5048 4.87654 10.6667C4.87654 9.82857 5.60443 9.14286 6.49407 9.14286C7.38372 9.14286 8.11161 9.82857 8.11161 10.6667C8.11161 11.5048 7.38372 12.1905 6.49407 12.1905ZM9.00126 5.33333H3.98689V3.80952C3.98689 2.51429 5.11917 1.44762 6.49407 1.44762C7.86898 1.44762 9.00126 2.51429 9.00126 3.80952V5.33333Z" fill="white"></path></svg>Unlock Large PNG</button>
+                        <go-pro-modal v-if="showGoProModal" @close="showGoProModal=false" :item="item" @download="downloadPng"></go-pro-modal>
+                    </template>
+
+                    <div class="cs-download-note">No Watermark, High Resolution PNG ({{ item.width }}x{{ item.height }}).</div>
+
                 </div>
             </div>
         </div>
@@ -92,6 +98,7 @@
 // Source from:  http://stackoverflow.com/questions/18480474/how-to-save-an-image-from-canvas
 
 /* Canvas Donwload */
+import GoProModal from "../../Components/GoProModal";
 function download(canvas, filename) {
     /// create an "off-screen" anchor tag
     var lnk = document.createElement('a'), e;
@@ -123,7 +130,7 @@ import _ from 'underscore';
 import toastr from 'toastr';
 import InputColorPicker from "../../../Shared/InputColorPicker";
     export default {
-        components: {InputColorPicker},
+        components: {GoProModal, InputColorPicker},
         props: {
             item: {
                 type: Object,
@@ -131,6 +138,8 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
         },
         data () {
           return {
+
+              showGoProModal: false,
               canvas: null,
               assets: [],
               backgroundColor: null,
@@ -181,6 +190,12 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
             }
         },
         methods: {
+            needSubscription (item) {
+                if(this.isPremiumMember) {
+                    return false;
+                }
+                return item.is_premium;
+            },
             changeColor: _.debounce(function (editableColor, colorObj) {
                 this.assets.forEach((currentValue, index) => {
                     if(currentValue.id === colorObj.asset_id) {
@@ -267,6 +282,9 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
             },
             tags() {
                 return this.item.tags
+            },
+            isPremiumMember() {
+                return this.$page.user && this.$page.user.is_premium_subscriber;
             }
         }
     }

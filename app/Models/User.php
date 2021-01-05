@@ -16,7 +16,7 @@ class User extends Authenticatable
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
+//    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id'
     ];
 
     /**
@@ -39,7 +40,16 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'created_at',
+        'updated_at',
+        'two_factor_enabled',
+        'email_verified_at',
+        'email_verified_at',
+        'current_team_id',
+        'profile_photo_path'
     ];
+
+
 
     /**
      * The attributes that should be cast to native types.
@@ -57,5 +67,12 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'is_premium_subscriber'
     ];
+
+    public function getIsPremiumSubscriberAttribute()
+    {
+        //@todo need to add premium subscriber condition
+        return false;
+    }
 }
