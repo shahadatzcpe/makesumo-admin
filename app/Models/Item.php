@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 class Item extends Model
 {
@@ -13,6 +15,8 @@ class Item extends Model
     const ICON = 'icon';
 
     use HasFactory;
+
+    use Searchable;
 
     protected $fillable =['page_views'];
 
@@ -170,5 +174,33 @@ class Item extends Model
     public function getIsPremiumAttribute()
     {
         return !$this->is_free;
+    }
+
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'tags' => $this->getTagsAsStringAttribute(),
+            'category' => $this->assetSet->name,
+            'keywords' => join(' ', [
+                $this->is_premium ? "Premium" : "Free",
+                $this->assetSet->asset_type
+            ]),
+            'thumbnail_src' => Storage::url($this->thumbnail_path),
+        ];
+    }
+
+    private function getTagsAsStringAttribute() {
+        return $this->tags->pluck('name')->join(' ');
+    }
+
+    public function getSearchNameAttribute() {
+        return implode(' ', [
+            'id' => $this->id,
+            'name' => $this->name,
+            'tags' => $this->getTagsAsStringAttribute(),
+        ]);
     }
 }

@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 class AssetSet extends Model
 {
     use SoftDeletes;
     use HasFactory;
+    use Searchable;
 
     protected $appends = [
         'thumbnail_src',
@@ -101,5 +103,19 @@ class AssetSet extends Model
     public function draftItems()
     {
         return $this->items()->where('status', 'draft');
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'items' => $this->items->pluck('search_name')->join(' '),
+            'keywords' => join(' ', [
+                $this->is_free ? "Free" : "Premium",
+                $this->asset_type
+            ]),
+            'thumbnail_src' => $this->thumbnail_src
+        ];
     }
 }

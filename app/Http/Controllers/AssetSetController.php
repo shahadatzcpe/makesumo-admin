@@ -215,6 +215,7 @@ class AssetSetController extends Controller
             $item->save();
             $item->updateTags($itemData['tags']);
             $colors = array_merge($colors, $itemData['colors']);
+            $item->save();
         }
 
         $editablecolors = array_filter($colors, function($item) {
@@ -229,6 +230,7 @@ class AssetSetController extends Controller
         Color::whereIn('id', array_column($editablecolors, 'id'))->update(['is_editable' => 1]);
         Color::whereIn('id', array_column($notEditablecolors, 'id'))->update(['is_editable' => 0]);
 
+        $assetSet->save();
         return response()->redirectToRoute('asset-sets.show', $assetSet);
     }
 
