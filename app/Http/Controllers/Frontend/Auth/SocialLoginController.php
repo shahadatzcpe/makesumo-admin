@@ -20,16 +20,25 @@ class SocialLoginController extends Controller
         return User::where('google_id', $userId)->first();
     }
 
+    private function getDuplicateAccount($provider, $socialuser) {
+        return User::where('email', $socialuser->getEmail())->first();
+    }
+
     private function registerUser($provider, \Laravel\Socialite\Contracts\User $socialuser)
     {
-        $newUser = User::create([
-            'name' => $socialuser->getName(),
-            'email' => $socialuser->getEmail(),
-            'google_id'=> $socialuser->getId(),
-            'password' => bcrypt(time() . $socialuser->getId())
-        ]);
+        if($user = $this->getDuplicateAccount($provider, $socialuser)) {
+           $user->google_id = $socialuser->getId();
+           $user->save();
+        } else {
+            $user = User::create([
+                'name' => $socialuser->getName(),
+                'email' => $socialuser->getEmail(),
+                'google_id'=> $socialuser->getId(),
+                'password' => bcrypt(time() . $socialuser->getId())
+            ]);
+        }
 
-        return $newUser;
+        return $user;
     }
 
     public function handleCallback($provider)
