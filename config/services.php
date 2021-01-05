@@ -34,7 +34,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_OAUTH_CLIENT_ID'),
         'client_secret' => env('GOOGLE_OAUTH_CLIENT_SECRET'),
-        'redirect' => env('FRONTEND_URL') . '/auth/google',
+        'redirect' => env('FRONTEND_URL') . '/auth/google/callback',
     ],
 
 
