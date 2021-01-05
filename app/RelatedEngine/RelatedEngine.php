@@ -8,7 +8,13 @@ use Illuminate\Support\Facades\Storage;
 class RelatedEngine{
 
     public function getRelatedItems(Item  $item, $limit = 12, $offset = 0) {
-        $collection =   Item::where('asset_type', $item->asset_type)->limit(12)->get();
+        $needMoreItem = $limit;
+
+
+        $collection = Item::search('')->where('asset_type', Item::mapAssetTypeCode($item->asset_type))
+            ->take($needMoreItem)
+            ->get();
+
 
         $collection =  $collection->map(function ($item) {
             return [

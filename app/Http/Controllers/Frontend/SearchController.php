@@ -19,12 +19,11 @@ class SearchController extends Controller
         $this->props['popular_illustrations3d'] = [];
     }
 
-    public function globalSearch(Request $request, SearchEngine $searchEngine, PopularityEngine  $popularityEngine)
+   public function globalSearch(Request $request, SearchEngine $searchEngine, PopularityEngine  $popularityEngine)
    {
-       $tag = Tag::where('name', $request->search)->first();
-       $this->props['search_results'] = $this->getSearchResults($tag);
+       $this->props['search_results'] = $this->getSearchResults($request->search);
        $this->props['search'] = $request->search;
-       $this->props['related_keywords'] = $searchEngine->getRelatedKeywords(4);
+       $this->props['related_keywords'] = $searchEngine->getRelatedKeywords(4, $request->search);
 
        $this->props['popular_illustrations3d'] = $popularityEngine->get3DIllustrations(12);
        $this->props['popular_illustrations'] = $popularityEngine->getIllustrations(12);
@@ -33,13 +32,14 @@ class SearchController extends Controller
    }
 
 
-   private function getSearchResults($tag)
+   private function getSearchResults($search)
    {
+       $hasItem = Item::search($search)->exist();
        $results =  [
-           'has_items' => $tag instanceof Tag,
-           Item::ICON => $this->getResultsByItemType($tag, Item::ILLUSTRATION),
-           'illustration3d' => $this->getResultsByItemType($tag, Item::ILLUSTRATION3D),
-           Item::ILLUSTRATION => $this->getResultsByItemType($tag, Item::ILLUSTRATION),
+           'has_items' => $hasItem,
+           Item::ICON => 0 ? $this->getResultsByItemType($search, Item::ILLUSTRATION) : [],
+           'illustration3d' => $hasItem ?$this->getResultsByItemType($search, Item::ILLUSTRATION3D): [],
+           Item::ILLUSTRATION => $hasItem ? $this->getResultsByItemType($search, Item::ILLUSTRATION): [],
        ];
 
        $results['total'] = array_sum(array_column($results, 'count'));
@@ -48,16 +48,23 @@ class SearchController extends Controller
    }
 
 
-   private function getResultsByItemType($tag, $type)
+   private function getResultsByItemType($search, $type)
    {
-       if(!($tag instanceof Tag)) {
-           return [
-               'items' => [],
-               'count' => 0
-           ];
+       $collection = Item::search($search)->where('asset_type', Item::mapAssetTypeCode($type))->take(8)->get();
+
+       $needMoreItem = 8 - $collection->count();
+
+       if($needMoreItem) {
+           $items = Item::where('asset_type', $type)
+               ->orderByDesc('page_views')
+               ->whereNotIn('id', $collection->pluck('id'))
+               ->take($needMoreItem)
+               ->get();
+
+           $collection = $collection->merge($items);
        }
 
-       $collection = $tag->items()->where('asset_type', $type)->take(8)->get();
+       $total = Item::search($search)->where('asset_type', Item::mapAssetTypeCode($type))->count();
 
        $collection =  $collection->map(function ($item) {
             return [
@@ -72,7 +79,7 @@ class SearchController extends Controller
 
        return [
            'items' => $collection,
-           'count' => $tag->items()->where('asset_type', $type)->count()
+           'count' => max($total, $collection->count())
        ];
    }
 }

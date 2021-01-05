@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Laravel\Scout\Builder;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Builder::macro('count', function () {
+            return $this->engine()->getTotalCount(
+                $this->engine()->search($this)
+            );
+        });
+
+        Builder::macro('exist', function () {
+            return $this->engine()->getTotalCount(
+                $this->engine()->search($this)
+            ) ? true : false;
+        });
     }
 }

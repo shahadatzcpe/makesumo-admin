@@ -47,7 +47,7 @@ class SearchEngine{
     }
 
     public function getIllustrations($limit = null, $offset = null) {
-        $collection =   Item::filter(request())->get();
+        $collection =   Item::search(request('search'))->where('asset_type', Item::mapAssetTypeCode(Item::ILLUSTRATION))->get();
 
         $collection =  $collection->map(function ($item) {
             return [
@@ -65,7 +65,7 @@ class SearchEngine{
 
 
     public function get3DIllustrations($limit = null, $offset = null) {
-        $collection =   Item::filter(request())->get();
+        $collection =   Item::search(request('search'))->where('asset_type', Item::mapAssetTypeCode(Item::ILLUSTRATION3D))->get();
 
         $collection =  $collection->map(function ($item) {
             return [

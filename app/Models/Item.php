@@ -14,6 +14,18 @@ class Item extends Model
     const ILLUSTRATION3D = '3d';
     const ICON = 'icon';
 
+    public static function mapAssetTypeCode($type)
+    {
+        switch ($type) {
+            case self::ILLUSTRATION3D:
+                return 2;
+            case self::ILLUSTRATION:
+                return 1;
+            default:
+                return 3;
+        }
+    }
+
     use HasFactory;
 
     use Searchable;
@@ -184,6 +196,7 @@ class Item extends Model
             'name' => $this->name,
             'tags' => $this->getTagsAsStringAttribute(),
             'category' => $this->assetSet->name,
+            'asset_type' => self::mapAssetTypeCode($this->assetSet->asset_type),
             'keywords' => join(' ', [
                 $this->is_premium ? "Premium" : "Free",
                 $this->assetSet->asset_type
