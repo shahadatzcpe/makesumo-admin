@@ -31,6 +31,7 @@
                     <search-result-section :results="search_results.illustration3d" type="illustrations3d" :search="search" label="3D illustrations"></search-result-section>
 <!--                    <search-result-section :results="search_results.icon" type="icons" :search="search" label="Icons"></search-result-section>-->
                 </div>
+                <short-footer></short-footer>
             </div>
         </div>
     </div>
@@ -39,8 +40,9 @@
 
 <script>
     import SearchResultSection from "./SearchResultSection";
+    import ShortFooter from "../../Sections/ShortFooter";
     export default {
-        components: {SearchResultSection},
+        components: {ShortFooter, SearchResultSection},
         props: {
             'search_results': {
                 type: Object,

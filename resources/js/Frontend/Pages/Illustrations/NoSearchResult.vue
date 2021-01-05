@@ -16,6 +16,8 @@
                 <item :key="key" v-for="(item,key) in popular_items" :item="item" />
 
             </div>
+
+            <short-footer></short-footer>
         </div>
     </div>
 </template>
@@ -26,8 +28,9 @@ import SiteBar from "./SiteBar";
 import Item from './Item'
 
 import SearchBox from "./SearchBox";
+import ShortFooter from "../../Sections/ShortFooter";
 export default {
-    components: {SiteBar, FrontendLayout, Item,SearchBox},
+    components: {ShortFooter, SiteBar, FrontendLayout, Item,SearchBox},
     props: {
         related_keywords: {
             type: Array,

@@ -24,6 +24,10 @@
                 </div>
             </template>
 
+            <div class="ms-site-content-in white">
+                <short-footer></short-footer>
+            </div>
+
 
         </div>
     </frontend-layout>
@@ -36,9 +40,10 @@ import FrontendLayout from "../../FrontendLayout";
 import EditableItem from "./EditableItem";
 import RelatedItem from "./RelatedItem";
 import PopularItem from "./PopularItem";
+import ShortFooter from "../../Sections/ShortFooter";
 
     export default {
-        components: {PopularItem, RelatedItem, EditableItem, FrontendLayout},
+        components: {ShortFooter, PopularItem, RelatedItem, EditableItem, FrontendLayout},
         props: {
             item: {
                 type: Object,
@@ -67,5 +72,8 @@ import PopularItem from "./PopularItem";
 <style>
 .pd-40{
     padding: 40px;
+}
+.white{
+    background: white;
 }
 </style>

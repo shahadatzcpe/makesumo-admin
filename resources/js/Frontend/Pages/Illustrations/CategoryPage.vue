@@ -22,6 +22,7 @@
 
 
             </div>
+            <short-footer></short-footer>
         </div>
     </div>
 </template>
@@ -29,9 +30,10 @@
 <script>
 import Item from './Item'
 import SearchBox from "./SearchBox";
+import ShortFooter from "../../Sections/ShortFooter";
 
     export default {
-    components: {SearchBox, Item},
+    components: {ShortFooter, SearchBox, Item},
         props: {
           asset_set: {
               type: Object

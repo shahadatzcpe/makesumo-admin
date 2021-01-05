@@ -16,6 +16,7 @@
 
 
             </div>
+            <short-footer></short-footer>
 
         </div>
     </div>
@@ -25,8 +26,9 @@
 import Item from './Item'
 
 import SearchBox from "./SearchBox";
+import ShortFooter from "../../Sections/ShortFooter";
 export default {
-    components: {Item, SearchBox},
+    components: {ShortFooter, Item, SearchBox},
     props: {
         popular_items: {
             type: Array,

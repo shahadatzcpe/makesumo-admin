@@ -23,6 +23,7 @@
                 <div class="ms-illustration-list ms-style3 ms-col-10">
                     <item :key="key" v-for="(item,key) in search_results" :item="item" />
                 </div>
+                <short-footer></short-footer>
             </div>
         </div>
     </div>
@@ -33,8 +34,9 @@
     import SiteBar from "./SiteBar";
     import Item from "./Item";
     import SearchBox from "./SearchBox";
+    import ShortFooter from "../../Sections/ShortFooter";
     export default {
-        components: {Item, SiteBar, FrontendLayout,SearchBox},
+        components: {ShortFooter, Item, SiteBar, FrontendLayout,SearchBox},
         props: {
             related_keywords: {
                 type: Array,

@@ -8,6 +8,6 @@ class IconController extends Controller
 {
    public function index()
    {
-
+        return "Coming soon...";
    }
 }
