@@ -22,6 +22,10 @@ class Asset extends Model
     {
         static::created(function ($asset) {
 
+            if(str_contains(pathinfo(strtolower($asset->path), PATHINFO_FILENAME), 'nocolor')) {
+                return;
+            }
+
             $ext = strtolower(pathinfo($asset->path, PATHINFO_EXTENSION));
 
             if($ext == 'svg') {

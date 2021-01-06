@@ -8,7 +8,9 @@
     </head>
     <body>
         @foreach($images as $img)
-            <img src="{{ $img }}" style="max-width: 200px; max-height: 200px; position: absolute; top: 0px">
+            <div style="width: 200px; height: 200px; position: absolute; top: 0px; overflow: hidden; display: flex; justify-content: center;align-items: center">
+                <img src="{{ $img }}" style="max-width: 100%; max-height: 100%; mix-blend-mode: multiply">
+            </div>
         @endforeach
     </body>
 </html>

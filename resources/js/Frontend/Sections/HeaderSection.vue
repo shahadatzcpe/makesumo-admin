@@ -54,11 +54,11 @@
                 <div class="ms-sub-nav-item-img"><img src="/assets/img/nav-img2.png" alt="3d Illustration"></div>
                 <span>3D Illustration</span>
             </inertia-link>
-            <inertia-link :href="route('frontend.icons.index')" class="ms-sub-nav-item" :class="{'ms-active': route().current('frontend.icons.*') }">
+            <a href="#" class="ms-sub-nav-item" :class="{'ms-active': route().current('frontend.icons.*') }">
                 <div class="ms-sub-nav-item-img"><img src="/assets/img/nav-img1.png" alt=""></div>
                 <span>Icon Set</span>
                 <span class="ms-label">Coming soon...</span>
-            </inertia-link>
+            </a>
         </div>
         <login-modal v-if="showLoginModal" @close="showLoginModal=false"></login-modal>
     </header>
