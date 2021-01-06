@@ -39,14 +39,12 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
     Route::get('/search', 'SearchController@globalSearch')->name('frontend.search.result'); // done
     Route::get('/sitemap.xml', 'SitemapController@preview')->name('sitemap.xml'); // done
 
+
+    Route::get('/subscription/intent', 'SubscriptionController@subscriptionIntent')->name('subscription.intent');
+    Route::post('/subscription/subscribe', 'SubscriptionController@processSubscription')->name('subscription.process');
 });
 
 
-
-
-
-
-return ;
 
 
 Route::domain(config('app.url'))->group(function () {

@@ -10,7 +10,6 @@ if (! function_exists( 'config_keys') ) {
 
 if(! function_exists('isBackend')) {
     function isBackend() {
-        return false;
         static  $isBackend;
         if(is_null($isBackend)) {
             $isBackend = request()->root() == config('app.url');

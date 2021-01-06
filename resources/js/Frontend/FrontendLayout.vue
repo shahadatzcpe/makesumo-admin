@@ -3,6 +3,7 @@
         <header-section></header-section>
         <slot></slot>
         <footer-section v-if="$page.currentRouteName === 'frontend.homepage'"></footer-section>
+
     </div>
 </template>
 

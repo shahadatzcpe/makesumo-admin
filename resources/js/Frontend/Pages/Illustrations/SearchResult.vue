@@ -3,7 +3,7 @@
         <div class="ms-hero ms-search-hero ms-remove-border">
             <div class="ms-hero-text">
                 <div class="ms-hero-text-in">
-                    <search-box></search-box>
+                    <search-box class="search-result-page"></search-box>
                     <a href="#" class="ms-back-to-home">Free Illustrations</a>
                     <h3 class="ms-search-result-text">{{ capitalizeFirstLetter(search) }} illustration</h3>
                     <div class="ms-search-result-subtext-wrap">

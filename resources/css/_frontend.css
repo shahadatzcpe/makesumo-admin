@@ -1226,7 +1226,7 @@ a:hover {
     height: 100vh;
     overflow: auto;
     z-index: 100;
-    background: var(--primary-color);
+    background: var(--ternary-color);
 }
 
 .ms-overlay-content {
