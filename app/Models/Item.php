@@ -134,7 +134,7 @@ class Item extends Model
                 break;
         }
 
-        return route('frontend.illustrations.asset', [$this, $this->slug]);
+        return route('frontend.illustrations.asset', [$this->assetSet, $this->slug]);
     }
 
     public function increasePageViews()
