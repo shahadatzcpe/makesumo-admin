@@ -39,6 +39,10 @@ class AssetSet extends Model
                 $i++;
             }while($alreadyExists);
         });
+
+        static::deleting(function ($assetSet) {
+            $assetSet->items()->delete();
+        });
     }
 
     public function scopeFindBySlug($query, $slug)
