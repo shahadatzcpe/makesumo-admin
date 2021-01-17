@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Tag extends Model
 {
+    use Searchable;
     use HasFactory;
 
     const DEFAULT_LIMIT = 8;
@@ -49,5 +51,22 @@ class Tag extends Model
     public function illustrations3d()
     {
         return $this->items()->where('asset_type', Item::ILLUSTRATION3D);
+    }
+
+
+    public function toSearchableArray()
+    {
+        $itemIitles =  $this->items->pluck('name');
+
+        $relatedTags = $this->items->pluck('tags')->map(function($tags) {
+            return $tags->pluck('name')->join(' ');
+        })->join(' ');
+
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'item_titles' => $itemIitles,
+            'related_tags' => $relatedTags,
+        ];
     }
 }

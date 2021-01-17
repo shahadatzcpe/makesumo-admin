@@ -12,7 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/abc', function() {
+    $man = request('tag');
 
+    $tag = \App\Models\Tag::where('name', $man)->with(['items', 'items.tags'])->first();
+
+
+
+
+});
 Route::view('welcome', 'renderable.item-thumbnail-generator');
 
 Route::domain(config('app.frontend_url'))->namespace('Frontend')

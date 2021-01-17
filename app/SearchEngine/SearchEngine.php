@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 class SearchEngine{
 
-    public function getRelatedKeywords($limit = 4) {
-        return Tag::inRandomOrder()->take($limit)->pluck('name');
+    public function getRelatedKeywords($limit = 4, $search = '') {
+        return Tag::search($search)->limit($limit)->get()->pluck('name');
     }
 
     public function get3dIllustrationSets($limit = 18, $offset = 0) {
