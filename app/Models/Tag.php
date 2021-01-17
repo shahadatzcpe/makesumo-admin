@@ -56,7 +56,7 @@ class Tag extends Model
 
     public function toSearchableArray()
     {
-        $itemIitles =  $this->items->pluck('name');
+        $itemIitles =  $this->items->pluck('name')->join(' ');
 
         $relatedTags = $this->items->pluck('tags')->map(function($tags) {
             return $tags->pluck('name')->join(' ');
