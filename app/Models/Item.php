@@ -126,19 +126,20 @@ class Item extends Model
 
     public function assetSet()
     {
-        return $this->belongsTo(AssetSet::class, $this->asset_set_id);
+
+        return $this->belongsTo(AssetSet::class);
     }
 
     public function getUrlAttribute() {
 
         switch ($this->asset_type) {
             case '3d':
-                return route('frontend.illustrations3d.asset', [$this->assetSet, $this->slug]);
+                return route('frontend.illustrations3d.asset', [$this->assetSet->slug, $this->slug]);
 
                 break;
         }
 
-        return route('frontend.illustrations.asset', [$this->assetSet, $this->slug]);
+        return route('frontend.illustrations.asset', [$this->assetSet->slug, $this->slug]);
     }
 
     public function increasePageViews()
