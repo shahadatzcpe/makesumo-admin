@@ -122,7 +122,7 @@ class Item extends Model
 
     public function assetSet()
     {
-        return $this->belongsTo(AssetSet::class);
+        return $this->belongsTo(AssetSet::class, $this->asset_set_id);
     }
 
     public function getUrlAttribute() {
@@ -134,7 +134,7 @@ class Item extends Model
                 break;
         }
 
-        return route('frontend.illustrations.asset', [$this->assetSet, $this]);
+        return route('frontend.illustrations.asset', [$this, $this->slug]);
     }
 
     public function increasePageViews()

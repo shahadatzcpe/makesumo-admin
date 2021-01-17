@@ -4,19 +4,18 @@ namespace App\Http\Controllers\Frontend;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\AccessibleItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use Stripe\StripeClient;
+
 
 class SubscriptionController extends Controller {
 
     public function subscriptionIntent() {
-        $plans = config('makesumo.subscription_models');
         $user = Auth::user();
+
         return  [
             'intent' => $user->createSetupIntent(),
-//            'plans' => $plans,
             'cards' => $user->paymentMethods()->transform(function($item) {
                 return [
                     'id' => $item->id,
@@ -28,6 +27,7 @@ class SubscriptionController extends Controller {
                     ]
                 ];
             }),
+            'defaultPaymentMethod' => optional($user->defaultPaymentMethod())->id
         ];
     }
 
@@ -41,10 +41,30 @@ class SubscriptionController extends Controller {
         $user->addPaymentMethod($paymentMethod);
         $plan = $request->input('productPriceId');
 
-        $user->newSubscription('primary', $plan)->create($paymentMethod, [
+        $payment = $user->newSubscription('primary', $plan)->create($paymentMethod, [
             'email' => $user->email
         ]);
 
 
+        // If payment success and customer is purchasing a set
+        // or a single item make it accessible
+        // by this user.
+        if($payment && $plan == config('makesumo.subscription_models.asset_set_price_onetime')) {
+            $others = $request->input('others');
+            $accessiableItem = new AccessibleItem();
+            $accessiableItem->description = "Purchase for commercial use.";
+            $accessiableItem->accessiable_id = $others['id'];
+            $accessiableItem->accessiable_type = $others['type'];
+            $accessiableItem->accessiable_by = Auth::id();
+            $accessiableItem->programmatic_description = json_encode([
+                array_merge($others, [
+                    'plan' => $plan, 'payment' => $payment->id, 'paymentMethod' => $paymentMethod
+
+                ])
+            ], JSON_PRETTY_PRINT);
+            $accessiableItem->save();
+        }
+
+        return back();
     }
 }
