@@ -4,15 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
 class Item extends Model
 {
+    use SoftDeletes;
+
     const ILLUSTRATION = 'illustration';
     const ILLUSTRATION3D = '3d';
     const ICON = 'icon';
+
 
     public static function mapAssetTypeCode($type)
     {
