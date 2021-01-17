@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class SearchEngine{
 
     public function getRelatedKeywords($limit = 4, $search = '') {
-        return Tag::search($search)->limit($limit)->get()->pluck('name');
+        return Tag::search($search)->take($limit)->get()->pluck('name');
     }
 
     public function get3dIllustrationSets($limit = 18, $offset = 0) {
