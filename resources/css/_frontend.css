@@ -3347,6 +3347,240 @@ a:hover {
     justify-content: center;
     position: relative;
 }
+
+
+
+
+
+
+
+.ms-card.ms-style4 {
+    padding: 20px 20px;
+}
+
+.ms-method-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ms-method-in {
+    display: flex;
+    align-items: center;
+}
+
+.ms-method-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.ms-method-in img {
+    width: 40px;
+}
+
+.ms-method-title {
+    color: var(--primary-color);
+    line-height: 1.2em;
+    font-size: 14px;
+}
+
+.ms-method-title span {
+    display: inline-block;
+    color: var(--ternary-color);
+    position: relative;
+    top: 2px;
+}
+
+.ms-method-expire {
+    line-height: 1.2em;
+    font-size: 12px;
+}
+
+.ms-add-btn {
+    background-color: rgba(28, 28, 30, 0.12);
+    color: var(--ternary-color);
+    border: none;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.ms-add-btn:hover {
+    color: #fff;
+    background-color: var(--ternary-color);
+}
+
+.ms-delete-btn {
+    background-color: rgba(255, 45, 85, 0.15);
+    border: none;
+    color: #ff2d55;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.ms-delete-btn:hover {
+    color: #fff;
+    background-color: #ff2d55;
+}
+
+.ms-method-items {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.ms-method-items .ms-method-item {
+    padding: 10px 10px 10px 0px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ms-add-new-btn {
+    background-color: transparent;
+    border: none;
+    font-weight: 600;
+    color: #506bf0;
+    padding: 8px 20px 10px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.5em;
+}
+
+.ms-add-new-btn span {
+    font-size: 20px;
+    margin-right: 5px;
+    display: inline-flex;
+    position: relative;
+    bottom: -1px;
+}
+
+.ms-add-new-btn:hover {
+    background-color: rgba(80, 107, 240, 0.1);
+}
+
+.ms-method-check {
+    position: relative;
+    height: 16px;
+    width: 16px;
+    margin: 0 10px;
+}
+
+.ms-method-check input {
+    opacity: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.ms-method-check span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    border: 1px solid rgb(28 28 30 / 0.3);
+    border-radius: 50%;
+}
+
+.ms-method-check input:checked+span {
+    background-color: #506bf0;
+    border-color: #506bf0;
+}
+
+.ms-card-dropdown-body {
+    margin-top: 10px;
+}
+
+.ms-arrow {
+    border: 2px solid var(--ternary-color);
+    height: 8px;
+    width: 8px;
+    transform: rotate(45deg);
+    border-left: none;
+    border-top: none;
+    position: relative;
+    top: -2px;
+    transition: all 0.4s ease;
+}
+
+.ms-card-dropdown-head .ms-method-item {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.ms-card-dropdown-head .ms-method-in img {
+    width: 30px;
+}
+
+.ms-card-dropdown-head {
+    cursor: pointer;
+}
+.ms-card-dropdown-body {
+    transition: all 0.4s ease;
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 0;
+}
+.active .ms-card-dropdown-body {
+    max-height: 300px;
+    margin-top: 10px;
+}
+.active .ms-arrow {
+    transform: rotate(-135deg);
+    top: 2px;
+}
+.ms-input-wrap input {
+    border: none;
+    outline: none;
+}
+.ms-input-wrap {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 9px 10px;
+}
+.ms-input-wrap input {
+    border: none;
+    outline: none;
+    width: 100%;
+    line-height: 1.6em;
+    background-color: transparent;
+}
+.loading {
+    position: relative;
+}
+.loading:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100px);
+    background: linear-gradient( 90deg, transparent, rgba(130, 130, 130, 0.2), transparent );
+    animation: loading 1s infinite;
+    z-index: 6;
+}
+.loading:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--border-color);
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+@keyframes loading {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
+
 @media screen and (max-width: 1400px) {
 .ms-ills-preview-in {
     padding: 0 30px;
@@ -3387,3 +3621,5 @@ a:hover {
 @media screen and (max-width: 575px) {}
 
 @media screen and (max-width: 380px) {}
+
+

@@ -1,42 +1,59 @@
 <template>
     <div class="payment-button" :class="{loading: !loaded}">
-
-        <div class="cards" v-if="cards.length">
-            <div class="card" @click="payment.paymentMethodId = c.id" v-for="c in cards">
-                <card-icon :brand="c.card.brand"/> **** **** {{ c.card.last4 }} {{ c.card.exp_month }}/{{ c.card.exp_year }}
-                <span class="tick" v-if="c.id == payment.paymentMethodId">
-                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 367.805 367.805" style="enable-background:new 0 0 367.805 367.805;" xml:space="preserve"><g><path style="fill:#3BB54A;" d="M183.903,0.001c101.566,0,183.902,82.336,183.902,183.902s-82.336,183.902-183.902,183.902
-S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205,0,183.554,0,183.903,0.001z"/><polygon style="fill:#D4E1F4;" points="285.78,133.225 155.168,263.837 82.025,191.217 111.805,161.96 155.168,204.801
-		256.001,103.968 	"/></g></svg>
-                </span>
+        <div class="ms-method-items" v-if="cards.length">
+            <div class="ms-method-item"  v-for="c in cards">
+                <div class="ms-method-in">
+                    <div class="ms-method-check" @click="payment.paymentMethodId = c.id">
+                        <input type="radio" name="card" :checked="payment.paymentMethodId == c.id" >
+                        <span></span>
+                    </div>
+                    <div class="ms-method-icon">
+                        <card-icon brand="visa"></card-icon>
+                    </div>
+                    <div class="ms-method-info">
+                        <div class="ms-method-title">{{ c.card.brand | capitalize }} <span>****</span> {{ c.card.last4 }}</div>
+                        <div class="ms-method-expire">Exp: {{ c.card.exp_month > 9 ?  c.card.exp_month : '0'  + c.card.exp_month  }}/{{ c.card.exp_year }}</div>
+                    </div>
+                </div>
+                <div class="ms-method-btns" v-if="!c.is_default">
+                    <button class="ms-add-btn" @click="updateDefaultPaymentMethod(c.id)">Make Default</button>
+                    <button class="ms-delete-btn" @click="deletePaymentMethod(c.id)">Delete</button>
+                </div>
             </div>
-            <div class="card" @click="payment.paymentMethodId=null">
-                + Add new payment method
+            <div class="ms-new-card-btn"  v-if="payment.paymentMethodId !== null">
+                <button class="ms-add-new-btn" @click="addNewCard"><span>+</span>Add New Card</button>
             </div>
         </div>
 
         <template v-if="payment.paymentMethodId == null">
-            <div class="card-element">
-                <input type="text" v-model="billingDetails.name" required>
+
+            <div style="height: 15px;"></div>
+            <div class="ms-input-wrap">
+                <input type="text" v-model="billingDetails.name" placeholder="Name on the card.." required>
             </div>
 
-            <div class="card-element">
-                <div id="card-element" class="form-control"></div>
-                <!-- Used to display form errors. -->
-                <div id="card-errors" role="alert"></div>
+            <div style="height: 15px;"></div>
+            <div class="ms-input-wrap">
+                <div id="card-element" ></div>
             </div>
+
+            <div id="card-errors" role="alert"></div>
 
             <div class="stripe-errors"></div>
 
 
         </template>
 
-        <button @click="confirmPaymentMethod" class="ms-card-btn">Make payment</button>
+        <div style="height: 15px;"></div>
+        <button @click="confirmPaymentMethod" class="ms-card-btn" :disabled="addingCard || processingPayment">
+            {{ addingCard ? 'Adding Card' : ( processingPayment ?  'Processing payment' : 'Make payment' ) }}
+        </button>
     </div>
 </template>
 <script>
     import Input from "../../Jetstream/Input";
     import CardIcon from "../../Icons/CardIcon";
+    import axios  from 'axios';
 
     var style = {
         base: {
@@ -82,7 +99,9 @@ S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205
               intent: null,
               billingDetails: {
                     name: ''
-              }
+              },
+              processingPayment: false,
+              addingCard: false
           }
         },
         mounted() {
@@ -92,6 +111,7 @@ S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205
                     this.loaded = true
                     this.intent = res.data.intent
                     this.cards = res.data.cards
+                    this.showCardInputForm();
                     this.payment.paymentMethodId = res.data.defaultPaymentMethod
                 }).catch(err => {
                     console.log(err)
@@ -119,6 +139,7 @@ S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205
             async confirmPaymentMethod() {
 
                 if(this.payment.paymentMethodId == null) {
+                    this.addingCard = true;
                     const { setupIntent, error } = await this.stripe.confirmCardSetup(
                         this.intent.client_secret, {
                             payment_method: {
@@ -127,10 +148,11 @@ S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205
                             }
                         }
                     );
-
+                    this.addingCard = false;
                     if (error) {
                         var errorElement = document.getElementById('card-errors');
                         errorElement.textContent = error.message;
+                        return;
                     }
                     this.payment.paymentMethodId = setupIntent.payment_method;
                 }
@@ -138,48 +160,69 @@ S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205
             },
 
             makePayment () {
+                this.processingPayment = true;
                 this.$inertia.post(route('subscription.process'), this.payment,  {
                     onSuccess() {
                         location.reload()
                     }
                 });
+            },
+
+            addNewCard () {
+                this.payment.paymentMethodId = null
+                this.$nextTick(function() {
+                    this.showCardInputForm();
+                })
+            },
+
+            updateDefaultPaymentMethod (id) {
+                axios.post(
+                    route('subscription.update-detault-payment-method'),
+                    {payment_method: id}
+                )
+                .then((response) => {
+                    for(var i; i < this.cards.length; i++) {
+                        this.cards[i].is_default = id === this.cards[i].id
+                    }
+                });
+            },
+
+            deletePaymentMethod (id) {
+                axios.post(route(
+                    'subscription.delete-payment-method'),
+                    {payment_method: id, '_method': 'delete'},
+                ).then((response) => {
+                    for(var i; i < this.cards.length; i++) {
+                       if(id === this.cards[i].id) {
+                           this.cards = this.cards.splice(i, 1);
+
+                           if(this.payment.paymentMethodId === id) {
+                               this.payment.paymentMethodId = null
+                           }
+                       }
+                    }
+                });
             }
 
         },
-        watch: {
-            'payment.paymentMethodId': function (value) {
-                if(value == null) {
-                    this.$nextTick(function() {
-                        this.showCardInputForm();
-                    })
-                }
+        filters: {
+            capitalize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
             }
         }
+
     }
 </script>
 <style scoped>
-.text-left{
-    text-align: center;
-}
-.card-element{
-    border: 2px dashed #d0cccc;
-    padding: 11px;
-    margin-bottom: 10px;
-}
+
 input{
     width: 100%;
     border: 0;
     color: #999;
-    font-size: 17px;
-}
-.card{
-    width: 100%;
-    cursor: pointer;
-}
-.tick{
-    width: 20px;
-    height: 20px;
-    display: inline-block;
+    font-size: 16px;
+    line-height: 16px;
 }
 </style>
 

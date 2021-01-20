@@ -13,12 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/abc', function() {
-    $man = request('tag');
+    \Illuminate\Support\Facades\Auth::login(\App\Models\User::first());
 
-    $tag = \App\Models\Tag::where('name', $man)->with(['items', 'items.tags'])->first();
-
-
-
+    Auth::login(\App\Models\User::where('email', 'shahadat.zcpe@gmail.com')->first());
 
 });
 Route::view('welcome', 'renderable.item-thumbnail-generator');
@@ -50,6 +47,8 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
 
     Route::get('/subscription/intent', 'SubscriptionController@subscriptionIntent')->name('subscription.intent');
     Route::post('/subscription/subscribe', 'SubscriptionController@processSubscription')->name('subscription.process');
+    Route::delete('/subscription/payment-method', 'SubscriptionController@deletePaymentMethod')->name('subscription.delete-payment-method');
+    Route::post('/subscription/default-payment-method', 'SubscriptionController@updateDefaultPaymentMethod')->name('subscription.update-detault-payment-method');
 });
 
 

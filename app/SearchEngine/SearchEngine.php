@@ -10,8 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class SearchEngine{
 
-    public function getRelatedKeywords($limit = 4, $search = '') {
-        return Tag::search($search)->take($limit)->get()->pluck('name');
+    public function getRelatedKeywords($limit = 5, $search = '') {
+        $tags =  Tag::search($search)->take($limit)->get()->pluck('name')->filter(function($item) use ($search) {
+            return strtolower(trim($item)) !== strtolower(trim($search));
+        });
+
+        return $tags;
     }
 
     public function get3dIllustrationSets($limit = 18, $offset = 0) {

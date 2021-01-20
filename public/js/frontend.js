@@ -2064,6 +2064,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
 /* harmony import */ var _Icons_CardIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Icons/CardIcon */ "./resources/js/Icons/CardIcon.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2106,6 +2108,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 var style = {
@@ -2154,17 +2173,22 @@ var style = {
       intent: null,
       billingDetails: {
         name: ''
-      }
+      },
+      processingPayment: false,
+      addingCard: false
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     console.log('Mounting....');
-    axios.get(route('subscription.intent')).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(route('subscription.intent')).then(function (res) {
       _this.loaded = true;
       _this.intent = res.data.intent;
       _this.cards = res.data.cards;
+
+      _this.showCardInputForm();
+
       _this.payment.paymentMethodId = res.data.defaultPaymentMethod;
     })["catch"](function (err) {
       console.log(err);
@@ -2201,11 +2225,12 @@ var style = {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(_this2.payment.paymentMethodId == null)) {
-                  _context.next = 8;
+                  _context.next = 13;
                   break;
                 }
 
-                _context.next = 3;
+                _this2.addingCard = true;
+                _context.next = 4;
                 return _this2.stripe.confirmCardSetup(_this2.intent.client_secret, {
                   payment_method: {
                     card: _this2.card,
@@ -2213,22 +2238,28 @@ var style = {
                   }
                 });
 
-              case 3:
+              case 4:
                 _yield$_this2$stripe$ = _context.sent;
                 setupIntent = _yield$_this2$stripe$.setupIntent;
                 error = _yield$_this2$stripe$.error;
+                _this2.addingCard = false;
 
-                if (error) {
-                  errorElement = document.getElementById('card-errors');
-                  errorElement.textContent = error.message;
+                if (!error) {
+                  _context.next = 12;
+                  break;
                 }
 
+                errorElement = document.getElementById('card-errors');
+                errorElement.textContent = error.message;
+                return _context.abrupt("return");
+
+              case 12:
                 _this2.payment.paymentMethodId = setupIntent.payment_method;
 
-              case 8:
+              case 13:
                 _this2.makePayment();
 
-              case 9:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -2237,20 +2268,54 @@ var style = {
       }))();
     },
     makePayment: function makePayment() {
+      this.processingPayment = true;
       this.$inertia.post(route('subscription.process'), this.payment, {
         onSuccess: function onSuccess() {
           location.reload();
         }
       });
+    },
+    addNewCard: function addNewCard() {
+      this.payment.paymentMethodId = null;
+      this.$nextTick(function () {
+        this.showCardInputForm();
+      });
+    },
+    updateDefaultPaymentMethod: function updateDefaultPaymentMethod(id) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(route('subscription.update-detault-payment-method'), {
+        payment_method: id
+      }).then(function (response) {
+        for (var i; i < _this3.cards.length; i++) {
+          _this3.cards[i].is_default = id === _this3.cards[i].id;
+        }
+      });
+    },
+    deletePaymentMethod: function deletePaymentMethod(id) {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(route('subscription.delete-payment-method'), {
+        payment_method: id,
+        '_method': 'delete'
+      }).then(function (response) {
+        for (var i; i < _this4.cards.length; i++) {
+          if (id === _this4.cards[i].id) {
+            _this4.cards = _this4.cards.splice(i, 1);
+
+            if (_this4.payment.paymentMethodId === id) {
+              _this4.payment.paymentMethodId = null;
+            }
+          }
+        }
+      });
     }
   },
-  watch: {
-    'payment.paymentMethodId': function paymentPaymentMethodId(value) {
-      if (value == null) {
-        this.$nextTick(function () {
-          this.showCardInputForm();
-        });
-      }
+  filters: {
+    capitalize: function capitalize(value) {
+      if (!value) return '';
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
     }
   }
 });
@@ -5591,7 +5656,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".text-left[data-v-78a80364]{\n  text-align: center;\n}\n.card-element[data-v-78a80364]{\n  border: 2px dashed #d0cccc;\n  padding: 11px;\n  margin-bottom: 10px;\n}\ninput[data-v-78a80364]{\n  width: 100%;\n  border: 0;\n  color: #999;\n  font-size: 17px;\n}\n.card[data-v-78a80364]{\n  width: 100%;\n  cursor: pointer;\n}\n.tick[data-v-78a80364]{\n  width: 20px;\n  height: 20px;\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, "input[data-v-78a80364]{\n  width: 100%;\n  border: 0;\n  color: #999;\n  font-size: 16px;\n  line-height: 16px;\n}\n", ""]);
 
 // exports
 
@@ -43659,91 +43724,108 @@ var render = function() {
       _vm.cards.length
         ? _c(
             "div",
-            { staticClass: "cards" },
+            { staticClass: "ms-method-items" },
             [
               _vm._l(_vm.cards, function(c) {
-                return _c(
-                  "div",
-                  {
-                    staticClass: "card",
-                    on: {
-                      click: function($event) {
-                        _vm.payment.paymentMethodId = c.id
-                      }
-                    }
-                  },
-                  [
-                    _c("card-icon", { attrs: { brand: c.card.brand } }),
-                    _vm._v(
-                      " **** **** " +
-                        _vm._s(c.card.last4) +
-                        " " +
-                        _vm._s(c.card.exp_month) +
-                        "/" +
-                        _vm._s(c.card.exp_year) +
-                        "\n                "
+                return _c("div", { staticClass: "ms-method-item" }, [
+                  _c("div", { staticClass: "ms-method-in" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "ms-method-check",
+                        on: {
+                          click: function($event) {
+                            _vm.payment.paymentMethodId = c.id
+                          }
+                        }
+                      },
+                      [
+                        _c("input", {
+                          attrs: { type: "radio", name: "card" },
+                          domProps: {
+                            checked: _vm.payment.paymentMethodId == c.id
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span")
+                      ]
                     ),
-                    c.id == _vm.payment.paymentMethodId
-                      ? _c("span", { staticClass: "tick" }, [
-                          _c(
-                            "svg",
-                            {
-                              staticStyle: {
-                                "enable-background": "new 0 0 367.805 367.805"
-                              },
-                              attrs: {
-                                version: "1.1",
-                                id: "Capa_1",
-                                xmlns: "http://www.w3.org/2000/svg",
-                                "xmlns:xlink": "http://www.w3.org/1999/xlink",
-                                x: "0px",
-                                y: "0px",
-                                viewBox: "0 0 367.805 367.805",
-                                "xml:space": "preserve"
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "ms-method-icon" },
+                      [_c("card-icon", { attrs: { brand: "visa" } })],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ms-method-info" }, [
+                      _c("div", { staticClass: "ms-method-title" }, [
+                        _vm._v(
+                          _vm._s(_vm._f("capitalize")(c.card.brand)) + " "
+                        ),
+                        _c("span", [_vm._v("****")]),
+                        _vm._v(" " + _vm._s(c.card.last4))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ms-method-expire" }, [
+                        _vm._v(
+                          "Exp: " +
+                            _vm._s(
+                              c.card.exp_month > 9
+                                ? c.card.exp_month
+                                : "0" + c.card.exp_month
+                            ) +
+                            "/" +
+                            _vm._s(c.card.exp_year)
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  !c.is_default
+                    ? _c("div", { staticClass: "ms-method-btns" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "ms-add-btn",
+                            on: {
+                              click: function($event) {
+                                return _vm.updateDefaultPaymentMethod(c.id)
                               }
-                            },
-                            [
-                              _c("g", [
-                                _c("path", {
-                                  staticStyle: { fill: "#3BB54A" },
-                                  attrs: {
-                                    d:
-                                      "M183.903,0.001c101.566,0,183.902,82.336,183.902,183.902s-82.336,183.902-183.902,183.902\nS0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205,0,183.554,0,183.903,0.001z"
-                                  }
-                                }),
-                                _c("polygon", {
-                                  staticStyle: { fill: "#D4E1F4" },
-                                  attrs: {
-                                    points:
-                                      "285.78,133.225 155.168,263.837 82.025,191.217 111.805,161.96 155.168,204.801\n\t\t256.001,103.968 \t"
-                                  }
-                                })
-                              ])
-                            ]
-                          )
-                        ])
-                      : _vm._e()
-                  ],
-                  1
-                )
+                            }
+                          },
+                          [_vm._v("Make Default")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "ms-delete-btn",
+                            on: {
+                              click: function($event) {
+                                return _vm.deletePaymentMethod(c.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ])
+                    : _vm._e()
+                ])
               }),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "card",
-                  on: {
-                    click: function($event) {
-                      _vm.payment.paymentMethodId = null
-                    }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                + Add new payment method\n            "
-                  )
-                ]
-              )
+              _vm.payment.paymentMethodId !== null
+                ? _c("div", { staticClass: "ms-new-card-btn" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "ms-add-new-btn",
+                        on: { click: _vm.addNewCard }
+                      },
+                      [_c("span", [_vm._v("+")]), _vm._v("Add New Card")]
+                    )
+                  ])
+                : _vm._e()
             ],
             2
           )
@@ -43751,7 +43833,9 @@ var render = function() {
       _vm._v(" "),
       _vm.payment.paymentMethodId == null
         ? [
-            _c("div", { staticClass: "card-element" }, [
+            _c("div", { staticStyle: { height: "15px" } }),
+            _vm._v(" "),
+            _c("div", { staticClass: "ms-input-wrap" }, [
               _c("input", {
                 directives: [
                   {
@@ -43761,7 +43845,11 @@ var render = function() {
                     expression: "billingDetails.name"
                   }
                 ],
-                attrs: { type: "text", required: "" },
+                attrs: {
+                  type: "text",
+                  placeholder: "Name on the card..",
+                  required: ""
+                },
                 domProps: { value: _vm.billingDetails.name },
                 on: {
                   input: function($event) {
@@ -43774,16 +43862,38 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
+            _c("div", { staticStyle: { height: "15px" } }),
+            _vm._v(" "),
             _vm._m(0),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "card-errors", role: "alert" } }),
             _vm._v(" "),
             _c("div", { staticClass: "stripe-errors" })
           ]
         : _vm._e(),
       _vm._v(" "),
+      _c("div", { staticStyle: { height: "15px" } }),
+      _vm._v(" "),
       _c(
         "button",
-        { staticClass: "ms-card-btn", on: { click: _vm.confirmPaymentMethod } },
-        [_vm._v("Make payment")]
+        {
+          staticClass: "ms-card-btn",
+          attrs: { disabled: _vm.addingCard || _vm.processingPayment },
+          on: { click: _vm.confirmPaymentMethod }
+        },
+        [
+          _vm._v(
+            "\n        " +
+              _vm._s(
+                _vm.addingCard
+                  ? "Adding Card"
+                  : _vm.processingPayment
+                  ? "Processing payment"
+                  : "Make payment"
+              ) +
+              "\n    "
+          )
+        ]
       )
     ],
     2
@@ -43794,10 +43904,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-element" }, [
-      _c("div", { staticClass: "form-control", attrs: { id: "card-element" } }),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "card-errors", role: "alert" } })
+    return _c("div", { staticClass: "ms-input-wrap" }, [
+      _c("div", { attrs: { id: "card-element" } })
     ])
   }
 ]

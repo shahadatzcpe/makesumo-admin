@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AccessibleItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Cashier\PaymentMethod;
 
 
 class SubscriptionController extends Controller {
@@ -14,9 +15,11 @@ class SubscriptionController extends Controller {
     public function subscriptionIntent() {
         $user = Auth::user();
 
+        $defaultPaymentMethod = optional($user->defaultPaymentMethod());
+
         return  [
             'intent' => $user->createSetupIntent(),
-            'cards' => $user->paymentMethods()->transform(function($item) {
+            'cards' => $user->paymentMethods()->transform(function($item) use ($defaultPaymentMethod){
                 return [
                     'id' => $item->id,
                     'card' => [
@@ -24,10 +27,11 @@ class SubscriptionController extends Controller {
                         'last4' => $item->card->last4,
                         'exp_month' => $item->card->exp_month,
                         'exp_year' => $item->card->exp_year,
-                    ]
+                    ],
+                    'is_default' => $defaultPaymentMethod->id == $item->id
                 ];
             }),
-            'defaultPaymentMethod' => optional($user->defaultPaymentMethod())->id
+            'defaultPaymentMethod' => $defaultPaymentMethod->id
         ];
     }
 
@@ -66,5 +70,18 @@ class SubscriptionController extends Controller {
         }
 
         return back();
+    }
+
+    public function updateDefaultPaymentMethod(Request  $request) {
+        $request->validate(['payment_method' => 'required']);
+        $paymentMethod = \request()->payment_method;
+        Auth::user()->updateDefaultPaymentMethod($paymentMethod);
+    }
+
+    public function deletePaymentMethod(Request  $request)
+    {
+        $request->validate(['payment_method' => 'required']);
+        $paymentMethod = Auth::user()->findPaymentMethod($request->payment_method);
+        $paymentMethod->delete();
     }
 }
