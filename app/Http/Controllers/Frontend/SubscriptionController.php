@@ -41,7 +41,8 @@ class SubscriptionController extends Controller {
         $user = Auth::user();
         $paymentMethod = $request->input('paymentMethodId');
 
-        $user->createOrGetStripeCustomer();
+        $x = $user->createOrGetStripeCustomer();
+
         $user->addPaymentMethod($paymentMethod);
         $plan = $request->input('productPriceId');
 

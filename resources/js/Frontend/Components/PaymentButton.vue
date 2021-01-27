@@ -16,8 +16,8 @@
                     </div>
                 </div>
                 <div class="ms-method-btns" v-if="!c.is_default">
-                    <button class="ms-add-btn" @click="updateDefaultPaymentMethod(c.id)">Make Default</button>
-                    <button class="ms-delete-btn" @click="deletePaymentMethod(c.id)">Delete</button>
+                    <button v-if="!processingMessage" class="ms-add-btn" @click="updateDefaultPaymentMethod(c.id)">Make Default</button>
+                    <button v-if="!processingMessage" class="ms-delete-btn" @click="deletePaymentMethod(c.id)">Delete</button>
                 </div>
             </div>
             <div class="ms-new-card-btn"  v-if="payment.paymentMethodId !== null">
@@ -41,19 +41,20 @@
 
             <div class="stripe-errors"></div>
 
-
         </template>
 
         <div style="height: 15px;"></div>
-        <button @click="confirmPaymentMethod" class="ms-card-btn" :disabled="addingCard || processingPayment">
-            {{ addingCard ? 'Adding Card' : ( processingPayment ?  'Processing payment' : 'Make payment' ) }}
+        <button @click="confirmPaymentMethod" class="ms-card-btn" v-if="!processingMessage">
+            Pay now
         </button>
+        <h2 v-else>{{ processingMessage }}</h2>
     </div>
 </template>
 <script>
     import Input from "../../Jetstream/Input";
     import CardIcon from "../../Icons/CardIcon";
     import axios  from 'axios';
+    import toastr from 'toastr';
 
     var style = {
         base: {
@@ -87,6 +88,7 @@
         },
         data() {
           return {
+              processingMessage: '',
               loaded: false,
               payment: {
                   paymentMethodId: null,
@@ -99,9 +101,7 @@
               intent: null,
               billingDetails: {
                     name: ''
-              },
-              processingPayment: false,
-              addingCard: false
+              }
           }
         },
         mounted() {
@@ -139,7 +139,7 @@
             async confirmPaymentMethod() {
 
                 if(this.payment.paymentMethodId == null) {
-                    this.addingCard = true;
+                    this.processingMessage = 'Adding payment method';
                     const { setupIntent, error } = await this.stripe.confirmCardSetup(
                         this.intent.client_secret, {
                             payment_method: {
@@ -148,7 +148,7 @@
                             }
                         }
                     );
-                    this.addingCard = false;
+                    this.processingMessage = '';
                     if (error) {
                         var errorElement = document.getElementById('card-errors');
                         errorElement.textContent = error.message;
@@ -160,7 +160,7 @@
             },
 
             makePayment () {
-                this.processingPayment = true;
+                this.processingMessage = 'Processing payment';
                 this.$inertia.post(route('subscription.process'), this.payment,  {
                     onSuccess() {
                         location.reload()
@@ -176,30 +176,45 @@
             },
 
             updateDefaultPaymentMethod (id) {
+
+                this.processingMessage = 'Updating default payment method.';
                 axios.post(
                     route('subscription.update-detault-payment-method'),
                     {payment_method: id}
                 )
                 .then((response) => {
-                    for(var i; i < this.cards.length; i++) {
+                    for(var i = 0; i < this.cards.length; i++) {
                         this.cards[i].is_default = id === this.cards[i].id
                     }
+
+                    this.processingMessage = '';
+                    toastr.success('Default payment method successfully changed')
                 });
             },
 
             deletePaymentMethod (id) {
+                this.processingMessage = 'Deleting payment method.';
                 axios.post(route(
                     'subscription.delete-payment-method'),
                     {payment_method: id, '_method': 'delete'},
                 ).then((response) => {
-                    for(var i; i < this.cards.length; i++) {
+                    var cards = [];
+                    for(var i = 0; i < this.cards.length; i++) {
                        if(id === this.cards[i].id) {
-                           this.cards = this.cards.splice(i, 1);
+                           var a = this.cards.splice(i, 1);
 
                            if(this.payment.paymentMethodId === id) {
                                this.payment.paymentMethodId = null
                            }
+                       } else {
+                           cards.push(this.cards[i])
                        }
+                        this.processingMessage = ''
+                        toastr.success('Payment method successfully deleted')
+                        this.cards = cards;
+                        if(this.cards.length == 0) {
+                            this.addNewCard();
+                        }
                     }
                 });
             }

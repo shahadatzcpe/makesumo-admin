@@ -49,7 +49,14 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
     Route::post('/subscription/subscribe', 'SubscriptionController@processSubscription')->name('subscription.process');
     Route::delete('/subscription/payment-method', 'SubscriptionController@deletePaymentMethod')->name('subscription.delete-payment-method');
     Route::post('/subscription/default-payment-method', 'SubscriptionController@updateDefaultPaymentMethod')->name('subscription.update-detault-payment-method');
-});
+
+
+    Route::get('/account-settings/profile', 'AccountSettings@profile')->name('account-settings.profile');
+    Route::get('/account-settings/security', 'AccountSettings@security')->name('account-settings.password');
+    Route::get('/account-settings/plan', 'AccountSettings@plan')->name('account-settings.plan');
+
+    });
+
 
 
 

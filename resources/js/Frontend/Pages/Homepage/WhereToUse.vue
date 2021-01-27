@@ -1,5 +1,6 @@
 <template>
     <div class="ms-browser-perview-wrap">
+        <profile></profile>
         <div class="ms-browser-section-heading">
             <h2 class="ms-browser-section-title">Where would I use these?</h2>
             <p class="ms-browser-section-subtitle">From website to landing page to app-onboarding to blog posts — <br>MakeSumo assets look lovely everywhere (we built these with categories in mind). <br>Impress your audience as if you hired a design agency for personalized assets <br>without paying big-agency-price-tag.</p>
@@ -310,7 +311,8 @@
 </template>
 
 <script>
+    import Profile from "../AccountSettings/Profile";
     export default {
-
+        components: {Profile}
     }
 </script>

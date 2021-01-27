@@ -38,8 +38,7 @@
                     </div>
                     <input type="checkbox" class="ms-toggle-controll">
                     <div class="ms-dropdown-body">
-                        <a href="#" class="ms-dropdown-item">Useful Link</a>
-                        <a href="#" class="ms-dropdown-item">Profile</a>
+                        <inertia-link :href="route('account-settings.profile')" class="ms-dropdown-item">Profile</inertia-link>
                         <inertia-link method="post" :href="route('logout')"  class="ms-dropdown-item">Log out</inertia-link>
                     </div>
                 </div>
