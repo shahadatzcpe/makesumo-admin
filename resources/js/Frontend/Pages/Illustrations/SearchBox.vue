@@ -1,5 +1,5 @@
 <template>
-       <form :action="route('frontend.illustrations.index')" class="ms-search-form" >
+       <form :action="route('frontend.illustrations.index')" @submit="submit" class="ms-search-form" >
             <button class="ms-search-btn" type="submit">
                 <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20.6781 18.892L15.9175 14.1315C17.0637 12.6057 17.6823 10.7485 17.6803 8.84015C17.6803 3.96572 13.7146 0 8.84015 0C3.96572 0 0 3.96572 0 8.84015C0 13.7146 3.96572 17.6803 8.84015 17.6803C10.7485 17.6823 12.6057 17.0637 14.1315 15.9175L18.892 20.6781C19.1331 20.8936 19.4474 21.0085 19.7704 20.9995C20.0936 20.9904 20.4009 20.858 20.6294 20.6294C20.858 20.4009 20.9904 20.0936 20.9995 19.7704C21.0085 19.4474 20.8936 19.1331 20.6781 18.892ZM2.52576 8.84015C2.52576 7.59128 2.8961 6.37046 3.58992 5.33206C4.28376 4.29367 5.26993 3.48433 6.42374 3.00642C7.57754 2.52849 8.84715 2.40345 10.072 2.64708C11.2969 2.89073 12.4221 3.49212 13.3051 4.37521C14.1882 5.25828 14.7896 6.3834 15.0332 7.60827C15.2769 8.83315 15.1518 10.1028 14.6739 11.2566C14.196 12.4104 13.3867 13.3966 12.3482 14.0904C11.3098 14.7842 10.089 15.1545 8.84015 15.1545C7.16609 15.1525 5.56117 14.4866 4.37742 13.3029C3.19368 12.1191 2.52777 10.5142 2.52576 8.84015Z" fill="black" fill-opacity="0.4"></path>
@@ -26,11 +26,9 @@
             }
         },
         methods: {
-            submit() {
-                this.$inertia.visit(route('frontend.search.result'), {
-                    method: 'get',
-                    data: this.form,
-                })
+            submit(e) {
+                e.preventDefault();
+                this.$inertia.visit(route(this.form.search ? 'frontend.illustrations.tag': 'frontend.illustrations.index', {tag: this.form.search.split(' ').join('-') }))
             },
         },
     }

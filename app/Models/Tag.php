@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Laravel\Scout\Searchable;
 
 class Tag extends Model
@@ -27,7 +28,7 @@ class Tag extends Model
                 $tag->slug = \Str::slug($uniqSlug);
                 $alreadyExists = static::where('slug', $tag->slug)->exists();
                 $i++;
-            }while($alreadyExists);
+            } while($alreadyExists);
 
         });
     }
@@ -56,6 +57,7 @@ class Tag extends Model
 
     public function toSearchableArray()
     {
+        Log::debug("Now indexing: [$this->id] $this->name");
         $itemIitles =  $this->items->pluck('name')->join(' ');
 
         $relatedTags = $this->items->pluck('tags')->map(function($tags) {

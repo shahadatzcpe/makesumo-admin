@@ -82,7 +82,9 @@
             <span class="ms-tag-icon">
               <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.7243 0.61874C19.5363 0.422169 19.3123 0.266229 19.0655 0.160003C18.8187 0.0537775 18.5538 -0.000611273 18.2864 5.18211e-06H12.7125C12.3468 0.000709925 11.9962 0.150444 11.7367 0.416714L0.593761 11.9336C0.21354 12.3275 0 12.8612 0 13.4176C0 13.9741 0.21354 14.5078 0.593761 14.9017L5.89884 20.3859C6.27994 20.7791 6.7964 21 7.33485 21C7.8733 21 8.38975 20.7791 8.77085 20.3859L19.9093 8.87369C20.1673 8.60584 20.3127 8.24349 20.3137 7.86544V2.09995C20.3154 1.82499 20.2641 1.55243 20.1629 1.29814C20.0617 1.04385 19.9126 0.812904 19.7243 0.61874ZM15.9608 5.99986C15.6738 5.99986 15.3933 5.91189 15.1547 5.74707C14.9161 5.58225 14.7301 5.34799 14.6203 5.07391C14.5105 4.79982 14.4818 4.49823 14.5377 4.20727C14.5937 3.9163 14.7319 3.64903 14.9348 3.43926C15.1378 3.22949 15.3963 3.08663 15.6778 3.02875C15.9592 2.97088 16.251 3.00058 16.5161 3.11411C16.7812 3.22764 17.0078 3.41989 17.1673 3.66656C17.3267 3.91323 17.4118 4.20323 17.4118 4.49989C17.4118 4.89771 17.2589 5.27923 16.9868 5.56053C16.7147 5.84183 16.3456 5.99986 15.9608 5.99986Z" fill="black" fill-opacity="0.4"></path></svg>
             </span>
-            <inertia-link v-for="(tag, key) in tags" :key="key" :href="route('frontend.illustrations.index', {search: tag.name})"  class="ms-tag">{{ tag.name }}</inertia-link>
+            <inertia-link v-for="(tag, key) in tags" :key="key" :href="route('frontend.illustrations.tag', {search: tag.name})"  class="ms-tag">{{ tag.name }}</inertia-link>
+
+            <a v-if="!showAllTags && this.item.tags.length > this.tags.length" href="#" @click="showAllTags = true" class="ms-tag">+{{ this.item.tags.length - this.tags.length }} Others</a>
         </div>
 
 
@@ -142,6 +144,7 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
               assets: [],
               backgroundColor: null,
               editableColors: [],
+              showAllTags: false,
           }
         },
 
@@ -280,7 +283,7 @@ import InputColorPicker from "../../../Shared/InputColorPicker";
                return this.assets.length   === this.item.assets.length;
             },
             tags() {
-                return this.item.tags
+                return !this.showAllTags ? this.item.tags.slice(0, 8) : this.item.tags;
             },
             isPremiumMember() {
                 return this.$page.user && this.$page.user.is_premium_subscriber;

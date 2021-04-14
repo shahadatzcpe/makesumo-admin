@@ -21,6 +21,19 @@
 import Layout from "./Layout";
 export default {
     components: {Layout},
+    props: {
+      'profile': {
+          type: Object,
+      }
+    },
+    data () {
+        return {
+            form: {
+                name: this.profile.name,
+                email: this.profile.email,
+            },
+        }
+    },
     methods: {
         updateProfile() {
 

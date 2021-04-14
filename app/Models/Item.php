@@ -134,12 +134,12 @@ class Item extends Model
 
         switch ($this->asset_type) {
             case '3d':
-                return route('frontend.illustrations3d.asset', [$this->assetSet->slug, $this->slug]);
+                return route('frontend.illustrations3d.asset', [$this->slug]);
 
                 break;
         }
 
-        return route('frontend.illustrations.asset', [$this->assetSet->slug, $this->slug]);
+        return route('frontend.illustrations.asset', [ $this->slug]);
     }
 
     public function increasePageViews()
@@ -200,11 +200,11 @@ class Item extends Model
             'id' => $this->id,
             'name' => $this->name,
             'tags' => $this->getTagsAsStringAttribute(),
-            'category' => $this->assetSet->name,
-            'asset_type' => self::mapAssetTypeCode($this->assetSet->asset_type),
+            'category' => $this->assetSet->name ?? '',
+            'asset_type' => self::mapAssetTypeCode($this->assetSet->asset_type ?? ''),
             'keywords' => join(' ', [
                 $this->is_premium ? "Premium" : "Free",
-                $this->assetSet->asset_type
+                $this->assetSet->asset_type ?? ''
             ]),
             'thumbnail_src' => Storage::url($this->thumbnail_path),
         ];

@@ -2518,6 +2518,19 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Layout: _Layout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: {
+    'profile': {
+      type: Object
+    }
+  },
+  data: function data() {
+    return {
+      form: {
+        name: this.profile.name,
+        email: this.profile.email
+      }
+    };
+  },
   methods: {
     updateProfile: function updateProfile() {}
   }
@@ -3382,6 +3395,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // Source from:  http://stackoverflow.com/questions/18480474/how-to-save-an-image-from-canvas
 
 /* Canvas Donwload */
@@ -3426,7 +3441,8 @@ function download(canvas, filename) {
       canvas: null,
       assets: [],
       backgroundColor: null,
-      editableColors: []
+      editableColors: [],
+      showAllTags: false
     };
   },
   mounted: function mounted() {
@@ -3567,7 +3583,7 @@ function download(canvas, filename) {
       return this.assets.length === this.item.assets.length;
     },
     tags: function tags() {
-      return this.item.tags;
+      return !this.showAllTags ? this.item.tags.slice(0, 8) : this.item.tags;
     },
     isPremiumMember: function isPremiumMember() {
       return this.$page.user && this.$page.user.is_premium_subscriber;
@@ -4013,11 +4029,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    submit: function submit() {
-      this.$inertia.visit(route('frontend.search.result'), {
-        method: 'get',
-        data: this.form
-      });
+    submit: function submit(e) {
+      e.preventDefault();
+      this.$inertia.visit(route(this.form.search ? 'frontend.illustrations.tag' : 'frontend.illustrations.index', {
+        tag: this.form.search.split(' ').join('-')
+      }));
     }
   }
 });
@@ -4038,6 +4054,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Item */ "./resources/js/Frontend/Pages/Illustrations/Item.vue");
 /* harmony import */ var _SearchBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SearchBox */ "./resources/js/Frontend/Pages/Illustrations/SearchBox.vue");
 /* harmony import */ var _Sections_ShortFooter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Sections/ShortFooter */ "./resources/js/Frontend/Sections/ShortFooter.vue");
+//
 //
 //
 //
@@ -48451,14 +48468,36 @@ var render = function() {
               key: key,
               staticClass: "ms-tag",
               attrs: {
-                href: _vm.route("frontend.illustrations.index", {
+                href: _vm.route("frontend.illustrations.tag", {
                   search: tag.name
                 })
               }
             },
             [_vm._v(_vm._s(tag.name))]
           )
-        })
+        }),
+        _vm._v(" "),
+        !_vm.showAllTags && this.item.tags.length > this.tags.length
+          ? _c(
+              "a",
+              {
+                staticClass: "ms-tag",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.showAllTags = true
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "+" +
+                    _vm._s(this.item.tags.length - this.tags.length) +
+                    " Others"
+                )
+              ]
+            )
+          : _vm._e()
       ],
       2
     )
@@ -49008,7 +49047,8 @@ var render = function() {
     "form",
     {
       staticClass: "ms-search-form",
-      attrs: { action: _vm.route("frontend.illustrations.index") }
+      attrs: { action: _vm.route("frontend.illustrations.index") },
+      on: { submit: _vm.submit }
     },
     [
       _c(
@@ -49140,15 +49180,26 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "ms-search-result-subtext-wrap" }, [
-              _c("p", { staticClass: "ms-search-result-subtext" }, [
-                _vm._v(
-                  "Get free " +
-                    _vm._s(_vm.search) +
-                    " Illustration. These free $asset-types are pixel-perfect to fit your design and available in both png and SVG vector. You can change colors easily and download right away. Be sure to check all "
-                ),
-                _c("a", { attrs: { href: "#" } }, [_vm._v("$asset-types")]),
-                _vm._v(".")
-              ])
+              _c(
+                "p",
+                { staticClass: "ms-search-result-subtext" },
+                [
+                  _vm._v(
+                    "Get free " +
+                      _vm._s(_vm.search) +
+                      " illustrations. These free illustrations are pixel-perfect to fit your design and available in both png and SVG vector.\n                        You can change colors easily and download right away. Be sure to check all "
+                  ),
+                  _c(
+                    "inertia-link",
+                    {
+                      attrs: { href: _vm.route("frontend.illustrations.index") }
+                    },
+                    [_vm._v("illustrations")]
+                  ),
+                  _vm._v(".")
+                ],
+                1
+              )
             ]),
             _vm._v(" "),
             _c(
@@ -49173,7 +49224,10 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "cs-number-of-search-result" }, [
-              _vm._v("138 vector illustrations found")
+              _vm._v(
+                _vm._s(_vm.search_results.length) +
+                  " vector illustrations found"
+              )
             ])
           ],
           1
@@ -50521,15 +50575,28 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "ms-search-result-subtext-wrap" }, [
-              _c("p", { staticClass: "ms-search-result-subtext" }, [
-                _vm._v(
-                  "Get free " +
-                    _vm._s(_vm.search) +
-                    " Illustration. These free $asset-types are pixel-perfect to fit your design and available in both png and SVG vector. You can change colors easily and download right away. Be sure to check all "
-                ),
-                _c("a", { attrs: { href: "#" } }, [_vm._v("$asset-types")]),
-                _vm._v(".")
-              ])
+              _c(
+                "p",
+                { staticClass: "ms-search-result-subtext" },
+                [
+                  _vm._v(
+                    "Get free " +
+                      _vm._s(_vm.search) +
+                      " 3d illustrations. These free 3d illustrations are pixel-perfect to fit your design and available in both png and SVG vector. You can change colors easily and download right away. Be sure to check all "
+                  ),
+                  _c(
+                    "inertia-link",
+                    {
+                      attrs: {
+                        href: _vm.route("frontend.illustrations3d.index")
+                      }
+                    },
+                    [_vm._v("3d illustrations")]
+                  ),
+                  _vm._v(".")
+                ],
+                1
+              )
             ]),
             _vm._v(" "),
             _c(

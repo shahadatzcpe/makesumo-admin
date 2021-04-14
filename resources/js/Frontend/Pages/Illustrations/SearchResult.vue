@@ -7,14 +7,15 @@
                     <a href="#" class="ms-back-to-home">Free Illustrations</a>
                     <h3 class="ms-search-result-text">{{ capitalizeFirstLetter(search) }} illustration</h3>
                     <div class="ms-search-result-subtext-wrap">
-                        <p class="ms-search-result-subtext">Get free {{ search }} Illustration. These free $asset-types are pixel-perfect to fit your design and available in both png and SVG vector. You can change colors easily and download right away. Be sure to check all <a href="#">$asset-types</a>.</p>
+                        <p class="ms-search-result-subtext">Get free {{ search }} illustrations. These free illustrations are pixel-perfect to fit your design and available in both png and SVG vector.
+                            You can change colors easily and download right away. Be sure to check all <inertia-link :href="route('frontend.illustrations.index')">illustrations</inertia-link>.</p>
                     </div>
                     <div class="ms-related-tags">
                         <inertia-link :key="key" v-for="(searchTerm, key) in related_keywords"
                                       :href="route('frontend.illustrations.index', { search: searchTerm } )"
                                       class="ms-tag">{{ searchTerm }}</inertia-link>
                     </div>
-                    <div class="cs-number-of-search-result">138 vector illustrations found</div>
+                    <div class="cs-number-of-search-result">{{ search_results.length }} vector illustrations found</div>
                 </div>
             </div><!-- .ms-hero-text -->
         </div><!-- .ms-hero -->

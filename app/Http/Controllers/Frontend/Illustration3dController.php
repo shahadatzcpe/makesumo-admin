@@ -25,7 +25,15 @@ class Illustration3dController extends Controller
         $this->props['search'] = \request('search') ?: '';
     }
 
-    public function index(Request $request, SearchEngine $searchEngine, PopularityEngine $popularityEngine) {
+    public function index(Request $request, $tag = '', SearchEngine $searchEngine, PopularityEngine $popularityEngine) {
+
+        if($tag) {
+            $request->merge([
+                'search' => str_replace('-', ' ', $tag),
+            ]);
+            $this->props['search'] = $request->search;
+        }
+
         $this->setupProps($request, $searchEngine, $popularityEngine);
 
         return Inertia::render('Illustrations3d/Index', $this->props);

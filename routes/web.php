@@ -28,14 +28,16 @@ Route::domain(config('app.frontend_url'))->namespace('Frontend')
         ->name('social-login-callback')->where('provider', implode(',', config('auth.available_login_option')));
 
 
-        Route::get('/', 'HomepageController@homepage')->name('frontend.homepage'); //done
-    Route::get('/illustrations', 'IllustrationController@index')->name('frontend.illustrations.index');
-    Route::get('/illustrations/{assetSet:slug}', 'IllustrationController@assetSet')->name('frontend.illustrations.assets-set');
-    Route::get('/illustrations/{assetSet:slug}/{item:slug}', 'IllustrationController@show')->name('frontend.illustrations.asset');
+    Route::get('/', 'HomepageController@homepage')->name('frontend.homepage'); //done
+    Route::get('/vector-illustrations', 'IllustrationController@index')->name('frontend.illustrations.index');
+    Route::get('/vector-illustrations/{assetSet:slug}', 'IllustrationController@assetSet')->name('frontend.illustrations.assets-set');
+    Route::get('/illustration/{item:slug}', 'IllustrationController@show')->name('frontend.illustrations.asset');
+    Route::get('/free-illustrations/{tag}', 'IllustrationController@index')->name('frontend.illustrations.tag');
 
     Route::get('/3d-illustrations', 'Illustration3dController@index')->name('frontend.illustrations3d.index');
     Route::get('/3d-illustrations/{assetSet:slug}', 'Illustration3dController@assetSet')->name('frontend.illustrations3d.assets-set');
-    Route::get('/3d-illustrations/{assetSet:slug}/{item:slug}', 'Illustration3dController@show')->name('frontend.illustrations3d.asset');
+    Route::get('/3d-illustration/{item:slug}', 'Illustration3dController@show')->name('frontend.illustrations3d.asset');
+    Route::get('/free-3d-illustrations/{tag}', 'Illustration3dController@index')->name('frontend.illustrations3d.tag');
 
     Route::get('/icons', 'IconController@index')->name('frontend.icons.index');
     Route::get('/icons/{assetSet}', 'IconController@assetSet')->name('frontend.icons.assets-set');
